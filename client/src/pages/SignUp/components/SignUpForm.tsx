@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { StyledInput, StyledForm } from "../style";
+import { StyledInput, StyledForm, TextWrapper, UserInfoWrapper, UserInfoLabel, Text } from "../style";
+import NotARobotBox from "./NotARobotBox";
 
 interface IForm {
     DisplayName: string;
@@ -22,9 +23,12 @@ function SignUpForm(){
 
     return (
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-            <h3>Display name</h3>
+          <UserInfoWrapper>
+            < UserInfoLabel>Display name</ UserInfoLabel>
             <StyledInput {...register("DisplayName", { required: false })}/>
-            <h3>Email</h3>
+          </UserInfoWrapper>
+          <UserInfoWrapper>
+            < UserInfoLabel>Email</ UserInfoLabel>
             <StyledInput {...register("Email", {
                 required: "Email cannot be empty",
                 pattern: {
@@ -33,7 +37,9 @@ function SignUpForm(){
                 },
               })}/>
               {isSubmitted && typeof errors?.Email?.message === "string" ? <p>{errors.Email.message}</p> : null}
-            <h3>Password</h3>
+          </UserInfoWrapper>
+          <UserInfoWrapper>
+            < UserInfoLabel>Password</ UserInfoLabel>
             <StyledInput {...register("Password", {
                 required: "Password cannot be empty",
                 minLength: {
@@ -50,7 +56,15 @@ function SignUpForm(){
                 },
               })}/>
               {isSubmitted && typeof errors?.Password?.message === "string" ? <p>{errors.Password.message}</p> : null}
+            </UserInfoWrapper>
+            <Text>Passwords must contain at least eight characters, including at least 1 letter and 1 number</Text>
+            <NotARobotBox/>
             <button onClick={()=> setIsSubmitted(true)}>Sign Up</button>
+            <TextWrapper>
+            <input type="checkbox"/>
+            <Text>Opt-in to receive occasional product updates, user research invitations, company announcements, and digests.</Text>
+            </TextWrapper>
+
         </StyledForm>
     )
 }
