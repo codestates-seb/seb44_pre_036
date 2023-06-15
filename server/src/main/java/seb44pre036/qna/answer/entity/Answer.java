@@ -28,7 +28,7 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private long memberId;
-정
+
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private long questionId;
