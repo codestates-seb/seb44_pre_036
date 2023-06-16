@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
+import axios from 'axios';
 import {
   StyledInput,
   StyledForm,
@@ -15,6 +17,36 @@ interface IForm {
   Password: string;
 }
 
+const SIGN_UP_URL_EXAMPLE = 'https://localhost:5001/api/Account/SignUp';
+const GET_ME_URL_EXAMPLE = 'https://localhost:5001/api/Account/GetMe';
+
+const postData = async (data: IForm) => {
+  const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
+
+  return response.data;
+};
+
+const getMe = async () => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  if (!accessToken) {
+    return null;
+  }
+
+  try {
+    const response = await axios.get(GET_ME_URL_EXAMPLE, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 function SignUpForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const {
@@ -23,8 +55,33 @@ function SignUpForm() {
     watch,
     formState: { errors },
   } = useForm<IForm>();
-  const onSubmit = (data: IForm) => {
-    console.log(data);
+
+  const mutation = useMutation(postData, {
+    onSuccess: async (data) => {
+      console.log(data);
+      if (!data) {
+        return;
+      }
+      const { accessToken, refreshToken } = data;
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+
+      const userData = await getMe();
+      console.log(userData);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
+  const onSubmit = async (userData: IForm) => {
+    setIsSubmitted(true);
+    try {
+      await mutation.mutateAsync(userData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -85,7 +142,7 @@ function SignUpForm() {
           letter and 1 number
         </Text>
       </TextWrapper>
-      <button onClick={() => setIsSubmitted(true)}>Sign Up</button>
+      <button type="submit">Sign Up</button>
     </StyledForm>
   );
 }
