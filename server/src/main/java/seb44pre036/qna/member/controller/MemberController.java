@@ -16,15 +16,24 @@ import javax.validation.constraints.Positive;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/qna")
+@RequestMapping("/")
 @Validated
 public class MemberController {
 
     private final MemberService memberService;
     private final MemberMapper mapper;
 
-    @PostMapping("/post")
-    public ResponseEntity<?> postMember(@Valid @RequestBody MemberDto.post memberDto) {
+    @PostMapping("/signup")
+    public ResponseEntity<?> postSignUp(@Valid @RequestBody MemberDto.post memberDto) {
+        Member member = mapper.memberPostDtoToMember(memberDto);
+        Member response = memberService.createMember(member);
+
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/signup")
+    public ResponseEntity<?> getSignUpPage(@Valid @RequestBody MemberDto.post memberDto) {
         Member member = mapper.memberPostDtoToMember(memberDto);
         Member response = memberService.createMember(member);
 
