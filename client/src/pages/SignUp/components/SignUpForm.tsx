@@ -122,6 +122,7 @@ function SignUpForm() {
       <UserInfoWrapper>
         <UserInfoLabel label={Password} />
         <StyledInput
+          type="password"
           {...register(Password, {
             required: WARNING_MESSAGE_PASSWORD_EMPTY,
             minLength: {
