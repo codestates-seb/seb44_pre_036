@@ -10,12 +10,7 @@ import {
   UserInfoLabel,
   Text,
 } from '../style';
-
-type UserInfoSignUp = {
-  DisplayName: string;
-  Email: string;
-  Password: string;
-};
+import { IUserInfoSignUp } from '../model/UserInfoSignUp';
 
 type UserInfoField = 'DisplayName' | 'Email' | 'Password';
 type Token = 'accessToken' | 'refreshToken';
@@ -38,7 +33,7 @@ const WARNING_MESSAGE_PASSWORD_WEAK =
   'Please add one of the following things to make your password stronger';
 const PASSWORD_RULE_MESSAGE = `Must contain at least eight characters, including at least 1 letter and 1 number`;
 
-const postData = async (data: UserInfoSignUp) => {
+const postData = async (data: IUserInfoSignUp) => {
   const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
 
   return response.data;
@@ -72,7 +67,7 @@ function SignUpForm() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<UserInfoSignUp>();
+  } = useForm<IUserInfoSignUp>();
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
@@ -93,7 +88,7 @@ function SignUpForm() {
     },
   });
 
-  const onSubmit = async (userData: UserInfoSignUp) => {
+  const onSubmit = async (userData: IUserInfoSignUp) => {
     setIsSubmitted(true);
     try {
       await mutation.mutateAsync(userData);
