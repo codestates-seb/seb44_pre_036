@@ -11,23 +11,41 @@ import {
   Text,
 } from '../style';
 
-interface IForm {
+type UserInfoSignUp = {
   DisplayName: string;
   Email: string;
   Password: string;
-}
+};
 
+type UserInfoField = 'DisplayName' | 'Email' | 'Password';
+type Token = 'accessToken' | 'refreshToken';
+
+const DisplayName: UserInfoField = 'DisplayName';
+const Email: UserInfoField = 'Email';
+const Password: UserInfoField = 'Password';
 const SIGN_UP_URL_EXAMPLE = 'https://localhost:5001/api/Account/SignUp';
 const GET_ME_URL_EXAMPLE = 'https://localhost:5001/api/Account/GetMe';
+const ACCESS_TOKEN: Token = 'accessToken';
+const REFRESH_TOKEN: Token = 'refreshToken';
+const PASSWORD_MIN_LENGTH = 8;
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i;
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).+$/;
+const PASSWORD_REGEX_NO_LETTERS = /^[^a-zA-Z]+$/;
+const PASSWORD_REGEX_NO_NUMBERS = /^[^0-9]+$/;
+const WARNING_MESSAGE_PASSWORD_EMPTY = 'Password cannot be empty';
+const WARNING_MESSAGE_EMAIL_EMPTY = 'Email cannot be empty';
+const WARNING_MESSAGE_PASSWORD_WEAK =
+  'Please add one of the following things to make your password stronger';
+const PASSWORD_RULE_MESSAGE = `Must contain at least eight characters, including at least 1 letter and 1 number`;
 
-const postData = async (data: IForm) => {
+const postData = async (data: UserInfoSignUp) => {
   const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
 
   return response.data;
 };
 
 const getMe = async () => {
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   if (!accessToken) {
     return null;
@@ -54,7 +72,7 @@ function SignUpForm() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IForm>();
+  } = useForm<UserInfoSignUp>();
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
@@ -64,8 +82,8 @@ function SignUpForm() {
       }
       const { accessToken, refreshToken } = data;
 
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem(ACCESS_TOKEN, accessToken);
+      localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
       const userData = await getMe();
       console.log(userData);
@@ -75,7 +93,7 @@ function SignUpForm() {
     },
   });
 
-  const onSubmit = async (userData: IForm) => {
+  const onSubmit = async (userData: UserInfoSignUp) => {
     setIsSubmitted(true);
     try {
       await mutation.mutateAsync(userData);
@@ -88,16 +106,16 @@ function SignUpForm() {
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
         <UserInfoLabel>Display name</UserInfoLabel>
-        <StyledInput {...register('DisplayName', { required: false })} />
+        <StyledInput {...register(DisplayName, { required: false })} />
       </UserInfoWrapper>
       <UserInfoWrapper>
         <UserInfoLabel>Email</UserInfoLabel>
         <StyledInput
-          {...register('Email', {
-            required: 'Email cannot be empty',
+          {...register(Email, {
+            required: WARNING_MESSAGE_EMAIL_EMPTY,
             pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
-              message: `${watch('Email')} is not a valid email address`,
+              value: EMAIL_REGEX,
+              message: `${watch(Email)} is not a valid email address`,
             },
           })}
         />
@@ -108,24 +126,26 @@ function SignUpForm() {
       <UserInfoWrapper>
         <UserInfoLabel>Password</UserInfoLabel>
         <StyledInput
-          {...register('Password', {
-            required: 'Password cannot be empty',
+          {...register(Password, {
+            required: WARNING_MESSAGE_PASSWORD_EMPTY,
             minLength: {
-              value: 8,
+              value: PASSWORD_MIN_LENGTH,
               message: `Must contain at least ${
-                8 - (watch('Password')?.length || 0)
+                PASSWORD_MIN_LENGTH - (watch(Password)?.length || 0)
               } more characters.`,
             },
             pattern: {
-              value: /^(?=.*[A-Za-z])(?=.*\d).+$/,
-              message: `Please add one of the following things to make your password stronger: 
+              value: PASSWORD_REGEX,
+              message: `${WARNING_MESSAGE_PASSWORD_WEAK}: 
                   ${
-                    watch('Password') && /^[^a-zA-Z]+$/.test(watch('Password'))
+                    watch(Password) &&
+                    PASSWORD_REGEX_NO_LETTERS.test(watch(Password))
                       ? 'letters'
                       : ''
                   }
                   ${
-                    watch('Password') && /^[^0-9]+$/.test(watch('Password'))
+                    watch(Password) &&
+                    PASSWORD_REGEX_NO_NUMBERS.test(watch(Password))
                       ? 'numbers'
                       : ''
                   }`,
@@ -137,10 +157,7 @@ function SignUpForm() {
         ) : null}
       </UserInfoWrapper>
       <TextWrapper>
-        <Text>
-          Passwords must contain at least eight characters, including at least 1
-          letter and 1 number
-        </Text>
+        <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
       <button type="submit">Sign Up</button>
     </StyledForm>
