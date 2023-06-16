@@ -61,7 +61,7 @@ const getMe = async () => {
 };
 
 function SignUpForm() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const {
     register,
     handleSubmit,
@@ -90,7 +90,7 @@ function SignUpForm() {
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
     console.log(userData);
-    setIsSubmitted(true);
+    setIsClicked(true);
     try {
       await mutation.mutateAsync(userData);
     } catch (error) {
@@ -116,7 +116,7 @@ function SignUpForm() {
           })}
         />
         {errors?.Email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
-        (isSubmitted && typeof errors?.Email?.message === 'string') ? (
+        (isClicked && typeof errors?.Email?.message === 'string') ? (
           <p>{errors.Email.message}</p>
         ) : null}
       </UserInfoWrapper>
@@ -151,14 +151,16 @@ function SignUpForm() {
           })}
         />
         {errors?.Password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
-        (isSubmitted && typeof errors?.Password?.message === 'string') ? (
+        (isClicked && typeof errors?.Password?.message === 'string') ? (
           <p>{errors.Password.message}</p>
         ) : null}
       </UserInfoWrapper>
       <TextWrapper>
         <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
-      <button type="submit">Sign Up</button>
+      <button type="submit" onClick={() => setIsClicked(true)}>
+        Sign Up
+      </button>
     </StyledForm>
   );
 }
