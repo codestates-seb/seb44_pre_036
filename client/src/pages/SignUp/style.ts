@@ -37,8 +37,3 @@ export const UserInfoWrapper = styled.div`
   justify-content: flex-start;
   margin-top: 20px;
 `;
-
-export const UserInfoLabel = styled.label`
-  font-size: 15px;
-  font-weight: 700;
-`;

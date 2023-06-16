@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axios from 'axios';
+import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
   StyledForm,
   TextWrapper,
   UserInfoWrapper,
-  UserInfoLabel,
   Text,
 } from '../style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
@@ -89,6 +89,7 @@ function SignUpForm() {
   });
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
+    console.log(userData);
     setIsSubmitted(true);
     try {
       await mutation.mutateAsync(userData);
@@ -100,11 +101,11 @@ function SignUpForm() {
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
-        <UserInfoLabel>Display name</UserInfoLabel>
+        <UserInfoLabel label={DisplayName} />
         <StyledInput {...register(DisplayName, { required: false })} />
       </UserInfoWrapper>
       <UserInfoWrapper>
-        <UserInfoLabel>Email</UserInfoLabel>
+        <UserInfoLabel label={Email} />
         <StyledInput
           {...register(Email, {
             required: WARNING_MESSAGE_EMAIL_EMPTY,
@@ -119,7 +120,7 @@ function SignUpForm() {
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
-        <UserInfoLabel>Password</UserInfoLabel>
+        <UserInfoLabel label={Password} />
         <StyledInput
           {...register(Password, {
             required: WARNING_MESSAGE_PASSWORD_EMPTY,
