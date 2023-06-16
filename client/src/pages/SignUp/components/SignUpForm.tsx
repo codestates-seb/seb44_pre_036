@@ -115,7 +115,8 @@ function SignUpForm() {
             },
           })}
         />
-        {isSubmitted && typeof errors?.Email?.message === 'string' ? (
+        {errors?.Email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
+        (isSubmitted && typeof errors?.Email?.message === 'string') ? (
           <p>{errors.Email.message}</p>
         ) : null}
       </UserInfoWrapper>
@@ -149,7 +150,8 @@ function SignUpForm() {
             },
           })}
         />
-        {isSubmitted && typeof errors?.Password?.message === 'string' ? (
+        {errors?.Password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
+        (isSubmitted && typeof errors?.Password?.message === 'string') ? (
           <p>{errors.Password.message}</p>
         ) : null}
       </UserInfoWrapper>
