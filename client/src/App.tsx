@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
 import Router from './Router';
 import useGetMe from './common/utils/customHook/useGetMe';
+import { useDispatch } from 'react-redux';
+import { createUserInfo } from './common/store/UserInfoStore';
 
 function App() {
+  const dispatch = useDispatch();
   const getMe = useGetMe();
 
   useEffect(() => {
@@ -12,6 +15,7 @@ function App() {
         return;
       }
       console.log(userInfo);
+      dispatch(createUserInfo(userInfo));
     };
 
     fetchUserInfo();
