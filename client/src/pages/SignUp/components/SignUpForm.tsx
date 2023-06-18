@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axios from 'axios';
+import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
@@ -28,7 +29,6 @@ import {
   WARNING_MESSAGE_PASSWORD_WEAK,
   PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
-import useGetMe from '../../../common/utils/customHook/useGetMe';
 
 const postData = async (data: IUserInfoSignUp) => {
   const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
@@ -45,7 +45,7 @@ function SignUpForm() {
     formState: { errors },
   } = useForm<IUserInfoSignUp>();
 
-  const getMe = useGetMe();
+  const { refetch: refetchGetMe } = useGetMe();
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
@@ -58,7 +58,7 @@ function SignUpForm() {
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
-      const userData = await getMe();
+      const { data: userData } = await refetchGetMe();
       console.log(userData);
     },
     onError: (error) => {
