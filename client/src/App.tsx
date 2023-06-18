@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Router from './Router';
 import useGetMe from './common/utils/customHook/useGetMe';
-import { useDispatch } from 'react-redux';
 import { createUserInfo } from './common/store/UserInfoStore';
 
 function App() {
