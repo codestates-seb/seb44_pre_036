@@ -6,8 +6,8 @@ export const Email: UserInfoField = 'Email';
 
 export const Password: UserInfoField = 'Password';
 
+// 잠시 보관. 향후 API URL 받으면 enum으로 바꿀 예정
 export const SIGN_UP_URL_EXAMPLE = 'https://localhost:5001/api/Account/SignUp';
-
 export const GET_ME_URL_EXAMPLE = 'https://localhost:5001/api/Account/GetMe';
 
 export const ACCESS_TOKEN: Token = 'accessToken';
