@@ -42,7 +42,7 @@ function LoginForm() {
     formState: { errors },
   } = useForm<IUserInfoLogin>();
 
-  const getMe = useGetMe();
+  const { refetch: refetchGetMe } = useGetMe();
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
@@ -55,7 +55,7 @@ function LoginForm() {
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
-      const userData = await getMe();
+      const { data: userData } = await refetchGetMe();
       console.log(userData);
     },
     onError: (error) => {

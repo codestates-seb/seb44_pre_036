@@ -1,8 +1,8 @@
+import { useQuery } from 'react-query';
 import axios from 'axios';
 import { ACCESS_TOKEN, GET_ME_URL_EXAMPLE } from '../constants';
-import { IUserInfo } from '../../model/UserInfo';
 
-function useGetMe(): () => Promise<IUserInfo | null> {
+function useGetMe() {
   const getMe = async () => {
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
@@ -37,6 +37,9 @@ function useGetMe(): () => Promise<IUserInfo | null> {
     }
   };
 
-  return getMe;
+  return useQuery('me', getMe, {
+    staleTime: 5 * 60 * 1000, // 5분동안 데이터가 신선하다고 간주
+    cacheTime: 30 * 60 * 1000, // 30분동안 캐시를 유지
+  });
 }
 export default useGetMe;
