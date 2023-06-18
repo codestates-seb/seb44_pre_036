@@ -4,11 +4,7 @@ import { ACCESS_TOKEN, GET_ME_URL_EXAMPLE } from '../constants';
 import { useDispatch } from 'react-redux';
 import { createUserInfo } from '../../store/UserInfoStore';
 import { IUserInfo } from '../../model/UserInfo';
-
-export interface IGetMeResponseData {
-  user?: IUserInfo | null;
-  accessToken?: string;
-}
+import { IGetMeResponseData } from '../../model/GetMeResponseData';
 
 function useGetMe(): UseQueryResult<IUserInfo | null> {
   const dispatch = useDispatch();
