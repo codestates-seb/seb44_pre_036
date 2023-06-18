@@ -15,7 +15,7 @@ function useGetMe(): () => Promise<IUserInfo | null> {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-        // 이 옵션은 쿠키를 서버와 주고받을 수 있게 해준다.
+        // 이 옵션은 쿠키를 서버와 주고받을 수 있게 해준다. (HTTP only 쿠키로 설정된 refresh token 자동 전송)
         withCredentials: true,
       });
       // accessToken이 만료되었을 경우 재발급
