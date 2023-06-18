@@ -3,9 +3,9 @@ import { IUserInfo } from '../model/UserInfo';
 
 const initialState: IUserInfo = {
   id: 0,
-  email: '',
-  name: '',
-  profileImageUrl: '',
+  email: 'abcde123@gmail.com',
+  name: '김감자',
+  profileImageUrl: 'https://dummyimage.com/100x100/8B4513/ffffff&text=Potato',
 };
 
 export const userInfo = createSlice({
