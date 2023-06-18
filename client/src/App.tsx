@@ -1,24 +1,21 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Router from './Router';
 import useGetMe from './common/utils/customHook/useGetMe';
-import { createUserInfo } from './common/store/UserInfoStore';
 
 function App() {
-  const dispatch = useDispatch();
-  const getMe = useGetMe();
+  // useGetMe()는 useQuery를 반환한다. refetch(서버에서 데이터를 다시 가져옴)를 사용하기 위해선 useQuery의 반환값을 사용해야 한다.
+  const { refetch: refetchGetMe } = useGetMe();
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      const userInfo = await getMe();
+    const autoLogin = async () => {
+      const { data: userInfo } = await refetchGetMe();
       if (!userInfo) {
         return;
       }
       console.log(userInfo);
-      dispatch(createUserInfo(userInfo));
     };
 
-    fetchUserInfo();
+    autoLogin();
   }, []);
 
   return <Router />;
