@@ -16,7 +16,6 @@ import {
   Email,
   Password,
   SIGN_UP_URL_EXAMPLE,
-  GET_ME_URL_EXAMPLE,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   PASSWORD_MIN_LENGTH,
@@ -29,32 +28,12 @@ import {
   WARNING_MESSAGE_PASSWORD_WEAK,
   PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
+import useGetMe from '../../../common/utils/customHook/useGetMe';
 
 const postData = async (data: IUserInfoSignUp) => {
   const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
 
   return response.data;
-};
-
-const getMe = async () => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
-
-  if (!accessToken) {
-    return null;
-  }
-
-  try {
-    const response = await axios.get(GET_ME_URL_EXAMPLE, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
 };
 
 function SignUpForm() {
@@ -65,6 +44,8 @@ function SignUpForm() {
     watch,
     formState: { errors },
   } = useForm<IUserInfoSignUp>();
+
+  const getMe = useGetMe();
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {

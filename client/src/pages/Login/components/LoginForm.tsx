@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axios from 'axios';
+import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledForm,
@@ -14,7 +15,6 @@ import {
   Email,
   Password,
   SIGN_UP_URL_EXAMPLE,
-  GET_ME_URL_EXAMPLE,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   PASSWORD_MIN_LENGTH,
@@ -33,27 +33,6 @@ const postData = async (data: IUserInfoLogin) => {
   return response.data;
 };
 
-const getMe = async () => {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
-
-  if (!accessToken) {
-    return null;
-  }
-
-  try {
-    const response = await axios.get(GET_ME_URL_EXAMPLE, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
-
 function LoginForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const {
@@ -62,6 +41,8 @@ function LoginForm() {
     watch,
     formState: { errors },
   } = useForm<IUserInfoLogin>();
+
+  const getMe = useGetMe();
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
