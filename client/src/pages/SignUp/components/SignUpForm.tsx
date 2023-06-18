@@ -9,29 +9,26 @@ import {
   TextWrapper,
   UserInfoWrapper,
   Text,
-} from '../style';
+} from '../../../common/style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
-
-type UserInfoField = 'DisplayName' | 'Email' | 'Password';
-type Token = 'accessToken' | 'refreshToken';
-
-const DisplayName: UserInfoField = 'DisplayName';
-const Email: UserInfoField = 'Email';
-const Password: UserInfoField = 'Password';
-const SIGN_UP_URL_EXAMPLE = 'https://localhost:5001/api/Account/SignUp';
-const GET_ME_URL_EXAMPLE = 'https://localhost:5001/api/Account/GetMe';
-const ACCESS_TOKEN: Token = 'accessToken';
-const REFRESH_TOKEN: Token = 'refreshToken';
-const PASSWORD_MIN_LENGTH = 8;
-const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i;
-const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).+$/;
-const PASSWORD_REGEX_NO_LETTERS = /^[^a-zA-Z]+$/;
-const PASSWORD_REGEX_NO_NUMBERS = /^[^0-9]+$/;
-const WARNING_MESSAGE_PASSWORD_EMPTY = 'Password cannot be empty';
-const WARNING_MESSAGE_EMAIL_EMPTY = 'Email cannot be empty';
-const WARNING_MESSAGE_PASSWORD_WEAK =
-  'Please add one of the following things to make your password stronger';
-const PASSWORD_RULE_MESSAGE = `Must contain at least eight characters, including at least 1 letter and 1 number`;
+import {
+  DisplayName,
+  Email,
+  Password,
+  SIGN_UP_URL_EXAMPLE,
+  GET_ME_URL_EXAMPLE,
+  ACCESS_TOKEN,
+  REFRESH_TOKEN,
+  PASSWORD_MIN_LENGTH,
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
+  PASSWORD_REGEX_NO_LETTERS,
+  PASSWORD_REGEX_NO_NUMBERS,
+  WARNING_MESSAGE_PASSWORD_EMPTY,
+  WARNING_MESSAGE_EMAIL_EMPTY,
+  WARNING_MESSAGE_PASSWORD_WEAK,
+  PASSWORD_RULE_MESSAGE,
+} from '../../../common/utils/constants';
 
 const postData = async (data: IUserInfoSignUp) => {
   const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
