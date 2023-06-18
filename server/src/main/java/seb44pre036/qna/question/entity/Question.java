@@ -3,6 +3,7 @@ package seb44pre036.qna.question.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.member.entity.Member;
 
 import javax.persistence.*;
@@ -36,13 +37,13 @@ public class Question {
     private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<seb44pre036.qna.qna.entity.Answer> answers = new ArrayList<>();
+    private List<Answer> answers = new ArrayList<>();
 
 //    public void addAnswers(seb44pre036.qna.qna.entity.Answer answer) {
 //        answers.add(answer);
 //        if(answer.getQuestion() != this){
 //            answer.addQuestion(this);
 //        }
-//    }
+////    }
 
 }

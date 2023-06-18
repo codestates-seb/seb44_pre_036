@@ -15,22 +15,22 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
-#logging:
-#  level:
-#    com:
-#      codestates: DEBUG
-#    org:
-#      springframework:
-#        orm:
-#          jpa: DEBUG
+logging:
+  level:
+    seb44pre036:
+      qna: DEBUG
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
 #server:
 #  servlet:
 #    encoding:
 #      force-response: true
-#mail:
-#  address:
-#    admin: admin@gmail.com
-#jwt:
-#  key: ${JWT_SECRET_KEY}
-#  access-token-expiration-minutes: 40
-#  refresh-token-expiration-minutes: 420
+mail:
+  address:
+    admin: admin@gmail.com
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 40
+  refresh-token-expiration-minutes: 420

@@ -40,6 +40,14 @@ public class MemberDto {
         private String name;
 
         @NotBlank(message = "공백이 아니어야 합니다.")
+        @Size(min = 8, max = 16, message = "비밀번호는 8글자 이상, 16글자 이하로 작성해주세요.")
         private String password;
+    }
+
+    @Getter @Setter
+    public static class response{
+        private Long memberId;
+        private String email;
+        private String name;
     }
 }
