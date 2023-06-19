@@ -1,16 +1,24 @@
-package seb44pre036.qna.qna.entity;
+package seb44pre036.qna.answer.entity;
+
 
 
 import lombok.Getter;
+import lombok.Setter;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
+import seb44pre036.qna.member.entity.Member;
+import seb44pre036.qna.question.entity.Question;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Entity(name="ANSWER")
 public class Answer {
 
     @Id
     @Column(name = "ANSWER_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerId;
 
     @Column(name = "CONTENT")
@@ -20,17 +28,20 @@ public class Answer {
     private boolean isAccepted;
 
     @Column(name = "CREATED_AT")
-    private String createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "UPDATED_AT")
-    private String updatedAt;
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
-    private long memberId;
 
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
-    private long questionId;
+    private Question question;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+
 
 }
