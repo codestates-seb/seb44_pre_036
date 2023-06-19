@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import Router from './Router';
+import { GlobalStyle } from './common/style';
+import GNB from './common/GNB/views/GNB';
 import useGetMe from './common/utils/customHook/useGetMe';
 
 function App() {
@@ -18,7 +20,13 @@ function App() {
     autoLogin();
   }, []);
 
-  return <Router />;
+  return (
+    <>
+      <GlobalStyle />
+      <GNB />
+      <Router />
+    </>
+  );
 }
 
 export default App;
