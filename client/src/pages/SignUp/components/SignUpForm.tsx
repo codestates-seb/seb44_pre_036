@@ -1,91 +1,144 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
+import axios from 'axios';
+import useGetMe from '../../../common/utils/customHook/useGetMe';
+import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
   StyledForm,
   TextWrapper,
   UserInfoWrapper,
-  UserInfoLabel,
   Text,
-} from '../style';
+} from '../../../common/style';
+import { IUserInfoSignUp } from '../model/UserInfoSignUp';
+import {
+  DisplayName,
+  Email,
+  Password,
+  SIGN_UP_URL_EXAMPLE,
+  ACCESS_TOKEN,
+  REFRESH_TOKEN,
+  PASSWORD_MIN_LENGTH,
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
+  PASSWORD_REGEX_NO_LETTERS,
+  PASSWORD_REGEX_NO_NUMBERS,
+  WARNING_MESSAGE_PASSWORD_EMPTY,
+  WARNING_MESSAGE_EMAIL_EMPTY,
+  WARNING_MESSAGE_PASSWORD_WEAK,
+  PASSWORD_RULE_MESSAGE,
+} from '../../../common/utils/constants';
 
-interface IForm {
-  DisplayName: string;
-  Email: string;
-  Password: string;
-}
+const postData = async (data: IUserInfoSignUp) => {
+  const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
+
+  return response.data;
+};
 
 function SignUpForm() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IForm>();
-  const onSubmit = (data: IForm) => {
-    console.log(data);
+  } = useForm<IUserInfoSignUp>();
+
+  const { refetch: refetchGetMe } = useGetMe();
+
+  const mutation = useMutation(postData, {
+    onSuccess: async (data) => {
+      console.log(data);
+      if (!data) {
+        return;
+      }
+      const { accessToken, refreshToken } = data;
+
+      localStorage.setItem(ACCESS_TOKEN, accessToken);
+      localStorage.setItem(REFRESH_TOKEN, refreshToken);
+
+      const { data: userData } = await refetchGetMe();
+      console.log(userData);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
+  const onSubmit = async (userData: IUserInfoSignUp) => {
+    console.log(userData);
+    setIsClicked(true);
+    try {
+      await mutation.mutateAsync(userData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
-        <UserInfoLabel>Display name</UserInfoLabel>
-        <StyledInput {...register('DisplayName', { required: false })} />
+        <UserInfoLabel label={DisplayName} />
+        <StyledInput {...register(DisplayName, { required: false })} />
       </UserInfoWrapper>
       <UserInfoWrapper>
-        <UserInfoLabel>Email</UserInfoLabel>
+        <UserInfoLabel label={Email} />
         <StyledInput
-          {...register('Email', {
-            required: 'Email cannot be empty',
+          {...register(Email, {
+            required: WARNING_MESSAGE_EMAIL_EMPTY,
             pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
-              message: `${watch('Email')} is not a valid email address`,
+              value: EMAIL_REGEX,
+              message: `${watch(Email)} is not a valid email address`,
             },
           })}
         />
-        {isSubmitted && typeof errors?.Email?.message === 'string' ? (
+        {errors?.Email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
+        (isClicked && typeof errors?.Email?.message === 'string') ? (
           <p>{errors.Email.message}</p>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
-        <UserInfoLabel>Password</UserInfoLabel>
+        <UserInfoLabel label={Password} />
         <StyledInput
-          {...register('Password', {
-            required: 'Password cannot be empty',
+          type="password"
+          {...register(Password, {
+            required: WARNING_MESSAGE_PASSWORD_EMPTY,
             minLength: {
-              value: 8,
+              value: PASSWORD_MIN_LENGTH,
               message: `Must contain at least ${
-                8 - (watch('Password')?.length || 0)
+                PASSWORD_MIN_LENGTH - (watch(Password)?.length || 0)
               } more characters.`,
             },
             pattern: {
-              value: /^(?=.*[A-Za-z])(?=.*\d).+$/,
-              message: `Please add one of the following things to make your password stronger: 
+              value: PASSWORD_REGEX,
+              message: `${WARNING_MESSAGE_PASSWORD_WEAK}: 
                   ${
-                    watch('Password') && /^[^a-zA-Z]+$/.test(watch('Password'))
+                    watch(Password) &&
+                    PASSWORD_REGEX_NO_LETTERS.test(watch(Password))
                       ? 'letters'
                       : ''
                   }
                   ${
-                    watch('Password') && /^[^0-9]+$/.test(watch('Password'))
+                    watch(Password) &&
+                    PASSWORD_REGEX_NO_NUMBERS.test(watch(Password))
                       ? 'numbers'
                       : ''
                   }`,
             },
           })}
         />
-        {isSubmitted && typeof errors?.Password?.message === 'string' ? (
+        {errors?.Password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
+        (isClicked && typeof errors?.Password?.message === 'string') ? (
           <p>{errors.Password.message}</p>
         ) : null}
       </UserInfoWrapper>
       <TextWrapper>
-        <Text>
-          Passwords must contain at least eight characters, including at least 1
-          letter and 1 number
-        </Text>
+        <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
-      <button onClick={() => setIsSubmitted(true)}>Sign Up</button>
+      <button type="submit" onClick={() => setIsClicked(true)}>
+        Sign Up
+      </button>
     </StyledForm>
   );
 }
