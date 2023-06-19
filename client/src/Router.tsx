@@ -9,18 +9,16 @@ import Ask from './pages/Ask/views/Ask';
 
 function Router() {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/board" element={<Board />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/ask" element={<Ask />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/board" element={<Board />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/ask" element={<Ask />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
