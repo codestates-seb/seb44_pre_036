@@ -31,7 +31,7 @@ export const LogoBox2 = styled.div`
   justify-content: center;
   height: 100%;
   margin-left: 10px;
-  margin-top: 5px;
+  padding-top: 5px;
   cursor: pointer;
   &:hover {
     background-color: #cecece;
@@ -51,7 +51,7 @@ export const Logo2 = styled.img`
 export const InputWrap = styled.div`
   position: relative;
   margin-left: 15px;
-  margin-right: 20px;
+  margin-right: 10px;
   width: 100%;
 `;
 export const SearchImg = styled.img`
@@ -82,14 +82,35 @@ export const NavMenu = styled.ul`
   list-style: none;
   display: flex;
   margin-right: 5px;
+  height: 100%;
   li {
-    margin: 2px;
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+    margin-right: 4px;
     cursor: pointer;
     &:hover {
       background-color: #cecece;
     }
+    .active {
+      display: none;
+    }
   }
   @media screen and (max-width: 600px) {
+    display: none;
+  }
+`;
+
+export const List = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  margin-left: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #cecece;
+  }
+  @media screen and (min-width: 600px) {
     display: none;
   }
 `;

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Header,
   Container,
@@ -10,12 +11,15 @@ import {
   InputStyles,
   NavMenu,
   SearchImg,
+  List,
 } from '../styles';
 import Dropdown from '../components/Dropdown';
 
 function GNB() {
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
@@ -25,10 +29,10 @@ function GNB() {
   return (
     <Header>
       <Container>
-        <LogoBox>
+        <LogoBox onClick={() => navigate('/')}>
           <Logo src="/header_svg/logo.svg" alt="logo" />
         </LogoBox>
-        <LogoBox2>
+        <LogoBox2 onClick={() => navigate('/')}>
           <Logo2 src="/header_svg/slogo.svg" alt="logo2" />
         </LogoBox2>
         <InputWrap>
@@ -43,20 +47,17 @@ function GNB() {
           </form>
         </InputWrap>
         <NavMenu>
-          <li onClick={() => setIsOpen(!isOpen)}>
-            <img src="/header_svg/message.svg" />
-            {isOpen ? <Dropdown /> : <></>}
+          <li onClick={() => navigate('/mypage')}>
+            <img src="/header_svg/user.svg" alt="user" />
           </li>
           <li>
-            <img src="/header_svg/cup.svg" />
-          </li>
-          <li>
-            <img src="/header_svg/help.svg" />
-          </li>
-          <li>
-            <img src="/header_svg/list.svg" />
+            <img src="/header_svg/logout.svg" alt="logout" />
           </li>
         </NavMenu>
+        <List onClick={() => handleClick()}>
+          <img src="/header_svg/list.svg" />
+          {isOpen ? <Dropdown /> : null}
+        </List>
       </Container>
     </Header>
   );
