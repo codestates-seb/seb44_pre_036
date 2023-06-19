@@ -10,7 +10,6 @@ import {
   TextWrapper,
   UserInfoWrapper,
   Text,
-  BlueButton,
 } from '../../../common/style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
 import {
@@ -30,6 +29,7 @@ import {
   WARNING_MESSAGE_PASSWORD_WEAK,
   PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
+import ConfirmButton from './ConfirmButton';
 
 const postData = async (data: IUserInfoSignUp) => {
   const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
@@ -137,9 +137,11 @@ function SignUpForm() {
       <TextWrapper>
         <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
-      <BlueButton type="submit" onClick={() => setIsClicked(true)}>
-        Sign Up
-      </BlueButton>
+      <ConfirmButton
+        type="submit"
+        setIsClicked={setIsClicked}
+        buttontext={'Sign Up'}
+      />
     </StyledForm>
   );
 }

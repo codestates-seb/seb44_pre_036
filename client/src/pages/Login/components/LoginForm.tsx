@@ -26,6 +26,7 @@ import {
   WARNING_MESSAGE_EMAIL_EMPTY,
   WARNING_MESSAGE_PASSWORD_WEAK,
 } from '../../../common/utils/constants';
+import ConfirmButton from '../../SignUp/components/ConfirmButton';
 
 const postData = async (data: IUserInfoLogin) => {
   const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
@@ -34,7 +35,7 @@ const postData = async (data: IUserInfoLogin) => {
 };
 
 function LoginForm() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const {
     register,
     handleSubmit,
@@ -65,7 +66,7 @@ function LoginForm() {
 
   const onSubmit = async (userData: IUserInfoLogin) => {
     console.log(userData);
-    setIsSubmitted(true);
+    setIsClicked(true);
 
     try {
       await mutation.mutateAsync(userData);
@@ -88,7 +89,7 @@ function LoginForm() {
           })}
         />
         {errors?.Email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
-        (isSubmitted && typeof errors?.Email?.message === 'string') ? (
+        (isClicked && typeof errors?.Email?.message === 'string') ? (
           <p>{errors.Email.message}</p>
         ) : null}
       </UserInfoWrapper>
@@ -123,11 +124,15 @@ function LoginForm() {
           })}
         />
         {errors?.Password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
-        (isSubmitted && typeof errors?.Password?.message === 'string') ? (
+        (isClicked && typeof errors?.Password?.message === 'string') ? (
           <p>{errors.Password.message}</p>
         ) : null}
       </UserInfoWrapper>
-      <button type="submit">Log in</button>
+      <ConfirmButton
+        type="submit"
+        setIsClicked={setIsClicked}
+        buttontext={'Log in'}
+      />
     </StyledForm>
   );
 }
