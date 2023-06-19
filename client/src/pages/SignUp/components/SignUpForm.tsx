@@ -10,6 +10,7 @@ import {
   TextWrapper,
   UserInfoWrapper,
   Text,
+  BlueButton,
 } from '../../../common/style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
 import {
@@ -136,9 +137,9 @@ function SignUpForm() {
       <TextWrapper>
         <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
-      <button type="submit" onClick={() => setIsClicked(true)}>
+      <BlueButton type="submit" onClick={() => setIsClicked(true)}>
         Sign Up
-      </button>
+      </BlueButton>
     </StyledForm>
   );
 }
