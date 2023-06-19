@@ -1,14 +1,12 @@
-import { UserInfoField, Token } from '../type';
+import { UserInfoFieldSignUp, UserInfoField, Token } from '../type';
 
-export const DisplayName: UserInfoField = 'DisplayName';
+export const name: UserInfoFieldSignUp = 'name';
 
-export const Email: UserInfoField = 'Email';
+export const email: UserInfoField = 'email';
 
-export const Password: UserInfoField = 'Password';
+export const password: UserInfoField = 'password';
 
-// 잠시 보관. 향후 API URL 받으면 enum으로 바꿀 예정
-export const SIGN_UP_URL_EXAMPLE = 'https://localhost:5001/api/Account/SignUp';
-export const GET_ME_URL_EXAMPLE = 'https://localhost:5001/api/Account/GetMe';
+export const GET_ME_URL_EXAMPLE = 'https://localhost:5000/api/v1/users/me';
 
 export const ACCESS_TOKEN: Token = 'accessToken';
 
