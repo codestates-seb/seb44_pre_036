@@ -1,3 +1,5 @@
+export type data = item[];
+
 export type item = {
   id: string;
   title: string;
