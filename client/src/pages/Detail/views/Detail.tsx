@@ -1,8 +1,10 @@
-import Header from '../components/Header';
-import { Page } from '../style';
-import { item } from '../type';
+import { Page } from '../style.ts';
+import { item } from '../type.ts';
+import Header from '../components/Header.tsx';
+import Main from '../components/Main.tsx';
 
-const Board = () => {
+// const Detail = ({ item }: { item: item }) => {
+const Detail = () => {
   const item: item = {
     id: '1234',
     title: 'how to use react hook',
@@ -22,8 +24,9 @@ const Board = () => {
   return (
     <Page>
       <Header item={item} />
+      <Main item={item} />
     </Page>
   );
 };
 
-export default Board;
+export default Detail;
