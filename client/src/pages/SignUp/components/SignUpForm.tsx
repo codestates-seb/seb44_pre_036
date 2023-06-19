@@ -6,11 +6,11 @@ import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
-  StyledForm,
   TextWrapper,
   UserInfoWrapper,
   Text,
 } from '../../../common/style';
+import { SignUpBox } from '../style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
 import {
   DisplayName,
@@ -78,7 +78,7 @@ function SignUpForm() {
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+    <SignUpBox onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
         <UserInfoLabel label={DisplayName} />
         <StyledInput {...register(DisplayName, { required: false })} />
@@ -142,7 +142,7 @@ function SignUpForm() {
         setIsClicked={setIsClicked}
         buttontext={'Sign Up'}
       />
-    </StyledForm>
+    </SignUpBox>
   );
 }
 export default SignUpForm;
