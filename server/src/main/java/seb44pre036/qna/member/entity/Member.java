@@ -3,9 +3,13 @@ package seb44pre036.qna.member.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import seb44pre036.qna.answer.entity.Answer;
+import seb44pre036.qna.question.entity.Question;
+
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +26,7 @@ public class Member {
     @Column(length = 10, nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(length = 100, nullable = false)
     private String password;
 
     @Column(nullable = false)
@@ -30,6 +34,15 @@ public class Member {
 
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Answer> answers = new ArrayList<>();
 
     public Member(String email, String name, String password) {
         this.email = email;

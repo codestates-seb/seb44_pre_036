@@ -1,4 +1,4 @@
-package seb44pre036.qna.qna.entity;
+package seb44pre036.qna.answer.entity;
 
 
 import lombok.Getter;

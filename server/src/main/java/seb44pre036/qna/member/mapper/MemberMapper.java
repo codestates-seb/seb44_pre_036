@@ -8,5 +8,6 @@ import seb44pre036.qna.member.entity.Member;
 public interface MemberMapper {
     Member memberPostDtoToMember(MemberDto.post memberPostDto);
     Member memberPatchDtoToMember(MemberDto.patch memberPatchDto);
+    MemberDto.response memberToMemberResponseDTO(Member member);
 
 }
