@@ -48,12 +48,12 @@ public class AnswerController {
     @PostMapping("/write")
     private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody){
 
-        Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,requestBody);
+        Answer answer = answerMapper.answerPostToAnswer(requestBody);
 
         //회원 id 전달 받아서 답변 작성자 등록 , 임시로 ID 1 배정
         Member member = memberService.findMember(1);
 
-        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
+        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer, member.getMemberId()));
 
         return new ResponseEntity(response,HttpStatus.CREATED);
     }
@@ -62,7 +62,7 @@ public class AnswerController {
     @PatchMapping("/{answer-Id}")
     private ResponseEntity patchAnswer(@PathParam("answer-Id") @Positive long answerId, @RequestBody AnswerDto.Patch requestBody){
 
-        Answer answer = answerMapper.answerPatchDtoToAnswer(memberService,answerService,requestBody);
+        Answer answer = answerMapper.answerPatchAnswer(requestBody);
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.updateAnswer(answer,answerId));
 
         return new ResponseEntity(response,HttpStatus.OK);

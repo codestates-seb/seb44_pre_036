@@ -14,41 +14,7 @@ import seb44pre036.qna.question.entity.Question;
 @Mapper(componentModel = "spring")
 public interface AnswerMapper  {
 
-    default Answer answerPostDtoToAnswer(MemberService memberService, AnswerService answerService, AnswerDto.Post answerPostDto){
-        Answer answer = new Answer();
-        answer.setContent(answerPostDto.getContent());
-        answer.setAccepted(false);
-        //answer.setQuestion();
-        answer.setMember(memberService.findVerifiedMember(answerPostDto.getMemberId()));
-
-        //수정 필요
-        answer.setQuestion(new Question());
-
-        return answer;
-    }
-
-
-    default Answer answerPatchDtoToAnswer(MemberService memberService, AnswerService answerService, AnswerDto.Patch answerPatchDto){
-        Answer answer = new Answer();
-
-        answer.setAnswerId(answerPatchDto.getAnswerId());
-        answer.setContent(answerPatchDto.getContent());
-        answer.setAccepted(answerPatchDto.isAccepted());
-
-        return answer;
-    }
-
-    default AnswerDto.Response answerToAnswerDtoResponse(Answer answer){
-        AnswerDto.Response answerDtoResponse = new AnswerDto.Response();
-        answerDtoResponse.setAnswerId(answer.getAnswerId());
-        answerDtoResponse.setAccepted(answer.isAccepted());
-        answerDtoResponse.setContent(answer.getContent());
-        answerDtoResponse.setCreatedAt(answer.getCreatedAt());
-        answerDtoResponse.setUpdatedAt(answer.getUpdatedAt());
-
-        answerDtoResponse.setMemberId(answer.getMember().getMemberId());
-        answerDtoResponse.setQuestionId(answer.getQuestion().getQuestionId());
-
-        return answerDtoResponse;
-    }
+    Answer answerPostToAnswer(AnswerDto.Post requestBody);
+    Answer answerPatchAnswer(AnswerDto.Patch requestBody);
+    AnswerDto.Response answerToAnswerDtoResponse(Answer answer);
 }

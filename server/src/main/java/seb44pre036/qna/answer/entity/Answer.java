@@ -21,8 +21,8 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerId;
 
-    @Column(name = "CONTENT")
-    private String content;
+    @Column
+    private String answerContent;
 
     @Column(name ="IS_ACCEPTED")
     private boolean isAccepted;
@@ -34,7 +34,7 @@ public class Answer {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
