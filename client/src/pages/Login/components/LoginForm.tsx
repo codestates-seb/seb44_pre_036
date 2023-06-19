@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -5,15 +6,12 @@ import axios from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
-  StyledInput,
   StyledForm,
-  TextWrapper,
+  StyledInput,
   UserInfoWrapper,
-  Text,
 } from '../../../common/style';
-import { IUserInfoSignUp } from '../model/UserInfoSignUp';
+import { IUserInfoLogin } from '../model/UserInfoLogin';
 import {
-  DisplayName,
   Email,
   Password,
   SIGN_UP_URL_EXAMPLE,
@@ -27,23 +25,22 @@ import {
   WARNING_MESSAGE_PASSWORD_EMPTY,
   WARNING_MESSAGE_EMAIL_EMPTY,
   WARNING_MESSAGE_PASSWORD_WEAK,
-  PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
 
-const postData = async (data: IUserInfoSignUp) => {
+const postData = async (data: IUserInfoLogin) => {
   const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
 
   return response.data;
 };
 
-function SignUpForm() {
-  const [isClicked, setIsClicked] = useState(false);
+function LoginForm() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IUserInfoSignUp>();
+  } = useForm<IUserInfoLogin>();
 
   const { refetch: refetchGetMe } = useGetMe();
 
@@ -66,9 +63,10 @@ function SignUpForm() {
     },
   });
 
-  const onSubmit = async (userData: IUserInfoSignUp) => {
+  const onSubmit = async (userData: IUserInfoLogin) => {
     console.log(userData);
-    setIsClicked(true);
+    setIsSubmitted(true);
+
     try {
       await mutation.mutateAsync(userData);
     } catch (error) {
@@ -79,22 +77,18 @@ function SignUpForm() {
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
-        <UserInfoLabel label={DisplayName} />
-        <StyledInput {...register(DisplayName, { required: false })} />
-      </UserInfoWrapper>
-      <UserInfoWrapper>
         <UserInfoLabel label={Email} />
         <StyledInput
-          {...register(Email, {
+          {...register('Email', {
             required: WARNING_MESSAGE_EMAIL_EMPTY,
             pattern: {
               value: EMAIL_REGEX,
-              message: `${watch(Email)} is not a valid email address`,
+              message: `${watch('Email')} is not a valid email address`,
             },
           })}
         />
         {errors?.Email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
-        (isClicked && typeof errors?.Email?.message === 'string') ? (
+        (isSubmitted && typeof errors?.Email?.message === 'string') ? (
           <p>{errors.Email.message}</p>
         ) : null}
       </UserInfoWrapper>
@@ -102,26 +96,26 @@ function SignUpForm() {
         <UserInfoLabel label={Password} />
         <StyledInput
           type="password"
-          {...register(Password, {
+          {...register('Password', {
             required: WARNING_MESSAGE_PASSWORD_EMPTY,
             minLength: {
               value: PASSWORD_MIN_LENGTH,
               message: `Must contain at least ${
-                PASSWORD_MIN_LENGTH - (watch(Password)?.length || 0)
+                PASSWORD_MIN_LENGTH - (watch('Password')?.length || 0)
               } more characters.`,
             },
             pattern: {
               value: PASSWORD_REGEX,
               message: `${WARNING_MESSAGE_PASSWORD_WEAK}: 
                   ${
-                    watch(Password) &&
-                    PASSWORD_REGEX_NO_LETTERS.test(watch(Password))
+                    watch('Password') &&
+                    PASSWORD_REGEX_NO_LETTERS.test(watch('Password'))
                       ? 'letters'
                       : ''
                   }
                   ${
-                    watch(Password) &&
-                    PASSWORD_REGEX_NO_NUMBERS.test(watch(Password))
+                    watch('Password') &&
+                    PASSWORD_REGEX_NO_NUMBERS.test(watch('Password'))
                       ? 'numbers'
                       : ''
                   }`,
@@ -129,17 +123,12 @@ function SignUpForm() {
           })}
         />
         {errors?.Password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
-        (isClicked && typeof errors?.Password?.message === 'string') ? (
+        (isSubmitted && typeof errors?.Password?.message === 'string') ? (
           <p>{errors.Password.message}</p>
         ) : null}
       </UserInfoWrapper>
-      <TextWrapper>
-        <Text>{PASSWORD_RULE_MESSAGE}</Text>
-      </TextWrapper>
-      <button type="submit" onClick={() => setIsClicked(true)}>
-        Sign Up
-      </button>
+      <button type="submit">Log in</button>
     </StyledForm>
   );
 }
-export default SignUpForm;
+export default LoginForm;
