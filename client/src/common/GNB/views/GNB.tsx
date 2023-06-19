@@ -11,7 +11,7 @@ import {
   NavMenu,
   SearchImg,
 } from '../styles';
-import Dropdown from '../components/Dropdown';
+// import Dropdown from '../components/Dropdown';
 
 function GNB() {
   const [input, setInput] = useState('');
@@ -45,7 +45,7 @@ function GNB() {
         <NavMenu>
           <li onClick={() => setIsOpen(!isOpen)}>
             <img src="/header_svg/message.svg" />
-            {isOpen ? <Dropdown /> : <></>}
+            {/* {isOpen ? <Dropdown /> : <></>} */}
           </li>
           <li>
             <img src="/header_svg/cup.svg" />
