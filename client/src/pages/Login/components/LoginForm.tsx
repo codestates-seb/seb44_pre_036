@@ -61,6 +61,11 @@ function LoginForm() {
     },
     onError: (error) => {
       console.error(error);
+      // TODO: 에러 처리
+      // 이메일 형식이 잘못됨 (400)
+      // 비밀번호가 잘못됨 (401)
+      // 이메일이 존재하지 않음 (404)
+      // 서버 에러 (500)
     },
   });
 
@@ -68,11 +73,7 @@ function LoginForm() {
     console.log(userData);
     setIsClicked(true);
 
-    try {
-      await mutation.mutateAsync(userData);
-    } catch (error) {
-      console.log(error);
-    }
+    await mutation.mutateAsync(userData);
   };
 
   return (

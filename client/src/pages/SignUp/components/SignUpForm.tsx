@@ -64,17 +64,17 @@ function SignUpForm() {
     },
     onError: (error) => {
       console.error(error);
+      // TODO: 에러 처리
+      // 유효성 검사 에러 (400)
+      // 중복된 이메일 에러 (409)
+      // 서버 에러 (500)
     },
   });
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
     console.log('준기님께 보내는 유저 정보', userData);
     setIsClicked(true);
-    try {
-      await mutation.mutateAsync(userData);
-    } catch (error) {
-      console.log(error);
-    }
+    await mutation.mutateAsync(userData);
   };
 
   return (
