@@ -20,11 +20,14 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
 
-    @Column(name = "TITLE")
+    @Column(name = "TITLE", nullable = false)
     private String title;
 
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", nullable = false)
     private String content;
+
+    @Column(name = "VIEW_COUNT", nullable = false)
+    private long viewCount;
 
     @Column(name ="CREATED_AT")
     private LocalDateTime createdAt = LocalDateTime.now();
