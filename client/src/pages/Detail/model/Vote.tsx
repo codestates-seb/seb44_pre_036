@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { QueryClient, useMutation } from 'react-query';
 import { VoteButton } from '../style';
-import { ReactComponent as UpIcon } from '../../../common/assests/icons/VoteUp.svg';
-import { ReactComponent as DownIcon } from '../../../common/assests/icons/VoteDown.svg';
+import { ReactComponent as UpIcon } from '../../../common/assets/icons/VoteUp.svg';
+import { ReactComponent as DownIcon } from '../../../common/assets/icons/VoteDown.svg';
 import { item } from '../type';
 
 export const VoteUp = ({ item }: { item: item }) => {
