@@ -44,6 +44,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
 
+    public void addAnswer(Answer answer) {
+        this.answers.add(answer);
+    }
+
     public Member(String email, String name, String password) {
         this.email = email;
         this.name = name;

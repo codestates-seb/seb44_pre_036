@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 
 
 public class QuestionDto {
-    @Getter
-    @AllArgsConstructor
+    @Getter @Setter
     public static class Post {
         @Positive
         private long memberId;
@@ -20,6 +19,8 @@ public class QuestionDto {
 
         @NotBlank(message = "내용은 공백이 아니어야 합니다.")
         private String content;
+
+
 
     }
     @Getter
