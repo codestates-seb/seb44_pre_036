@@ -62,9 +62,9 @@ function LoginForm() {
     onError: (error) => {
       console.error(error);
       // TODO: 에러 처리
-      // 이메일 형식이 잘못됨 (400)
-      // 비밀번호가 잘못됨 (401)
-      // 이메일이 존재하지 않음 (404)
+      // 이메일 형식이 잘못됨 (400) -> The email is not a valid email address.
+      // 비밀번호가 잘못됨 (401) -> The email or password is incorrect.
+      // 이메일이 존재하지 않음 (404) -> No user found with matching email
       // 서버 에러 (500)
     },
   });
