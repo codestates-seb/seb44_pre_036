@@ -3,9 +3,11 @@ package seb44pre036.qna.question.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import seb44pre036.qna.answer.dto.AnswerDto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class QuestionDto {
@@ -46,7 +48,7 @@ public class QuestionDto {
         private LocalDateTime updatedAt;
         private long memberId;
         private String name;
-//        private List<AnswerDto.Response> answers;
+        private List<AnswerDto.Response> answers;
     }
 
     @Getter
@@ -60,7 +62,6 @@ public class QuestionDto {
         private LocalDateTime updatedAt;
         private long memberId;
         private String name;
-
     }
 
 }
