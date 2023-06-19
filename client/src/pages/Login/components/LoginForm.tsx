@@ -26,7 +26,7 @@ import {
   WARNING_MESSAGE_PASSWORD_WEAK,
 } from '../../../common/utils/constants';
 import ConfirmButton from '../../SignUp/components/ConfirmButton';
-import { MembershipUrl } from '../../SignUp/type';
+import { MembershipUrl } from '../../../common/type';
 
 const postData = async (data: IUserInfoLogin) => {
   const response = await axios.post(MembershipUrl.Login, data);
