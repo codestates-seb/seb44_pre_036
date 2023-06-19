@@ -29,7 +29,7 @@ import {
   PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
 import ConfirmButton from './ConfirmButton';
-import { MembershipUrl } from '../../../common/type';
+import { MembershipUrl } from '../../../common/enum';
 
 const postData = async (data: IUserInfoSignUp) => {
   const response = await axios.post(MembershipUrl.signUp, data);
