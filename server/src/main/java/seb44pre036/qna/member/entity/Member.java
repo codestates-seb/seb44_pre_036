@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.question.entity.Question;
-//import seb44pre036.qna.answer.entity.Answer;
-//import seb44pre036.qna.question.entity.Question;
+
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
