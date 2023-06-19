@@ -1,5 +1,5 @@
 export interface IUserInfoSignUp {
-  DisplayName: string;
-  Email: string;
-  Password: string;
+  name: string;
+  email: string;
+  password: string;
 }
