@@ -3,7 +3,6 @@ package seb44pre036.qna.question.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import seb44pre036.qna.member.entity.Member;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
