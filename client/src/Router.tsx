@@ -4,8 +4,8 @@ import Home from './pages/Home/views/Home';
 import MyPage from './pages/MyPage/views/MyPage';
 import Board from './pages/Board/views/Board';
 import Login from './pages/Login/views/Login';
-import SignUp from './pages/SignUp/views/SignUp';
 import Ask from './pages/Ask/views/Ask';
+import SignUp from './pages/SignUp/views/SignUp';
 
 function Router() {
   return (
