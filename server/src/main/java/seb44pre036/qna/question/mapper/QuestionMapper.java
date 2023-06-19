@@ -3,6 +3,7 @@ package seb44pre036.qna.question.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.question.dto.QuestionDto;
 import seb44pre036.qna.question.entity.Question;
@@ -30,7 +31,7 @@ public interface QuestionMapper {
     Question questionPatchToQuestion(QuestionDto.Patch requestBody);
 
     default QuestionDto.Response questionToQuestionResponseDto(Question question){
-        List<seb44pre036.qna.qna.entity.Answer> answers = question.getAnswers();
+        List<Answer> answers = question.getAnswers();
         QuestionDto.Response response = new QuestionDto.Response();
         response.setQuestionId(question.getQuestionId());
         response.setTitle(question.getTitle());
