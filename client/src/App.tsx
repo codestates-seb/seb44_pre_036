@@ -1,5 +1,13 @@
+import GlobalStyle from './common/style';
+import GNB from './common/GNB/views/GNB';
+
 function App() {
-  return <h1>6 potatoes - stackoverflow clone pre-project</h1>;
+  return (
+    <>
+      <GlobalStyle />
+      <GNB />
+    </>
+  );
 }
 
 export default App;
