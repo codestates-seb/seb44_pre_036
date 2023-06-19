@@ -30,21 +30,6 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const BlueButton = styled.button`
-  background-color: #0a95ff;
-  height: 2.25rem;
-  border: 0;
-  border-radius: 3px;
-  border-top: 2px solid #6cbfff;
-  padding: 0.625rem;
-  cursor: pointer;
-
-  & > * {
-    color: white;
-    text-decoration: none;
-  }
-`;
-
 export const MainContainer = styled.main`
   display: flex;
 `;
@@ -97,7 +82,7 @@ export const QuestionInfo = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: start;
-  margin-top: 0.25rem;
+  margin-top: 3rem;
   font-size: 0.875rem;
 
   & > a {
