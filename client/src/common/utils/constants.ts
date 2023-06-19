@@ -33,4 +33,4 @@ export const WARNING_MESSAGE_EMAIL_EMPTY: string = 'Email cannot be empty';
 export const WARNING_MESSAGE_PASSWORD_WEAK: string =
   'Please add one of the following things to make your password stronger';
 
-export const PASSWORD_RULE_MESSAGE: string = `Must contain at least eight characters, including at least 1 letter and 1 number`;
+export const PASSWORD_RULE_MESSAGE: string = `Passwords must contain at least eight characters, including at least 1 letter and 1 number.`;
