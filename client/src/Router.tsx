@@ -9,19 +9,15 @@ import Detail from './pages/Detail/views/Detail';
 
 function Router() {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/board" element={<Board />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/ask" element={<Ask />} />
-          <Route path="/detail" element={<Detail />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/mypage" element={<MyPage />} />
+      <Route path="/board" element={<Board />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/ask" element={<Ask />} />
+      <Route path="/detail" element={<Detail />} />
+    </Routes>
   );
 }
 

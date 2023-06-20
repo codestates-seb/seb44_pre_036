@@ -26,20 +26,23 @@ public class AnswerService {
         this.questionService = questionService;
     }
 
-    public Answer postAnswer (Answer answer, long memberId){
-        //회원이 존재하는지 확인
-        Member member = memberService.findVerifiedMember(memberId);
-        answer.setMember(member);
-        answer.getQuestion();
+    public Answer postAnswer (Answer answer){
+
+        // 본인 질문에 답변 등록 불가
+        if(answer.getMember().getMemberId() == answer.getQuestion().getMember().getMemberId()){
+            throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_CREATED);
+        }
 
         Answer createAnswer = answerRepository.save(answer);
-        member.addAnswer(createAnswer);
+
+        // 맴버에 답변 추가
+        // answer.getMember().addAnswer(createAnswer);
+
 
         return createAnswer;
     }
 
     public Answer findAnswer(long answerId){
-
 
         return findVerifiedAnswer(answerId);
     }
@@ -55,20 +58,32 @@ public class AnswerService {
     }
 
     public Answer updateAnswer(Answer answer){
+        // 답변자일 경우 수정 가능
 
         // 존재하는 답변인지 확인
         Answer preAnswer = findVerifiedAnswer(answer.getAnswerId());
 
         // update
-        Optional.ofNullable(answer.getAnswerContent()).ifPresent(newContent -> preAnswer.setAnswerContent(newContent));
+        Optional.ofNullable(answer.getContent()).ifPresent(newContent -> preAnswer.setContent(newContent));
         Optional.ofNullable(answer.getUpdatedAt()).ifPresent(updateAt -> preAnswer.setUpdatedAt(updateAt));
 
         return answerRepository.save(preAnswer);
     }
 
     public void deleteAnswer(long answerId){
+        // 질문 작성자, 답변자일 경우 삭제 가능
+
         Answer answer = findAnswer(answerId);
         answerRepository.delete(answer);
-        //answerRepository.deleteAnswer(answerId);
+    }
+
+    public Answer selectAnswer(long answerId){
+        // 본인 답변에 채택 불가
+
+        //존재하는 답변인지 확인
+        Answer answer = findAnswer(answerId);
+        //Optional.of(Answer.AnswerStatus.ANSWER_SELECT).ifPresent((select) -> answer.setAnswerStatus(select));
+
+        return answer;
     }
 }

@@ -29,7 +29,7 @@ public class AnswerController {
     private QuestionService questionService;
 
     @Autowired
-    public void AnswerController(AnswerMapper answerMapper ,AnswerService answerService, MemberService memberService){
+    public void AnswerController(AnswerMapper answerMapper ,AnswerService answerService, MemberService memberService, QuestionService questionService){
         this.answerMapper = answerMapper;
         this.answerService = answerService;
         this.memberService = memberService;
@@ -54,9 +54,7 @@ public class AnswerController {
 
 
         Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,questionService,requestBody);
-
-
-        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer, member.getMemberId()));
+        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
 
         return new ResponseEntity(response,HttpStatus.CREATED);
     }
@@ -67,8 +65,6 @@ public class AnswerController {
 
 
         Answer answer = answerMapper.answerPatchDtoToAnswer(memberService,answerService,requestBody);
-
-        //문제 발생
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.updateAnswer(answer));
 
         return new ResponseEntity(response,HttpStatus.OK);
@@ -82,5 +78,11 @@ public class AnswerController {
     }
 
     //채택 기능 추가필요
+    @PatchMapping("/select/{answer-Id}")
+    private ResponseEntity selectAnswer(@PathParam("answer-Id") @Positive long answerId){
+        Answer response = answerService.selectAnswer(answerId);
+
+        return new ResponseEntity(response,HttpStatus.OK);
+    }
 
 }
