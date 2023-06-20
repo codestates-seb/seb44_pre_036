@@ -57,7 +57,7 @@ public interface QuestionMapper {
         for(Answer answer : answers) {
             AnswerDto.Response responseDto = new AnswerDto.Response();
             responseDto.setContent(answer.getContent());
-            responseDto.setAccepted(answer.isAccepted());
+            responseDto.setIsAccepted(answer.getAnswerStatus().getStatus());
             responseDto.setMemberId(answer.getMember().getMemberId());
             responseDto.setQuestionId(answer.getQuestion().getQuestionId());
         }

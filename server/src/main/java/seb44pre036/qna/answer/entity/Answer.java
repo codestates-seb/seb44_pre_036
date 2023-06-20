@@ -24,19 +24,17 @@ public class Answer {
     @Column(name = "CONTENT")
     private String content;
 
-    @Column(name ="IS_ACCEPTED")
-    private boolean isAccepted;
-
     @Column(name = "CREATED_AT")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-
+    @Enumerated(EnumType.STRING)
+    @Column(name="STATUS")
+    private AnswerStatus answerStatus = AnswerStatus.ANSWER_NOT_SELECTED;
 
     @ManyToOne(cascade=CascadeType.PERSIST)
-
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
@@ -44,6 +42,18 @@ public class Answer {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+
+    public enum AnswerStatus {
+        ANSWER_NOT_SELECTED("채택이 되지 않은 답변"),
+        ANSWER_SELECT("채택된 답변");
+
+        @Getter
+        private String status;
+
+        AnswerStatus(String status) {
+            this.status = status;
+        }
+    }
 
 
 }
