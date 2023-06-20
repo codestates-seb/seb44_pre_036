@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.entity.Question;
+import seb44pre036.qna.question.service.QuestionService;
 
 import java.util.Optional;
 
@@ -16,13 +17,13 @@ import java.util.Optional;
 public class AnswerService {
     private MemberService memberService;
     private AnswerRepository answerRepository;
-    // private QuestionService questionServicce;
+    private QuestionService questionService;
 
     @Autowired
     public void AnswerService(AnswerRepository answerRepository, MemberService memberService /*,QuestionService questionService*/){
         this.answerRepository = answerRepository;
         this.memberService = memberService;
-        // this.questionService = questionService;
+        this.questionService = questionService;
     }
 
     public Answer postAnswer (Answer answer, long memberId){
@@ -53,10 +54,10 @@ public class AnswerService {
         return findAnswer;
     }
 
-    public Answer updateAnswer(Answer answer,long answerId){
+    public Answer updateAnswer(Answer answer){
 
         // 존재하는 답변인지 확인
-        Answer preAnswer = findVerifiedAnswer(answerId);
+        Answer preAnswer = findVerifiedAnswer(answer.getAnswerId());
 
         // update
         Optional.ofNullable(answer.getAnswerContent()).ifPresent(newContent -> preAnswer.setAnswerContent(newContent));
@@ -65,12 +66,9 @@ public class AnswerService {
         return answerRepository.save(preAnswer);
     }
 
-    public void deleteAllAnswer(){
-        answerRepository.deleteAll();
-    }
-
     public void deleteAnswer(long answerId){
         Answer answer = findAnswer(answerId);
         answerRepository.delete(answer);
+        //answerRepository.deleteAnswer(answerId);
     }
 }

@@ -38,10 +38,12 @@ public class AnswerDto {
     @Setter
     public static class Post {
 
+        @NotBlank(message="답변할 질문 정보를 ")
         private long questionId;
 
-        @NotBlank(message = "내용은 공백이 아니어야 합니다.")
-        private String answerContent;
+        @NotBlank(message = "답변 내용을 입력해주세요.")
+        private String content;
+
     }
 
     @Getter
@@ -54,7 +56,6 @@ public class AnswerDto {
         @NotBlank(message = "내용은 공백이 아니어야 합니다.")
         private String content;
 
-        private boolean isAccepted;
     }
 
 

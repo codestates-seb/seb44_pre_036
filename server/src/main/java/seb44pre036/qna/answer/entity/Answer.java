@@ -34,11 +34,13 @@ public class Answer {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+
+    @ManyToOne(cascade=CascadeType.PERSIST)
+
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
