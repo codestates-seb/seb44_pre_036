@@ -1,4 +1,4 @@
-package seb44pre036.qna.qna.enums;
+package seb44pre036.qna.question.enums;
 
 public class dummy {
 }
