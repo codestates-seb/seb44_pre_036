@@ -6,17 +6,16 @@ import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
-  StyledForm,
   TextWrapper,
   UserInfoWrapper,
   Text,
 } from '../../../common/style';
+import { SignUpBox } from '../style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
 import {
-  DisplayName,
-  Email,
-  Password,
-  SIGN_UP_URL_EXAMPLE,
+  name,
+  email,
+  password,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   PASSWORD_MIN_LENGTH,
@@ -29,9 +28,11 @@ import {
   WARNING_MESSAGE_PASSWORD_WEAK,
   PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
+import ConfirmButton from './ConfirmButton';
+import { MembershipUrl } from '../../../common/utils/enum';
 
 const postData = async (data: IUserInfoSignUp) => {
-  const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
+  const response = await axios.post(MembershipUrl.SignUp, data);
 
   return response.data;
 };
@@ -49,11 +50,11 @@ function SignUpForm() {
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
-      console.log(data);
+      console.log('준기님께 계정 정보 전달 후 받아온 데이터', data);
       if (!data) {
         return;
       }
-      const { accessToken, refreshToken } = data;
+      const { accessToken, refreshToken } = data.tokens;
 
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
@@ -63,83 +64,85 @@ function SignUpForm() {
     },
     onError: (error) => {
       console.error(error);
+      // TODO: 에러 처리
+      // 유효성 검사 에러 (400)
+      // 중복된 이메일 에러는 처리할 필요 없음 -> 로그인 시켜주면 된다. (409)
+      // 서버 에러 (500)
     },
   });
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
-    console.log(userData);
+    console.log('준기님께 보내는 유저 정보', userData);
     setIsClicked(true);
-    try {
-      await mutation.mutateAsync(userData);
-    } catch (error) {
-      console.log(error);
-    }
+    await mutation.mutateAsync(userData);
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+    <SignUpBox onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
-        <UserInfoLabel label={DisplayName} />
-        <StyledInput {...register(DisplayName, { required: false })} />
+        <UserInfoLabel label={'DisplayName'} />
+        <StyledInput {...register(name, { required: false })} />
       </UserInfoWrapper>
       <UserInfoWrapper>
-        <UserInfoLabel label={Email} />
+        <UserInfoLabel label={'Email'} />
         <StyledInput
-          {...register(Email, {
+          {...register(email, {
             required: WARNING_MESSAGE_EMAIL_EMPTY,
             pattern: {
               value: EMAIL_REGEX,
-              message: `${watch(Email)} is not a valid email address`,
+              message: `${watch(email)} is not a valid email address`,
             },
           })}
         />
-        {errors?.Email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
-        (isClicked && typeof errors?.Email?.message === 'string') ? (
-          <p>{errors.Email.message}</p>
+        {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
+        (isClicked && typeof errors?.email?.message === 'string') ? (
+          <p>{errors.email.message}</p>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
-        <UserInfoLabel label={Password} />
+        <UserInfoLabel label={'Password'} />
         <StyledInput
           type="password"
-          {...register(Password, {
+          {...register(password, {
             required: WARNING_MESSAGE_PASSWORD_EMPTY,
             minLength: {
               value: PASSWORD_MIN_LENGTH,
               message: `Must contain at least ${
-                PASSWORD_MIN_LENGTH - (watch(Password)?.length || 0)
+                PASSWORD_MIN_LENGTH - (watch(password)?.length || 0)
               } more characters.`,
             },
             pattern: {
               value: PASSWORD_REGEX,
               message: `${WARNING_MESSAGE_PASSWORD_WEAK}: 
                   ${
-                    watch(Password) &&
-                    PASSWORD_REGEX_NO_LETTERS.test(watch(Password))
+                    watch(password) &&
+                    PASSWORD_REGEX_NO_LETTERS.test(watch(password))
                       ? 'letters'
                       : ''
                   }
                   ${
-                    watch(Password) &&
-                    PASSWORD_REGEX_NO_NUMBERS.test(watch(Password))
+                    watch(password) &&
+                    PASSWORD_REGEX_NO_NUMBERS.test(watch(password))
                       ? 'numbers'
                       : ''
                   }`,
             },
           })}
         />
-        {errors?.Password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
-        (isClicked && typeof errors?.Password?.message === 'string') ? (
-          <p>{errors.Password.message}</p>
+        {errors?.password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
+        (isClicked && typeof errors?.password?.message === 'string') ? (
+          <p>{errors.password.message}</p>
         ) : null}
       </UserInfoWrapper>
       <TextWrapper>
         <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
-      <button type="submit" onClick={() => setIsClicked(true)}>
-        Sign Up
-      </button>
-    </StyledForm>
+      <ConfirmButton
+        type="submit"
+        setIsClicked={setIsClicked}
+        buttontext={'Sign Up'}
+      />
+    </SignUpBox>
   );
 }
 export default SignUpForm;
