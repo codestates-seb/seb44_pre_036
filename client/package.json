@@ -16,12 +16,13 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
     "react-query": "^3.39.3",
+    "react-quill": "^2.0.0",
     "react-redux": "^8.1.0",
     "react-router-dom": "^6.13.0",
     "redux": "^4.2.1",
     "styled-components": "^5.3.11",
-    "vite-plugin-svgr": "^3.2.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "vite-plugin-svgr": "^3.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
