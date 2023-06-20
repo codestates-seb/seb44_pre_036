@@ -40,10 +40,10 @@ public class AnswerDto {
         @NotBlank(message="작성자 정보를 입력해주세요")
         private long memberId;
 
-        @NotBlank(message="답변할 질문 정보를 입력해주새요")
+        @NotBlank(message="답변할 질문 정보를 ")
         private long questionId;
 
-        @NotBlank(message = "내용은 공백이 아니어야 합니다.")
+        @NotBlank(message = "답변 내용을 입력해주세요.")
         private String content;
     }
 
@@ -57,7 +57,6 @@ public class AnswerDto {
         @NotBlank(message = "내용은 공백이 아니어야 합니다.")
         private String content;
 
-        private boolean isAccepted;
     }
 
 
