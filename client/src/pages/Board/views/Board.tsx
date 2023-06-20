@@ -26,6 +26,7 @@ const Board = () => {
     id: '1234',
     name: 'Mooobi',
   };
+  // 더미 데이터
 
   return (
     <Page>
