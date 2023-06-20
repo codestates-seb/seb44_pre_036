@@ -15,6 +15,7 @@ import seb44pre036.qna.question.service.QuestionService;
 @Mapper(componentModel = "spring")
 public interface AnswerMapper  {
 
+
     default Answer answerPostDtoToAnswer(MemberService memberService, AnswerService answerService,QuestionService questionService, AnswerDto.Post answerPostDto){
         Answer answer = new Answer();
         answer.setContent(answerPostDto.getContent());
@@ -56,4 +57,5 @@ public interface AnswerMapper  {
 
         return answerDtoResponse;
     }
+
 }

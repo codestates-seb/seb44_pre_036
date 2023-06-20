@@ -52,9 +52,11 @@ public class AnswerController {
     @PostMapping("/")
     private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody){
 
+
         Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,questionService,requestBody);
 
-        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
+
+        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer, member.getMemberId()));
 
         return new ResponseEntity(response,HttpStatus.CREATED);
     }
@@ -62,6 +64,7 @@ public class AnswerController {
     //수정
     @PatchMapping("/")
     private ResponseEntity patchAnswer( @RequestBody AnswerDto.Patch requestBody){
+
 
         Answer answer = answerMapper.answerPatchDtoToAnswer(memberService,answerService,requestBody);
 

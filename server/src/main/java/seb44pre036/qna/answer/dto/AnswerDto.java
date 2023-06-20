@@ -37,14 +37,13 @@ public class AnswerDto {
     @Getter
     @Setter
     public static class Post {
-        @NotBlank(message="작성자 정보를 입력해주세요")
-        private long memberId;
 
         @NotBlank(message="답변할 질문 정보를 ")
         private long questionId;
 
         @NotBlank(message = "답변 내용을 입력해주세요.")
         private String content;
+
     }
 
     @Getter

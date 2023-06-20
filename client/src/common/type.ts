@@ -2,6 +2,8 @@ export type UserInfoLabelProps = {
   label: string;
 };
 
-export type UserInfoField = 'DisplayName' | 'Email' | 'Password';
+export type UserInfoFieldSignUp = 'name' | 'email' | 'password';
+
+export type UserInfoField = 'email' | 'password';
 
 export type Token = 'accessToken' | 'refreshToken';
