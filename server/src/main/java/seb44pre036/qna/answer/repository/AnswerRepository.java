@@ -11,12 +11,4 @@ public interface AnswerRepository extends JpaRepository<Answer,Long> {
     @Override
     Optional<Answer> findById(Long aLong);
 
-    @Query("DELETE FROM ANSWER")
-    void deleteAnswers();
-
-    /*
-    @Query("DELETE FROM ANSWER where ANSWER.answerId= :answerId")
-    void deleteAnswer(long answerId);
-
-     */
 }

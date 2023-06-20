@@ -19,14 +19,8 @@ public interface AnswerMapper  {
     default Answer answerPostDtoToAnswer(MemberService memberService, AnswerService answerService,QuestionService questionService, AnswerDto.Post answerPostDto){
         Answer answer = new Answer();
         answer.setContent(answerPostDto.getContent());
-
         answer.setMember(memberService.findVerifiedMember(answerPostDto.getMemberId()));
-
-        //수정 필요 ( question post가 등록되지 않아 builder 사용으로 질문 객체 직접 주입)
-        //answer.setQuestion(questionService.findQuestion(answerPostDto.getQuestionId()));
-        Question question = Question.builder().content("dasda").title("dada").viewCount(6).build();
-        answer.setQuestion(question);
-
+        answer.setQuestion(questionService.findVerifiedQuestion(answerPostDto.getQuestionId()));
 
         return answer;
     }
@@ -44,16 +38,13 @@ public interface AnswerMapper  {
     default AnswerDto.Response answerToAnswerDtoResponse(Answer answer){
         AnswerDto.Response answerDtoResponse = new AnswerDto.Response();
         answerDtoResponse.setAnswerId(answer.getAnswerId());
-        answerDtoResponse.setAccepted(answerDtoResponse.isAccepted());
+        answerDtoResponse.setIsAccepted(answer.getAnswerStatus().getStatus());
         answerDtoResponse.setContent(answer.getContent());
         answerDtoResponse.setCreatedAt(answer.getCreatedAt());
         answerDtoResponse.setUpdatedAt(answer.getUpdatedAt());
 
         answerDtoResponse.setMemberId(answer.getMember().getMemberId());
-
-        //질문 쪽 post가 되지 않아 수동 설정
         answerDtoResponse.setQuestionId(answer.getQuestion().getQuestionId());
-        //answerDtoResponse.setQuestionId(1);
 
         return answerDtoResponse;
     }
