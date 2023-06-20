@@ -22,7 +22,7 @@ public class AnswerDto {
 
         private String content;
 
-        private boolean isAccepted;
+        private String isAccepted;
 
         private LocalDateTime createdAt;
 
@@ -37,14 +37,16 @@ public class AnswerDto {
     @Getter
     @Setter
     public static class Post {
-        @NotBlank(message="작성자 정보를 입력해주세요")
+
+        @NotBlank(message="맴버 ID 입력이 필요합니다")
         private long memberId;
 
-        @NotBlank(message="답변할 질문 정보를 입력해주새요")
+        @NotBlank(message="질문 ID 입력이 필요합니다")
         private long questionId;
 
-        @NotBlank(message = "내용은 공백이 아니어야 합니다.")
+        @NotBlank(message = "답변 내용을 입력해주세요.")
         private String content;
+
     }
 
     @Getter
@@ -57,7 +59,6 @@ public class AnswerDto {
         @NotBlank(message = "내용은 공백이 아니어야 합니다.")
         private String content;
 
-        private boolean isAccepted;
     }
 
 

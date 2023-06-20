@@ -1,20 +1,22 @@
 package seb44pre036.qna.question.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.member.entity.Member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,11 +44,11 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
-    public void addAnswers(Answer answer) {
-        answers.add(answer);
-        if(answer.getQuestion() != this){
-       //     answer.addQuestion(this);
-        }
-    }
+//    public void addAnswers(Answer answer) {
+//        answers.add(answer);
+//        if(answer.getQuestion() != this){
+//            answer.addQuestion(this);
+//        }
+//    }
 
 }

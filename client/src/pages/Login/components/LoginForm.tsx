@@ -12,9 +12,8 @@ import {
 } from '../../../common/style';
 import { IUserInfoLogin } from '../model/UserInfoLogin';
 import {
-  Email,
-  Password,
-  SIGN_UP_URL_EXAMPLE,
+  email,
+  password,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   PASSWORD_MIN_LENGTH,
@@ -26,15 +25,17 @@ import {
   WARNING_MESSAGE_EMAIL_EMPTY,
   WARNING_MESSAGE_PASSWORD_WEAK,
 } from '../../../common/utils/constants';
+import ConfirmButton from '../../SignUp/components/ConfirmButton';
+import { MembershipUrl } from '../../../common/utils/enum';
 
 const postData = async (data: IUserInfoLogin) => {
-  const response = await axios.post(SIGN_UP_URL_EXAMPLE, data);
-
+  const response = await axios.post(MembershipUrl.Login, data);
+  console.log('준기님께 계정 정보 전달 후 받아온 데이터', response.headers);
   return response.data;
 };
 
 function LoginForm() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const {
     register,
     handleSubmit,
@@ -46,11 +47,11 @@ function LoginForm() {
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
-      console.log(data);
+      console.log('access_token', data);
       if (!data) {
         return;
       }
-      const { accessToken, refreshToken } = data;
+      const { accessToken, refreshToken } = data.tokens;
 
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
@@ -60,74 +61,79 @@ function LoginForm() {
     },
     onError: (error) => {
       console.error(error);
+      // TODO: 에러 처리
+      // 이메일 형식이 잘못됨 (400) -> The email is not a valid email address.
+      // 비밀번호가 잘못됨 (401) -> The email or password is incorrect.
+      // 이메일이 존재하지 않음 (404) -> No user found with matching email
+      // 서버 에러 (500)
     },
   });
 
   const onSubmit = async (userData: IUserInfoLogin) => {
     console.log(userData);
-    setIsSubmitted(true);
+    setIsClicked(true);
 
-    try {
-      await mutation.mutateAsync(userData);
-    } catch (error) {
-      console.log(error);
-    }
+    await mutation.mutateAsync(userData);
   };
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
-        <UserInfoLabel label={Email} />
+        <UserInfoLabel label={'Email'} />
         <StyledInput
-          {...register('Email', {
+          {...register(email, {
             required: WARNING_MESSAGE_EMAIL_EMPTY,
             pattern: {
               value: EMAIL_REGEX,
-              message: `${watch('Email')} is not a valid email address`,
+              message: `${watch(email)} is not a valid email address`,
             },
           })}
         />
-        {errors?.Email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
-        (isSubmitted && typeof errors?.Email?.message === 'string') ? (
-          <p>{errors.Email.message}</p>
+        {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
+        (isClicked && typeof errors?.email?.message === 'string') ? (
+          <p>{errors.email.message}</p>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
-        <UserInfoLabel label={Password} />
+        <UserInfoLabel label={'Password'} />
         <StyledInput
           type="password"
-          {...register('Password', {
+          {...register(password, {
             required: WARNING_MESSAGE_PASSWORD_EMPTY,
             minLength: {
               value: PASSWORD_MIN_LENGTH,
               message: `Must contain at least ${
-                PASSWORD_MIN_LENGTH - (watch('Password')?.length || 0)
+                PASSWORD_MIN_LENGTH - (watch(password)?.length || 0)
               } more characters.`,
             },
             pattern: {
               value: PASSWORD_REGEX,
               message: `${WARNING_MESSAGE_PASSWORD_WEAK}: 
                   ${
-                    watch('Password') &&
-                    PASSWORD_REGEX_NO_LETTERS.test(watch('Password'))
+                    watch(password) &&
+                    PASSWORD_REGEX_NO_LETTERS.test(watch(password))
                       ? 'letters'
                       : ''
                   }
                   ${
-                    watch('Password') &&
-                    PASSWORD_REGEX_NO_NUMBERS.test(watch('Password'))
+                    watch(password) &&
+                    PASSWORD_REGEX_NO_NUMBERS.test(watch(password))
                       ? 'numbers'
                       : ''
                   }`,
             },
           })}
         />
-        {errors?.Password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
-        (isSubmitted && typeof errors?.Password?.message === 'string') ? (
-          <p>{errors.Password.message}</p>
+        {errors?.password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
+        (isClicked && typeof errors?.password?.message === 'string') ? (
+          <p>{errors.password.message}</p>
         ) : null}
       </UserInfoWrapper>
-      <button type="submit">Log in</button>
+      <ConfirmButton
+        type="submit"
+        setIsClicked={setIsClicked}
+        buttontext={'Log in'}
+      />
     </StyledForm>
   );
 }

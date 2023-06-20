@@ -45,9 +45,10 @@ export const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid #b8afaf;
-  border-radius: 7px;
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
   width: 300px;
+  height: 237px;
 `;
 
 export const StyledInput = styled.input`

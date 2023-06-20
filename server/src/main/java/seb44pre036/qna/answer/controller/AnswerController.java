@@ -14,6 +14,7 @@ import seb44pre036.qna.answer.mapper.AnswerMapper;
 import seb44pre036.qna.answer.service.AnswerService;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.service.MemberService;
+import seb44pre036.qna.question.service.QuestionService;
 
 import javax.validation.constraints.Positive;
 import javax.websocket.server.PathParam;
@@ -25,12 +26,15 @@ public class AnswerController {
     private AnswerService answerService;
     private AnswerMapper answerMapper;
     private MemberService memberService;
+    private QuestionService questionService;
 
     @Autowired
-    public void AnswerController(AnswerMapper answerMapper ,AnswerService answerService, MemberService memberService){
+    public void AnswerController(AnswerMapper answerMapper ,AnswerService answerService, MemberService memberService, QuestionService questionService){
         this.answerMapper = answerMapper;
         this.answerService = answerService;
         this.memberService = memberService;
+        this.questionService = questionService;
+
     }
 
     //조회
@@ -45,25 +49,23 @@ public class AnswerController {
     // 전체 답변 조회 필요시 구현
 
     //생성
-    @PostMapping("/write")
+    @PostMapping("/")
     private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody){
 
-        Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,requestBody);
 
-        //회원 id 전달 받아서 답변 작성자 등록 , 임시로 ID 1 배정
-        Member member = memberService.findMember(1);
-
+        Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,questionService,requestBody);
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
 
         return new ResponseEntity(response,HttpStatus.CREATED);
     }
 
     //수정
-    @PatchMapping("/{answer-Id}")
-    private ResponseEntity patchAnswer(@PathParam("answer-Id") @Positive long answerId, @RequestBody AnswerDto.Patch requestBody){
+    @PatchMapping("/")
+    private ResponseEntity patchAnswer( @RequestBody AnswerDto.Patch requestBody){
+
 
         Answer answer = answerMapper.answerPatchDtoToAnswer(memberService,answerService,requestBody);
-        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.updateAnswer(answer,answerId));
+        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.updateAnswer(answer));
 
         return new ResponseEntity(response,HttpStatus.OK);
     }
@@ -75,11 +77,12 @@ public class AnswerController {
         answerService.deleteAnswer(answerId);
     }
 
-    @DeleteMapping("/")
-    private void deleteAllAnswer(){
-        answerService.deleteAllAnswer();
-    }
-
     //채택 기능 추가필요
+    @PatchMapping("/select/{answer-Id}")
+    private ResponseEntity selectAnswer(@PathParam("answer-Id") @Positive long answerId){
+        Answer response = answerService.selectAnswer(answerId);
+
+        return new ResponseEntity(response,HttpStatus.OK);
+    }
 
 }
