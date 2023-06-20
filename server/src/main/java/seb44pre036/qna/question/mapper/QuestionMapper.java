@@ -3,10 +3,13 @@ package seb44pre036.qna.question.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+import seb44pre036.qna.answer.dto.AnswerDto;
+import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.question.dto.QuestionDto;
 import seb44pre036.qna.question.entity.Question;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +33,7 @@ public interface QuestionMapper {
     Question questionPatchToQuestion(QuestionDto.Patch requestBody);
 
     default QuestionDto.Response questionToQuestionResponseDto(Question question){
-        List<seb44pre036.qna.qna.entity.Answer> answers = question.getAnswers();
+        List<Answer> answers = question.getAnswers();
         QuestionDto.Response response = new QuestionDto.Response();
         response.setQuestionId(question.getQuestionId());
         response.setTitle(question.getTitle());
@@ -40,26 +43,27 @@ public interface QuestionMapper {
         response.setUpdatedAt(question.getUpdatedAt());
         response.setMemberId(question.getMember().getMemberId());
         response.setName(question.getMember().getName());
-//        response.setAnswers(
-//                answersToAnswerResponseDtos(answers)
-//        );
+        response.setAnswers(
+                answersToAnswerResponseDtos(answers)
+        );
 
         return response;
     }
 
 
-//    default List<AnswerDto.Response> answersToAnswerResponseDtos(List<seb44pre036.qna.qna.entity.Answer> answers) {
-//        return answers
-//                .stream()
-//                .map(answer -> AnswerDto.Response
-//                        .builder()
-//                        .content(answer.getContent())
-//                        .memberId(answer.getMember().getMemberId())
-//                        .questionId(answer.getQuestion.getQuestionId())
-//                        .answerId(answer.getAnswerId())
-//                        .build())
-//                .collect(Collectors.toList());
-//    }
+    default List<AnswerDto.Response> answersToAnswerResponseDtos(List<Answer> answers) {
+        List<AnswerDto.Response> responseDtos = new ArrayList<>();
+
+        for(Answer answer : answers) {
+            AnswerDto.Response responseDto = new AnswerDto.Response();
+            responseDto.setContent(answer.getContent());
+            responseDto.setAccepted(answer.isAccepted());
+            responseDto.setMemberId(answer.getMember().getMemberId());
+            responseDto.setQuestionId(answer.getQuestion().getQuestionId());
+        }
+
+        return responseDtos;
+    }
 
     default List<QuestionDto.ResponseList> questionsToQuestionResponseDtos(List<Question> questions) {
         return questions.stream()

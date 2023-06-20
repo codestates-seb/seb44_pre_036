@@ -3,14 +3,15 @@ package seb44pre036.qna.question.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import seb44pre036.qna.answer.dto.AnswerDto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public class QuestionDto {
-    @Getter
-    @AllArgsConstructor
+    @Getter @Setter
     public static class Post {
         @Positive
         private long memberId;
@@ -20,6 +21,8 @@ public class QuestionDto {
 
         @NotBlank(message = "내용은 공백이 아니어야 합니다.")
         private String content;
+
+
 
     }
     @Getter
@@ -46,7 +49,7 @@ public class QuestionDto {
         private LocalDateTime updatedAt;
         private long memberId;
         private String name;
-//        private List<AnswerDto.Response> answers;
+        private List<AnswerDto.Response> answers;
     }
 
     @Getter
@@ -60,7 +63,6 @@ public class QuestionDto {
         private LocalDateTime updatedAt;
         private long memberId;
         private String name;
-
     }
 
 }

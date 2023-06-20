@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <GNB />
+      {/* <GNB /> */}
       <Router />
     </>
   );

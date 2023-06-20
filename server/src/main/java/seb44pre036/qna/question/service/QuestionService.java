@@ -6,7 +6,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import seb44pre036.qna.exception.BusinessLogicException;
 import seb44pre036.qna.exception.ExceptionCode;
-import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.entity.Question;
 import seb44pre036.qna.question.repository.QuestionRepository;
@@ -52,11 +51,10 @@ public class QuestionService {
         return questionRepository.save(findedQuestion);
     }
     public Page<Question> findQuestions(int page, int size, String tab) {
-        Page<Question> result;
         if (tab.equals("View")) {
-            tab = "View";
-        } else if (tab == null || tab.equals("Newest")) {
-            tab = "Newest";
+            tab = "viewCount";
+        } else if (tab.equals("Newest")) {
+            tab = "questionId";
         }
 
         return questionRepository.findAll(PageRequest.of(page, size, Sort.by(tab).descending()));
