@@ -56,11 +56,18 @@ public interface QuestionMapper {
 
         for(Answer answer : answers) {
             AnswerDto.Response responseDto = new AnswerDto.Response();
-            responseDto.setContent(answer.getContent());
-            responseDto.setAccepted(answer.isAccepted());
+            responseDto.setAnswerId(answer.getAnswerId());
             responseDto.setMemberId(answer.getMember().getMemberId());
             responseDto.setQuestionId(answer.getQuestion().getQuestionId());
+            responseDto.setContent(answer.getContent());
+            responseDto.setAccepted(answer.isAccepted());
+            responseDto.setCreatedAt(answer.getCreatedAt());
+            responseDto.setUpdatedAt(answer.getUpdatedAt());
+
+            responseDtos.add(responseDto);
         }
+
+
 
         return responseDtos;
     }
