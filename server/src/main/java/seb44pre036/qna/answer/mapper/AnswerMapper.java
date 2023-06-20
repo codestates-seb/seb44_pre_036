@@ -23,9 +23,9 @@ public interface AnswerMapper  {
         answer.setMember(memberService.findVerifiedMember(answerPostDto.getMemberId()));
 
         //수정 필요 ( question post가 등록되지 않아 builder 사용으로 질문 객체 직접 주입)
-        //answer.setQuestion(questionService.findQuestion(answerPostDto.getQuestionId()));
-        Question question = Question.builder().content("dasda").title("dada").viewCount(6).build();
-        answer.setQuestion(question);
+        answer.setQuestion(questionService.findVerifiedQuestion(answerPostDto.getQuestionId()));
+//        Question question = Question.builder().content("dasda").title("dada").viewCount(6).build();
+//        answer.setQuestion(question);
 
 
         return answer;

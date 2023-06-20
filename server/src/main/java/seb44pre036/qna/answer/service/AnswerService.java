@@ -28,12 +28,12 @@ public class AnswerService {
 
     public Answer postAnswer (Answer answer, long memberId){
         //회원이 존재하는지 확인
-        Member member = memberService.findVerifiedMember(memberId);
-        answer.setMember(member);
-        answer.getQuestion();
+//        Member member = memberService.findVerifiedMember(memberId);
+//        answer.setMember(member);
+//        answer.getQuestion();
 
         Answer createAnswer = answerRepository.save(answer);
-        member.addAnswer(createAnswer);
+//        member.addAnswer(createAnswer);
 
         return createAnswer;
     }
@@ -60,7 +60,7 @@ public class AnswerService {
         Answer preAnswer = findVerifiedAnswer(answer.getAnswerId());
 
         // update
-        Optional.ofNullable(answer.getAnswerContent()).ifPresent(newContent -> preAnswer.setAnswerContent(newContent));
+        Optional.ofNullable(answer.getContent()).ifPresent(newContent -> preAnswer.setContent(newContent));
         Optional.ofNullable(answer.getUpdatedAt()).ifPresent(updateAt -> preAnswer.setUpdatedAt(updateAt));
 
         return answerRepository.save(preAnswer);

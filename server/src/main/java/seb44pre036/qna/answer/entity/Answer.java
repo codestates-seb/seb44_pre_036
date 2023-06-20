@@ -21,8 +21,8 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerId;
 
-    @Column
-    private String answerContent;
+    @Column(name = "CONTENT")
+    private String content;
 
     @Column(name ="IS_ACCEPTED")
     private boolean isAccepted;
