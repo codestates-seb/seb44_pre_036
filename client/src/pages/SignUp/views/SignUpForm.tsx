@@ -10,6 +10,16 @@ import {
   UserInfoWrapper,
   Text,
 } from '../../../common/style';
+import {
+  Text2,
+  Text3,
+  TextWrapper2,
+  TextWrapper4,
+  CheckBox,
+  CheckBoxWrapper,
+  RobotBoxContainer,
+  RobotBox,
+} from '../style';
 import { SignUpBox } from '../style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
 import {
@@ -28,8 +38,9 @@ import {
   WARNING_MESSAGE_PASSWORD_WEAK,
   PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
-import ConfirmButton from './ConfirmButton';
+import ConfirmButton from '../components/ConfirmButton';
 import { MembershipUrl } from '../../../common/utils/enum';
+import { ErrorMsg } from '../../../common/style';
 
 const postData = async (data: IUserInfoSignUp) => {
   const response = await axios.post(MembershipUrl.SignUp, data);
@@ -80,7 +91,7 @@ function SignUpForm() {
   return (
     <SignUpBox onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
-        <UserInfoLabel label={'DisplayName'} />
+        <UserInfoLabel label={'Display name'} />
         <StyledInput {...register(name, { required: false })} />
       </UserInfoWrapper>
       <UserInfoWrapper>
@@ -96,7 +107,7 @@ function SignUpForm() {
         />
         {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
         (isClicked && typeof errors?.email?.message === 'string') ? (
-          <p>{errors.email.message}</p>
+          <ErrorMsg>{errors.email.message}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
@@ -131,17 +142,41 @@ function SignUpForm() {
         />
         {errors?.password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
         (isClicked && typeof errors?.password?.message === 'string') ? (
-          <p>{errors.password.message}</p>
+          <ErrorMsg>{errors.password.message}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <TextWrapper>
         <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
+      <RobotBoxContainer>
+        <RobotBox>
+          <TextWrapper4>
+            <StyledInput type="checkbox" />
+            <Text3>I'm not a robot</Text3>
+          </TextWrapper4>
+        </RobotBox>
+      </RobotBoxContainer>
+      <TextWrapper2>
+        <CheckBoxWrapper>
+          <CheckBox type="checkbox" />
+        </CheckBoxWrapper>
+        <Text2>
+          Opt-in to receive occasional product updates, user research
+          invitations, company announcements, and digests.
+        </Text2>
+      </TextWrapper2>
       <ConfirmButton
         type="submit"
         setIsClicked={setIsClicked}
         buttontext={'Sign Up'}
       />
+      <TextWrapper>
+        <Text>
+          By clicking “Sign up”, you agree to our terms of service and
+          acknowledge that you have read and understand our privacy policy and
+          code of conduct.
+        </Text>
+      </TextWrapper>
     </SignUpBox>
   );
 }

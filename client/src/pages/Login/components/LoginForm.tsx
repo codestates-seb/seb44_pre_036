@@ -6,6 +6,7 @@ import axios from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
+  ErrorMsg,
   StyledForm,
   StyledInput,
   UserInfoWrapper,
@@ -31,7 +32,7 @@ import { MembershipUrl } from '../../../common/utils/enum';
 const postData = async (data: IUserInfoLogin) => {
   const response = await axios.post(MembershipUrl.Login, data);
   console.log('준기님께 계정 정보 전달 후 받아온 데이터', response.headers);
-  return response.data;
+  return response.headers;
 };
 
 function LoginForm() {
@@ -47,14 +48,13 @@ function LoginForm() {
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
-      console.log('access_token', data);
       if (!data) {
         return;
       }
-      const { accessToken, refreshToken } = data.tokens;
+      const accessToken = data.authorization.split(' ')[1];
 
+      localStorage.removeItem(ACCESS_TOKEN);
       localStorage.setItem(ACCESS_TOKEN, accessToken);
-      localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
       const { data: userData } = await refetchGetMe();
       console.log(userData);
@@ -91,7 +91,7 @@ function LoginForm() {
         />
         {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
         (isClicked && typeof errors?.email?.message === 'string') ? (
-          <p>{errors.email.message}</p>
+          <ErrorMsg>{errors.email.message}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
@@ -126,7 +126,7 @@ function LoginForm() {
         />
         {errors?.password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
         (isClicked && typeof errors?.password?.message === 'string') ? (
-          <p>{errors.password.message}</p>
+          <ErrorMsg>{errors.password.message}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <ConfirmButton
