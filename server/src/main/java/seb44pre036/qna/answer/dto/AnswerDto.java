@@ -37,6 +37,7 @@ public class AnswerDto {
     @Getter
     @Setter
     public static class Post {
+        private long memberId;
 
         @NotBlank(message="답변할 질문 정보를 ")
         private long questionId;
