@@ -56,8 +56,4 @@ public class Answer {
     }
 
 
-    public void setAnswerStatus(AnswerStatus answerStatus){
-        this.answerStatus = answerStatus;
-    }
-
 }
