@@ -27,7 +27,6 @@ import {
   email,
   password,
   ACCESS_TOKEN,
-  REFRESH_TOKEN,
   PASSWORD_MIN_LENGTH,
   EMAIL_REGEX,
   PASSWORD_REGEX,
@@ -43,9 +42,13 @@ import { MembershipUrl } from '../../../common/utils/enum';
 import { ErrorMsg } from '../../../common/style';
 
 const postData = async (data: IUserInfoSignUp) => {
+  console.log('1. 준기님께 보내는 유저 정보', data);
   const response = await axios.post(MembershipUrl.SignUp, data);
+  console.log('2. 준기님께 계정 정보 전달 후 받아온 데이터', response);
 
-  return response.data;
+  console.log('3. 준기님께 계정 정보 전달 후 받아온 헤더', response.headers);
+
+  return response.headers;
 };
 
 function SignUpForm() {
@@ -57,21 +60,26 @@ function SignUpForm() {
     formState: { errors },
   } = useForm<IUserInfoSignUp>();
 
-  const { refetch: refetchGetMe } = useGetMe();
+  // const { refetch: refetchGetMe } = useGetMe();
 
   const mutation = useMutation(postData, {
-    onSuccess: async (data) => {
-      console.log('준기님께 계정 정보 전달 후 받아온 데이터', data);
-      if (!data) {
-        return;
-      }
-      const { accessToken, refreshToken } = data.tokens;
+    onSuccess: async (headers) => {
+      console.log('3. 준기님께 계정 정보 전달 후 받아온 데이터', headers);
+      return null;
+      // if (!headers) {
+      //   return;
+      // }
+      // const accessToken = headers.Authorization;
 
-      localStorage.setItem(ACCESS_TOKEN, accessToken);
-      localStorage.setItem(REFRESH_TOKEN, refreshToken);
+      // console.log(
+      //   '4. 준기님께 계정 정보 전달 후 받아온 accessToken',
+      //   accessToken,
+      // );
 
-      const { data: userData } = await refetchGetMe();
-      console.log(userData);
+      // localStorage.setItem(ACCESS_TOKEN, accessToken);
+
+      // const { data: userData } = await refetchGetMe();
+      // console.log(userData);
     },
     onError: (error) => {
       console.error(error);
@@ -83,7 +91,7 @@ function SignUpForm() {
   });
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
-    console.log('준기님께 보내는 유저 정보', userData);
+    console.log('1. 준기님께 보내는 유저 정보', userData);
     setIsClicked(true);
     await mutation.mutateAsync(userData);
   };
@@ -148,14 +156,14 @@ function SignUpForm() {
       <TextWrapper>
         <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
-      <RobotBoxContainer>
-        <RobotBox>
-          <TextWrapper4>
-            <StyledInput type="checkbox" />
-            <Text3>I'm not a robot</Text3>
-          </TextWrapper4>
-        </RobotBox>
-      </RobotBoxContainer>
+      {/* <RobotBoxContainer> */}
+      <RobotBox>
+        <TextWrapper4>
+          <StyledInput type="checkbox" />
+          <Text3>I'm not a robot</Text3>
+        </TextWrapper4>
+      </RobotBox>
+      {/* </RobotBoxContainer> */}
       <TextWrapper2>
         <CheckBoxWrapper>
           <CheckBox type="checkbox" />
