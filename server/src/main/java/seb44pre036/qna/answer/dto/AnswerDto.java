@@ -61,5 +61,15 @@ public class AnswerDto {
 
     }
 
+    @Getter
+    @Setter
+    public static class Select {
+        @NotBlank(message = "현재 채택자 정보를 입력해주세요")
+        private long memberId;
+
+        @NotBlank(message = "채택할 질문 정보를 입력해주세요")
+        private long answerId;
+    }
+
 
 }

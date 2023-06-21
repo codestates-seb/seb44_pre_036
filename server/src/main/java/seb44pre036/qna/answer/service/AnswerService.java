@@ -11,6 +11,7 @@ import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.entity.Question;
 import seb44pre036.qna.question.service.QuestionService;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -65,8 +66,8 @@ public class AnswerService {
 
         // update
         Optional.ofNullable(answer.getContent()).ifPresent(newContent -> preAnswer.setContent(newContent));
-        Optional.ofNullable(answer.getUpdatedAt()).ifPresent(updateAt -> preAnswer.setUpdatedAt(updateAt));
-
+        Optional.ofNullable(LocalDateTime.now()).ifPresent(updateAt -> preAnswer.setUpdatedAt(updateAt));
+        Optional.ofNullable(answer.getAnswerStatus()).ifPresent(status-> preAnswer.setAnswerStatus(status));
         return answerRepository.save(preAnswer);
     }
 
@@ -77,12 +78,14 @@ public class AnswerService {
         answerRepository.delete(answer);
     }
 
-    public Answer selectAnswer(long answerId){
-        // 본인 답변에 채택 불가
-
+    public Answer selectingAnswer(long answerId,long memberId){
         //존재하는 답변인지 확인
         Answer answer = findAnswer(answerId);
-        //Optional.of(Answer.AnswerStatus.ANSWER_SELECT).ifPresent((select) -> answer.setAnswerStatus(select));
+        // 질문자일 경우에만 채택 가능
+        if(memberId == answer.getQuestion().getMember().getMemberId()) {
+            answer.setAnswerStatus(Answer.AnswerStatus.ANSWER_SELECT);
+            return updateAnswer(answer);
+        }
 
         return answer;
     }

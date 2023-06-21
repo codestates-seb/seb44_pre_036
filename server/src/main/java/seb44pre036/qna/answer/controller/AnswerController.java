@@ -12,6 +12,7 @@ import seb44pre036.qna.answer.dto.AnswerDto;
 import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.answer.mapper.AnswerMapper;
 import seb44pre036.qna.answer.service.AnswerService;
+import seb44pre036.qna.exception.BusinessLogicException;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.service.QuestionService;
@@ -46,7 +47,7 @@ public class AnswerController {
 
         return new ResponseEntity(response, HttpStatus.OK);
     }
-    // 전체 답변 조회 필요시 구현
+
 
     //생성
     @PostMapping("/")
@@ -77,12 +78,14 @@ public class AnswerController {
         answerService.deleteAnswer(answerId);
     }
 
-    //채택 기능 추가필요
-    @PatchMapping("/select/{answer-Id}")
-    private ResponseEntity selectAnswer(@PathParam("answer-Id") @Positive long answerId){
-        Answer response = answerService.selectAnswer(answerId);
+    //채택
+    @PatchMapping("/select")
+    private ResponseEntity selectAnswer(@RequestBody AnswerDto.Select requestBody){
 
-        return new ResponseEntity(response,HttpStatus.OK);
+        Answer answer = answerService.selectingAnswer(requestBody.getAnswerId(), requestBody.getMemberId());
+        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answer);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 }
