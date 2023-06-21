@@ -1,9 +1,13 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useDispatch } from 'react-redux';
+import { setQuestion } from '../store/AskStore';
 
 function Editor() {
+  const dispatch = useDispatch();
+
   const handleTextChange = (value: string) => {
-    console.log(value);
+    dispatch(setQuestion(value));
   };
 
   const modules = {
