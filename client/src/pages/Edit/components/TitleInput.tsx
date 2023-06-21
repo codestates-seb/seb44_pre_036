@@ -5,7 +5,7 @@ const TitleInput = ({ item }: { item: item }) => {
   return (
     <TitleInputContainer>
       <h4>Title</h4>
-      <TitleInputBox type="text" value={item.title} />
+      <TitleInputBox type="text" defaultValue={item.title} />
     </TitleInputContainer>
   );
 };
