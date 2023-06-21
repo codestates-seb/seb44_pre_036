@@ -1,10 +1,13 @@
-import SignUpForm from '../components/SignUpForm';
+import SignUpForm from './SignUpForm';
+import { SignUpContainer } from '../style';
+import StackoverflowJoinBenefit from '../components/StackoverflowJoinBenefit';
 
 function SignUp() {
   return (
-    <div>
+    <SignUpContainer>
+      <StackoverflowJoinBenefit />
       <SignUpForm />
-    </div>
+    </SignUpContainer>
   );
 }
 export default SignUp;
