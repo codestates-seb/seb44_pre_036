@@ -64,10 +64,12 @@ export const TextWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 260px;
+  margin-top: 7px;
 `;
 
 export const Text = styled.p`
   font-size: 13px;
+  font-weight: 440;
   color: gray;
 `;
 
@@ -77,4 +79,10 @@ export const UserInfoWrapper = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   margin-top: 20px;
+`;
+
+export const ErrorMsg = styled.p`
+  color: #df3232;
+  font-size: 13.5px;
+  margin: 5px 0 0 2px;
 `;

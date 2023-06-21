@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import List from '../components/List';
 import { Page } from '../style';
 import { data } from '../type';
 
@@ -21,9 +22,16 @@ const Board = () => {
   ];
   // 더미 데이터
 
+  const user = {
+    id: '1234',
+    name: 'Mooobi',
+  };
+  // 더미 데이터
+
   return (
     <Page>
-      <Header data={data} />
+      <Header data={data} user={user} />
+      <List data={data} user={user} />
     </Page>
   );
 };

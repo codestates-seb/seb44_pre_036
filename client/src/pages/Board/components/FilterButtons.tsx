@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FilterContainer } from '../style';
-import { data } from '../type';
 import { setFilter } from '../store/FilterStore';
 import { RootState } from '../../../common/store/RootStore';
 
-const FilterButtons = ({ data }: { data: data }) => {
+const FilterButtons = () => {
   const dispatch = useDispatch();
   const currentFilter = useSelector((state: RootState) => state.filter);
 

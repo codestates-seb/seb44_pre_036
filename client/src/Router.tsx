@@ -12,12 +12,12 @@ function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/mypage" element={<MyPage />} />
+      <Route path="/mypage/:id/:name" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/ask" element={<Ask />} />
-      <Route path="/detail" element={<Detail />} />
+      <Route path="/ask/:id/:name" element={<Ask />} />
+      <Route path="/detail/:id" element={<Detail />} />
       <Route path="/answer" element={<Answer />} />
     </Routes>
   );

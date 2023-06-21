@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Page = styled.main`
   padding-top: 1rem;
   font-size: 0.875rem;
-  max-width: 1100px;
+  width: 47rem;
 `;
 
 export const HeaderContainer = styled.header`
@@ -21,7 +21,7 @@ export const HeaderContainer = styled.header`
     padding-bottom: 2rem;
 
     & > :first-child {
-      color: #3b4045;
+      color: #232629;
       font-weight: 400;
       font-size: 2rem;
     }
@@ -95,5 +95,85 @@ export const FilterContainer = styled.section`
       background: #e3e6e8;
       color: #3b4045;
     }
+  }
+`;
+
+export const ListContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 47rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e3e6e8;
+`;
+
+export const ListItemContainer = styled.li`
+  list-style: none;
+  display: flex;
+`;
+
+export const LeftSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: end;
+  width: 6.75rem;
+  margin-right: 1rem;
+  margin-top: 0.25rem;
+`;
+
+export const RightSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+`;
+
+export const ContentSection = styled.section`
+  margin-bottom: 1rem;
+
+  & :first-child {
+    font-size: 1.125rem;
+    color: #0074cc;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      color: #0a95ff;
+    }
+  }
+
+  & :nth-child(2) {
+    color: #3b4045;
+  }
+`;
+
+export const AuthorSection = styled.section`
+  display: flex;
+  justify-content: end;
+
+  & > a {
+    display: flex;
+    justify-content: end;
+
+    & > img {
+      height: 1rem;
+      margin-right: 0.25rem;
+      border-radius: 3px;
+    }
+
+    & :nth-child(2) {
+      margin-right: 0.25rem;
+      color: #0074cc;
+      cursor: pointer;
+
+      &:hover {
+        color: #0a95ff;
+      }
+    }
+  }
+
+  & :nth-child(2) {
+    color: #6c757e;
   }
 `;

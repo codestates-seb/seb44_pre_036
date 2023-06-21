@@ -27,10 +27,16 @@ public class CustomAuthorityUtils {
         return USER_ROLES;
     }
 
-    public List<GrantedAuthority> createAuthorities(List<String> roles) {
-        return roles.stream()
+    public List<GrantedAuthority> createAuthorities(List<?> roles) {
+        List<String> roleStrings = roles.stream()
+                .map(Object::toString)
+                .collect(Collectors.toList());
+
+        List<GrantedAuthority> authorities = roleStrings.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
+
+        return authorities;
     }
 
     public List<String> createRoles(String email) {
