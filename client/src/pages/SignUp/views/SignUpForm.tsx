@@ -156,14 +156,14 @@ function SignUpForm() {
       <TextWrapper>
         <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
-      {/* <RobotBoxContainer> */}
-      <RobotBox>
-        <TextWrapper4>
-          <StyledInput type="checkbox" />
-          <Text3>I'm not a robot</Text3>
-        </TextWrapper4>
-      </RobotBox>
-      {/* </RobotBoxContainer> */}
+      <RobotBoxContainer>
+        <RobotBox>
+          <TextWrapper4>
+            <StyledInput type="checkbox" />
+            <Text3>I'm not a robot</Text3>
+          </TextWrapper4>
+        </RobotBox>
+      </RobotBoxContainer>
       <TextWrapper2>
         <CheckBoxWrapper>
           <CheckBox type="checkbox" />
