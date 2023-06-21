@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axios from 'axios';
+import CryptoJS from 'crypto-js';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
@@ -30,6 +31,13 @@ import { MembershipUrl } from '../../../common/utils/enum';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
+
+const secretKey = import.meta.env.VITE_SECRET_KEY;
+
+// Encrypt the access token
+const encryptToken = (token: string) => {
+  return CryptoJS.AES.encrypt(token, secretKey).toString();
+};
 
 const postData = async (data: IUserInfoLogin) => {
   const response = await axios.post(MembershipUrl.Login, data);
@@ -60,7 +68,7 @@ function LoginForm() {
       );
 
       localStorage.removeItem(ACCESS_TOKEN);
-      localStorage.setItem(ACCESS_TOKEN, accessToken);
+      localStorage.setItem(ACCESS_TOKEN, encryptToken(accessToken));
 
       await refetchGetMe();
 
@@ -92,6 +100,7 @@ function LoginForm() {
 
   const memberId = useSelector((state: RootState) => state.userInfo.memberId);
   const handleWithdrawal = async () => {
+    localStorage.removeItem(ACCESS_TOKEN);
     const response = await axios.delete(
       MembershipUrl.Withdrawal + `/${memberId}`,
     );
