@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/views/Home';
 import MyPage from './pages/MyPage/views/MyPage';
 import Board from './pages/Board/views/Board';
@@ -11,12 +11,12 @@ function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/mypage" element={<MyPage />} />
+      <Route path="/mypage/:id/:name" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/ask" element={<Ask />} />
-      <Route path="/detail" element={<Detail />} />
+      <Route path="/ask/:id/:name" element={<Ask />} />
+      <Route path="/detail/:id" element={<Detail />} />
     </Routes>
   );
 }
