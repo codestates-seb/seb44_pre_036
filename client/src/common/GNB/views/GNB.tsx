@@ -13,7 +13,7 @@ import {
   SearchImg,
   List,
 } from '../styles';
-// import Dropdown from '../components/Dropdown';
+import Dropdown from '../components/Dropdown';
 
 function GNB() {
   const [input, setInput] = useState('');
