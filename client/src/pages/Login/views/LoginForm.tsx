@@ -160,16 +160,12 @@ function LoginForm() {
             <ErrorMsg>{errors.password.message}</ErrorMsg>
           ) : null}
         </UserInfoWrapper>
-        <ConfirmButton
-          type="submit"
-          setIsClicked={setIsClicked}
-          buttontext={'Log in'}
-        />
+        <ConfirmButton setIsClicked={setIsClicked} buttontext={'Log in'} />
+        <h1>로그아웃</h1>
         <button onClick={handleLogout}>log out</button>
       </StyledForm>
       <section>
         <h1>회원 탈퇴</h1>
-
         <button onClick={handleWithdrawal}>withdraw</button>
       </section>
     </>
