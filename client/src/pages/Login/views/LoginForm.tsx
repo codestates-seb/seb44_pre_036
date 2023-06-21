@@ -100,10 +100,8 @@ function LoginForm() {
   const memberId = useSelector((state: RootState) => state.userInfo.memberId);
   const handleWithdrawal = async () => {
     localStorage.removeItem(ACCESS_TOKEN);
-    const response = await axios.delete(
-      MembershipUrl.Withdrawal + `/${memberId}`,
-    );
-    console.log(response);
+    await axios.delete(MembershipUrl.Withdrawal + `/${memberId}`);
+    navigate('/');
   };
 
   return (
