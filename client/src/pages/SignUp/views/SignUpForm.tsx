@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axios from 'axios';
-import useGetMe from '../../../common/utils/customHook/useGetMe';
+// import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
@@ -26,7 +26,7 @@ import {
   name,
   email,
   password,
-  ACCESS_TOKEN,
+  // ACCESS_TOKEN,
   PASSWORD_MIN_LENGTH,
   EMAIL_REGEX,
   PASSWORD_REGEX,
@@ -173,11 +173,7 @@ function SignUpForm() {
           invitations, company announcements, and digests.
         </Text2>
       </TextWrapper2>
-      <ConfirmButton
-        type="submit"
-        setIsClicked={setIsClicked}
-        buttontext={'Sign Up'}
-      />
+      <ConfirmButton setIsClicked={setIsClicked} buttontext={'Sign Up'} />
       <TextWrapper>
         <Text>
           By clicking “Sign up”, you agree to our terms of service and
