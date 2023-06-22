@@ -86,3 +86,10 @@ export const ErrorMsg = styled.p`
   font-size: 13.5px;
   margin: 5px 0 0 2px;
 `;
+
+export const SocialLoginBtn = styled.button`
+  height: 40px;
+  margin: 15px 0 15px 0;
+  background-color: transparent;
+  border: none;
+`;
