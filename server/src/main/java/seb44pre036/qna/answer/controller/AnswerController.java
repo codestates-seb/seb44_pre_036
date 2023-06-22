@@ -7,11 +7,16 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import seb44pre036.qna.answer.dto.AnswerDto;
 import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.answer.mapper.AnswerMapper;
 import seb44pre036.qna.answer.service.AnswerService;
+import seb44pre036.qna.auth.interceptor.JwtParseInterceptor;
+import seb44pre036.qna.auth.jwt.JwtTokenizer;
+import seb44pre036.qna.auth.userdetails.MemberDetailsService;
+import seb44pre036.qna.auth.utils.JwtUtils;
 import seb44pre036.qna.exception.BusinessLogicException;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.service.MemberService;
@@ -20,7 +25,10 @@ import seb44pre036.qna.question.service.QuestionService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 import javax.websocket.server.PathParam;
+<<<<<<< HEAD
 import java.io.IOException;
+=======
+>>>>>>> 2d9add985716b058093c8899af2b6f70796adac2
 import java.util.Map;
 
 @RestController
@@ -32,8 +40,9 @@ public class AnswerController {
     private MemberService memberService;
     private QuestionService questionService;
 
+
     @Autowired
-    public void AnswerController(AnswerMapper answerMapper ,AnswerService answerService, MemberService memberService, QuestionService questionService){
+    public void AnswerController(AnswerMapper answerMapper,AnswerService answerService, MemberService memberService, QuestionService questionService){
         this.answerMapper = answerMapper;
         this.answerService = answerService;
         this.memberService = memberService;
@@ -54,7 +63,13 @@ public class AnswerController {
 
     //생성
     @PostMapping("/")
+<<<<<<< HEAD
     private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody) throws IOException {
+=======
+    private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody){
+
+        requestBody.setMemberId(JwtParseInterceptor.getAuthenticatedMemberId());
+>>>>>>> 2d9add985716b058093c8899af2b6f70796adac2
 
         Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,questionService,requestBody);
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
@@ -62,13 +77,18 @@ public class AnswerController {
         return new ResponseEntity(response,HttpStatus.CREATED);
     }
 
+
+
     //수정
     @PatchMapping("/")
     private ResponseEntity patchAnswer(@RequestBody AnswerDto.Patch requestBody){
 
+        // 수정을 요청한 유저 Id
+        requestBody.setMemberId(JwtParseInterceptor.getAuthenticatedMemberId());
+        final long userId= requestBody.getMemberId();
 
-        Answer answer = answerMapper.answerPatchDtoToAnswer(memberService,answerService,requestBody);
-        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.updateAnswer(answer));
+        Answer answer = answerMapper.answerPatchDtoToAnswer(memberService,answerService,questionService,requestBody);
+        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.updateAnswer(userId,answer));
 
         return new ResponseEntity(response,HttpStatus.OK);
     }
@@ -77,12 +97,16 @@ public class AnswerController {
     //삭제
     @DeleteMapping("/{answer-Id}")
     private void deleteAnswer(@PathVariable("answer-Id") @Positive long answerId){
-        answerService.deleteAnswer(answerId);
+        long userId = JwtParseInterceptor.getAuthenticatedMemberId();
+        answerService.deleteAnswer(answerId,userId);
     }
 
     //채택
     @PatchMapping("/select")
     private ResponseEntity selectAnswer(@RequestBody AnswerDto.Select requestBody){
+
+        // 채택을 시도하는 유저 정보
+        requestBody.setMemberId(JwtParseInterceptor.getAuthenticatedMemberId());
 
         Answer answer = answerService.selectingAnswer(requestBody.getAnswerId(), requestBody.getMemberId());
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answer);
@@ -90,4 +114,6 @@ public class AnswerController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    // 추천
+    //@PatchMapping("/vote/")
 }
