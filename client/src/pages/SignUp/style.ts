@@ -22,6 +22,11 @@ export const BlueButtonMembership = styled(BlueButton)<BlueButtonProps>`
   margin: 20px;
 `;
 
+export const SignUpArea = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const SignUpBox = styled(StyledForm)`
   height: 690px;
 `;
