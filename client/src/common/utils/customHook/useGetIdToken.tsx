@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { GetIdTokenType } from '../../../common/type';
+import { MembershipUrl } from '../enum';
 
 function useGetIdToken(): GetIdTokenType {
   const [idToken, setIdToken] = useState<string>();
@@ -25,7 +26,7 @@ function useGetIdToken(): GetIdTokenType {
 
     const loadGoogleScript = () => {
       const script = document.createElement('script');
-      script.src = 'https://accounts.google.com/gsi/client';
+      script.src = MembershipUrl.GoogleGsiClient;
       script.async = true;
       script.onload = () => {
         if (googleSignInRef.current) {
@@ -39,7 +40,7 @@ function useGetIdToken(): GetIdTokenType {
 
     return () => {
       const script = document.querySelector(
-        'script[src="https://accounts.google.com/gsi/client"]',
+        `script[src="${MembershipUrl.GoogleGsiClient}"]`,
       );
       if (script) {
         document.body.removeChild(script);
