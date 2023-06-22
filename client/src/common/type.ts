@@ -1,5 +1,11 @@
 import { RefObject } from 'react';
 
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
 export type UserInfoLabelProps = {
   label: string;
 };
