@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import seb44pre036.qna.exception.BusinessLogicException;
 import seb44pre036.qna.exception.ExceptionCode;
+import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.entity.Question;
 import seb44pre036.qna.question.repository.QuestionRepository;
@@ -26,17 +27,17 @@ public class QuestionService {
         this.memberService = memberService;
     }
 
-    public Question createQuestion(Question question) {
-        memberService.findVerifiedMember(question.getMember().getMemberId());
+    public Question createQuestion(Question question, long authenticatedMemberId) {
+        Member member = memberService.findVerifiedMember(authenticatedMemberId);
+        question.setMember(member);
 
         return questionRepository.save(question);
     }
-    public Question updateQuestion(Question question) {
+
+    public Question updateQuestion(Question question, long authenticatedMemberId) {
         Question findedQuestion = findVerifiedQuestion(question.getQuestionId());
 
-        if(!findedQuestion.getQuestionId().equals(question.getMember().getMemberId())){
-            throw new BusinessLogicException(ExceptionCode.ACCESS_DENIED);
-        }
+        validateQuestionOwnership(findedQuestion, authenticatedMemberId);
 
         Optional.ofNullable(question.getTitle())
                 .ifPresent(findedQuestion::setTitle);
@@ -47,6 +48,7 @@ public class QuestionService {
 
         return findedQuestion;
     }
+
     @Transactional(readOnly = true)
     public Question findQuestion(long questionId) {
         Question findedQuestion = findVerifiedQuestion(questionId);
@@ -54,6 +56,13 @@ public class QuestionService {
 
         return questionRepository.save(findedQuestion);
     }
+
+    @Transactional(readOnly = true)
+    public Page<Question> searchQuestions(int page, int size, String keyword){
+        return questionRepository.findAllByTitleContainingIgnoreCase(keyword,
+                PageRequest.of(page, size, Sort.by("questionId").descending()));
+    }
+
     @Transactional(readOnly = true)
     public Page<Question> findQuestions(int page, int size, String tab) {
         if (tab.equals("View")) {
@@ -65,11 +74,15 @@ public class QuestionService {
         return questionRepository.findAll(PageRequest.of(page, size, Sort.by(tab).descending()));
 
     }
-    public void deleteQuestion(long questionId) {
-        Question question = findVerifiedQuestion(questionId);
 
-        questionRepository.delete(question);
+    public void deleteQuestion(long questionId, long authenticatedMemberId) {
+        Question findedQuestion = findVerifiedQuestion(questionId);
+
+        validateQuestionOwnership(findedQuestion, authenticatedMemberId);
+
+        questionRepository.delete(findedQuestion);
     }
+
     @Transactional(readOnly = true)
     public Question findVerifiedQuestion(long questionId) {
 
@@ -78,5 +91,11 @@ public class QuestionService {
         Question findedQuestion = optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         return findedQuestion;
+    }
+
+    public void validateQuestionOwnership(Question question, long authenticatedMemberId) {
+        if(!question.getMember().getMemberId().equals(authenticatedMemberId)) {
+            throw new BusinessLogicException(ExceptionCode.ACCESS_DENIED);
+        }
     }
 }

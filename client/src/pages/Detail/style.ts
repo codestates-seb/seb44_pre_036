@@ -73,8 +73,8 @@ export const QuestionContent = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  min-width: 37.5rem;
-  max-width: 37.5rem;
+  min-width: 43.5rem;
+  max-width: 43.5rem;
 `;
 
 export const QuestionInfo = styled.div`
@@ -85,8 +85,25 @@ export const QuestionInfo = styled.div`
   margin-top: 3rem;
   font-size: 0.875rem;
 
-  & > a {
-    color: #6a737c;
+  & > * {
+  }
+
+  & > :first-child {
+    & > :first-child {
+      color: #6a737c;
+      margin-right: 1rem;
+      vertical-align: top;
+    }
+
+    & a {
+      border: none;
+      color: #6a737c;
+      background: none;
+      vertical-align: top;
+      font-size: 0.875rem;
+      font-weight: 400;
+      cursor: pointer;
+    }
   }
 `;
 

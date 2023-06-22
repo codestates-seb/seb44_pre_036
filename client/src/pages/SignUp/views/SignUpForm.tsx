@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axios from 'axios';
-import useGetMe from '../../../common/utils/customHook/useGetMe';
+// import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
@@ -10,14 +10,23 @@ import {
   UserInfoWrapper,
   Text,
 } from '../../../common/style';
+import {
+  Text2,
+  Text3,
+  TextWrapper2,
+  TextWrapper4,
+  CheckBox,
+  CheckBoxWrapper,
+  RobotBoxContainer,
+  RobotBox,
+} from '../style';
 import { SignUpBox } from '../style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
 import {
   name,
   email,
   password,
-  ACCESS_TOKEN,
-  REFRESH_TOKEN,
+  // ACCESS_TOKEN,
   PASSWORD_MIN_LENGTH,
   EMAIL_REGEX,
   PASSWORD_REGEX,
@@ -28,13 +37,18 @@ import {
   WARNING_MESSAGE_PASSWORD_WEAK,
   PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
-import ConfirmButton from './ConfirmButton';
+import ConfirmButton from '../components/ConfirmButton';
 import { MembershipUrl } from '../../../common/utils/enum';
+import { ErrorMsg } from '../../../common/style';
 
 const postData = async (data: IUserInfoSignUp) => {
+  console.log('1. 준기님께 보내는 유저 정보', data);
   const response = await axios.post(MembershipUrl.SignUp, data);
+  console.log('2. 준기님께 계정 정보 전달 후 받아온 데이터', response);
 
-  return response.data;
+  console.log('3. 준기님께 계정 정보 전달 후 받아온 헤더', response.headers);
+
+  return response.headers;
 };
 
 function SignUpForm() {
@@ -46,21 +60,26 @@ function SignUpForm() {
     formState: { errors },
   } = useForm<IUserInfoSignUp>();
 
-  const { refetch: refetchGetMe } = useGetMe();
+  // const { refetch: refetchGetMe } = useGetMe();
 
   const mutation = useMutation(postData, {
-    onSuccess: async (data) => {
-      console.log('준기님께 계정 정보 전달 후 받아온 데이터', data);
-      if (!data) {
-        return;
-      }
-      const { accessToken, refreshToken } = data.tokens;
+    onSuccess: async (headers) => {
+      console.log('3. 준기님께 계정 정보 전달 후 받아온 데이터', headers);
+      return null;
+      // if (!headers) {
+      //   return;
+      // }
+      // const accessToken = headers.Authorization;
 
-      localStorage.setItem(ACCESS_TOKEN, accessToken);
-      localStorage.setItem(REFRESH_TOKEN, refreshToken);
+      // console.log(
+      //   '4. 준기님께 계정 정보 전달 후 받아온 accessToken',
+      //   accessToken,
+      // );
 
-      const { data: userData } = await refetchGetMe();
-      console.log(userData);
+      // localStorage.setItem(ACCESS_TOKEN, accessToken);
+
+      // const { data: userData } = await refetchGetMe();
+      // console.log(userData);
     },
     onError: (error) => {
       console.error(error);
@@ -72,7 +91,7 @@ function SignUpForm() {
   });
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
-    console.log('준기님께 보내는 유저 정보', userData);
+    console.log('1. 준기님께 보내는 유저 정보', userData);
     setIsClicked(true);
     await mutation.mutateAsync(userData);
   };
@@ -80,7 +99,7 @@ function SignUpForm() {
   return (
     <SignUpBox onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
-        <UserInfoLabel label={'DisplayName'} />
+        <UserInfoLabel label={'Display name'} />
         <StyledInput {...register(name, { required: false })} />
       </UserInfoWrapper>
       <UserInfoWrapper>
@@ -96,7 +115,7 @@ function SignUpForm() {
         />
         {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
         (isClicked && typeof errors?.email?.message === 'string') ? (
-          <p>{errors.email.message}</p>
+          <ErrorMsg>{errors.email.message}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
@@ -131,17 +150,37 @@ function SignUpForm() {
         />
         {errors?.password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
         (isClicked && typeof errors?.password?.message === 'string') ? (
-          <p>{errors.password.message}</p>
+          <ErrorMsg>{errors.password.message}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <TextWrapper>
         <Text>{PASSWORD_RULE_MESSAGE}</Text>
       </TextWrapper>
-      <ConfirmButton
-        type="submit"
-        setIsClicked={setIsClicked}
-        buttontext={'Sign Up'}
-      />
+      <RobotBoxContainer>
+        <RobotBox>
+          <TextWrapper4>
+            <StyledInput type="checkbox" />
+            <Text3>I'm not a robot</Text3>
+          </TextWrapper4>
+        </RobotBox>
+      </RobotBoxContainer>
+      <TextWrapper2>
+        <CheckBoxWrapper>
+          <CheckBox type="checkbox" />
+        </CheckBoxWrapper>
+        <Text2>
+          Opt-in to receive occasional product updates, user research
+          invitations, company announcements, and digests.
+        </Text2>
+      </TextWrapper2>
+      <ConfirmButton setIsClicked={setIsClicked} buttontext={'Sign Up'} />
+      <TextWrapper>
+        <Text>
+          By clicking “Sign up”, you agree to our terms of service and
+          acknowledge that you have read and understand our privacy policy and
+          code of conduct.
+        </Text>
+      </TextWrapper>
     </SignUpBox>
   );
 }
