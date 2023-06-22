@@ -1,5 +1,5 @@
 // 로그인한 유저의 정보를 담는 인터페이스
-interface IUserInfo {
+export interface IUserInfo {
   answers: [
     answerId: number,
     content: string,
