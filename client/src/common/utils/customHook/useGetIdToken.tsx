@@ -49,7 +49,7 @@ function useGetIdToken() {
         document.body.removeChild(script);
       }
     };
-  }, []);
+  }, [idToken]);
 
   return [idToken, googleSignInRef];
 }
