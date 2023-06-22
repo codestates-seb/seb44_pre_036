@@ -17,3 +17,9 @@ export type UserInfoField = 'email' | 'password';
 export type Token = 'accessToken' | 'refreshToken';
 
 export type GetIdTokenType = [string | undefined, RefObject<HTMLButtonElement>];
+
+export enum GoogleLoginBtnStyle {
+  theme = 'white',
+  size = 'large',
+  width = '300px',
+}

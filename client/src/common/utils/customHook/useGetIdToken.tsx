@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { GetIdTokenType } from '../../../common/type';
+import { GetIdTokenType, GoogleLoginBtnStyle } from '../../../common/type';
 import { MembershipUrl } from '../enum';
 
 function useGetIdToken(): GetIdTokenType {
@@ -18,9 +18,9 @@ function useGetIdToken(): GetIdTokenType {
       });
 
       window.google.accounts.id.renderButton(googleSignInRef.current!, {
-        theme: 'white',
-        size: 'large',
-        width: '300px',
+        theme: GoogleLoginBtnStyle.theme,
+        size: GoogleLoginBtnStyle.size,
+        width: GoogleLoginBtnStyle.width,
       });
     };
 
