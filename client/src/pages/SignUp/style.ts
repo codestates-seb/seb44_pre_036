@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { BlueButton, TextWrapper, Text } from '../../common/style';
+import { StyledForm, BlueButton, TextWrapper, Text } from '../../common/style';
 import { BlueButtonProps } from '../SignUp/type';
-import { StyledForm } from '../../common/style';
 
 export const SignUpContainer = styled.div`
   display: flex;
