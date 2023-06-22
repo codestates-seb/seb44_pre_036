@@ -1,11 +1,11 @@
-import { useQuery } from 'react-query';
+// import { useQuery } from 'react-query';
 import Header from '../components/Header';
 import List from '../components/List';
-import { getList } from '../model/getList';
+// import { getList } from '../model/getList';
 import { Page } from '../style';
 import { data } from '../type';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../common/store/RootStore';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../../../common/store/RootStore';
 
 const Board = () => {
   // const { data: data } = useQuery('data', getList);

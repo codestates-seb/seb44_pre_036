@@ -7,7 +7,7 @@ import { RootState } from '../../../common/store/RootStore';
 import {
   setDate,
   setUserAvatar,
-  setUserId,
+  // setUserId,
   setUserName,
 } from '../store/AskStore';
 import { useEffect } from 'react';
@@ -21,7 +21,7 @@ const Ask = () => {
 
   useEffect(() => {
     dispatch(setDate(new Date().toLocaleDateString()));
-    dispatch(setUserId(user.id));
+    // dispatch(setUserId(user.id));
     dispatch(setUserName(user.name));
     dispatch(setUserAvatar(user.profileImageUrl));
   }, []);

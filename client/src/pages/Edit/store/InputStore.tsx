@@ -4,7 +4,7 @@ export const previewSlice = createSlice({
   name: 'preview',
   initialState: '',
   reducers: {
-    setPreview: (state, action) => {
+    setPreview: (_state, action) => {
       return action.payload;
     },
   },
