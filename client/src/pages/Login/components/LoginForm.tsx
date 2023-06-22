@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -5,25 +6,13 @@ import axios from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
+  ErrorMsg,
+  StyledForm,
   StyledInput,
-  TextWrapper,
   UserInfoWrapper,
-  Text,
 } from '../../../common/style';
+import { IUserInfoLogin } from '../model/UserInfoLogin';
 import {
-  Text2,
-  Text3,
-  TextWrapper2,
-  TextWrapper4,
-  CheckBox,
-  CheckBoxWrapper,
-  RobotBoxContainer,
-  RobotBox,
-} from '../style';
-import { SignUpBox } from '../style';
-import { IUserInfoSignUp } from '../model/UserInfoSignUp';
-import {
-  name,
   email,
   password,
   ACCESS_TOKEN,
@@ -36,39 +25,36 @@ import {
   WARNING_MESSAGE_PASSWORD_EMPTY,
   WARNING_MESSAGE_EMAIL_EMPTY,
   WARNING_MESSAGE_PASSWORD_WEAK,
-  PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
-import ConfirmButton from '../components/ConfirmButton';
+import ConfirmButton from '../../SignUp/components/ConfirmButton';
 import { MembershipUrl } from '../../../common/utils/enum';
-import { ErrorMsg } from '../../../common/style';
 
-const postData = async (data: IUserInfoSignUp) => {
-  const response = await axios.post(MembershipUrl.SignUp, data);
-
-  return response.data;
+const postData = async (data: IUserInfoLogin) => {
+  const response = await axios.post(MembershipUrl.Login, data);
+  console.log('준기님께 계정 정보 전달 후 받아온 데이터', response.headers);
+  return response.headers;
 };
 
-function SignUpForm() {
+function LoginForm() {
   const [isClicked, setIsClicked] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IUserInfoSignUp>();
+  } = useForm<IUserInfoLogin>();
 
   const { refetch: refetchGetMe } = useGetMe();
 
   const mutation = useMutation(postData, {
     onSuccess: async (data) => {
-      console.log('준기님께 계정 정보 전달 후 받아온 데이터', data);
       if (!data) {
         return;
       }
-      const { accessToken, refreshToken } = data.tokens;
+      const accessToken = data.authorization.split(' ')[1];
 
+      localStorage.removeItem(ACCESS_TOKEN);
       localStorage.setItem(ACCESS_TOKEN, accessToken);
-      localStorage.setItem(REFRESH_TOKEN, refreshToken);
 
       const { data: userData } = await refetchGetMe();
       console.log(userData);
@@ -76,24 +62,22 @@ function SignUpForm() {
     onError: (error) => {
       console.error(error);
       // TODO: 에러 처리
-      // 유효성 검사 에러 (400)
-      // 중복된 이메일 에러는 처리할 필요 없음 -> 로그인 시켜주면 된다. (409)
+      // 이메일 형식이 잘못됨 (400) -> The email is not a valid email address.
+      // 비밀번호가 잘못됨 (401) -> The email or password is incorrect.
+      // 이메일이 존재하지 않음 (404) -> No user found with matching email
       // 서버 에러 (500)
     },
   });
 
-  const onSubmit = async (userData: IUserInfoSignUp) => {
-    console.log('준기님께 보내는 유저 정보', userData);
+  const onSubmit = async (userData: IUserInfoLogin) => {
+    console.log(userData);
     setIsClicked(true);
+
     await mutation.mutateAsync(userData);
   };
 
   return (
-    <SignUpBox onSubmit={handleSubmit(onSubmit)}>
-      <UserInfoWrapper>
-        <UserInfoLabel label={'Display name'} />
-        <StyledInput {...register(name, { required: false })} />
-      </UserInfoWrapper>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
         <UserInfoLabel label={'Email'} />
         <StyledInput
@@ -145,39 +129,12 @@ function SignUpForm() {
           <ErrorMsg>{errors.password.message}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
-      <TextWrapper>
-        <Text>{PASSWORD_RULE_MESSAGE}</Text>
-      </TextWrapper>
-      <RobotBoxContainer>
-        <RobotBox>
-          <TextWrapper4>
-            <StyledInput type="checkbox" />
-            <Text3>I'm not a robot</Text3>
-          </TextWrapper4>
-        </RobotBox>
-      </RobotBoxContainer>
-      <TextWrapper2>
-        <CheckBoxWrapper>
-          <CheckBox type="checkbox" />
-        </CheckBoxWrapper>
-        <Text2>
-          Opt-in to receive occasional product updates, user research
-          invitations, company announcements, and digests.
-        </Text2>
-      </TextWrapper2>
       <ConfirmButton
         type="submit"
         setIsClicked={setIsClicked}
-        buttontext={'Sign Up'}
+        buttontext={'Log in'}
       />
-      <TextWrapper>
-        <Text>
-          By clicking “Sign up”, you agree to our terms of service and
-          acknowledge that you have read and understand our privacy policy and
-          code of conduct.
-        </Text>
-      </TextWrapper>
-    </SignUpBox>
+    </StyledForm>
   );
 }
-export default SignUpForm;
+export default LoginForm;

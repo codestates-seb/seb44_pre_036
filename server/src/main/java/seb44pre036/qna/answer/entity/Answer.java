@@ -30,9 +30,6 @@ public class Answer {
     @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @Column(name= "VOTE")
-    private int vote =0;
-
     @Enumerated(EnumType.STRING)
     @Column(name="STATUS")
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_NOT_SELECTED;

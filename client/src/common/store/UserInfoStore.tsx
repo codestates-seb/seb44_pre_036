@@ -2,14 +2,9 @@ import { PayloadAction, configureStore, createSlice } from '@reduxjs/toolkit';
 import { IUserInfo } from '../model/UserInfo';
 
 const initialState: IUserInfo = {
-  answers: [],
-  authorities: ['USER'],
-  createdTime: '',
+  id: 0,
   email: 'abcde123@gmail.com',
   name: '김감자',
-  memberId: 0,
-  modifiedTime: '',
-  questions: [],
   profileImageUrl: 'https://dummyimage.com/100x100/8B4513/ffffff&text=Potato',
 };
 
@@ -19,15 +14,10 @@ export const userInfo = createSlice({
   reducers: {
     createUserInfo: (state, action: PayloadAction<IUserInfo>) => {
       return {
-        answers: action.payload.answers,
-        authorities: action.payload.authorities,
-        createdTime: action.payload.createdTime,
+        id: action.payload.id,
         email: action.payload.email,
         name: action.payload.name,
-        profileImageUrl: state.profileImageUrl,
-        memberId: action.payload.memberId,
-        modifiedTime: action.payload.modifiedTime,
-        questions: action.payload.questions,
+        profileImageUrl: action.payload.profileImageUrl,
       };
     },
   },

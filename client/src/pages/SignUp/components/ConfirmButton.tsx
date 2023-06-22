@@ -1,9 +1,9 @@
 import { BlueButtonMembership } from '../style';
 import { ConfirmButtonProps } from '../type';
 
-function ConfirmButton({ setIsClicked, buttontext }: ConfirmButtonProps) {
+function ConfirmButton({ type, setIsClicked, buttontext }: ConfirmButtonProps) {
   return (
-    <BlueButtonMembership type="submit" onClick={() => setIsClicked(true)}>
+    <BlueButtonMembership onClick={() => setIsClicked(true)}>
       {buttontext}
     </BlueButtonMembership>
   );

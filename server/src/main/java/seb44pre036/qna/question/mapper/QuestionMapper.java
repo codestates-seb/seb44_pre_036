@@ -1,6 +1,7 @@
 package seb44pre036.qna.question.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import seb44pre036.qna.answer.dto.AnswerDto;
 import seb44pre036.qna.answer.entity.Answer;
@@ -17,6 +18,7 @@ public interface QuestionMapper {
     default Question questionPostToQuestion(QuestionDto.Post requestBody){
         Question question = new Question();
         Member member = new Member();
+        member.setMemberId(requestBody.getMemberId());
 
         question.setTitle(requestBody.getTitle());
         question.setContent(requestBody.getContent());
@@ -27,10 +29,8 @@ public interface QuestionMapper {
 
         return question;
     }
-
+    @Mapping(source = "memberId", target = "member.memberId")
     Question questionPatchToQuestion(QuestionDto.Patch requestBody);
-
-
 
     default QuestionDto.Response questionToQuestionResponseDto(Question question){
         List<Answer> answers = question.getAnswers();

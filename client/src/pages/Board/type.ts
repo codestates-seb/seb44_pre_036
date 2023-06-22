@@ -5,7 +5,6 @@ export type item = {
   title: string;
   date: string;
   author: {
-    id: string;
     name: string;
     avatar: string;
   };
