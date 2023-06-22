@@ -107,3 +107,27 @@ export const TextWrapper4 = styled(TextWrapper)`
   margin: 0 0 0 3px;
   width: 130px;
 `;
+
+export const TextWrapper5 = styled(TextWrapper)`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  width: 300px;
+`;
+
+export const TextWrapper6 = styled(TextWrapper5)`
+  margin-left: 20px;
+`;
+
+export const Text4 = styled(Text)`
+  font-size: 15px;
+  font-weight: 350;
+  color: black;
+`;
+
+export const Text5 = styled(Text4)`
+  margin-left: 5px;
+  color: #0074cc;
+`;
