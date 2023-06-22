@@ -2,6 +2,7 @@ import { Page } from '../style.ts';
 import { item } from '../type.ts';
 import Header from '../components/Header.tsx';
 import Main from '../components/Main.tsx';
+import Answer from '../../../common/Answer/views/Answer';
 
 // const Detail = ({ item }: { item: item }) => {
 const Detail = () => {
@@ -31,6 +32,7 @@ const Detail = () => {
     <Page>
       <Header item={item} user={user} />
       <Main item={item} user={user} />
+      <Answer />
     </Page>
   );
 };
