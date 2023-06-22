@@ -6,8 +6,7 @@ function useGetIdToken(): GetIdTokenType {
   const googleSignInRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    const handleCredentialResponse = (response: any) => {
-      console.log('응답', response);
+    const handleCredentialResponse = (response: GoogleCredentialResponse) => {
       setIdToken(response.credential);
     };
 
