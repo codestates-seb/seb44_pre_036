@@ -93,3 +93,12 @@ export const SocialLoginBtn = styled.button`
   background-color: transparent;
   border: none;
 `;
+
+export const StackoverflowLogo = styled.div`
+  background-image: url('/header_svg/slogo.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 45px;
+  height: 45px;
+`;
