@@ -26,7 +26,7 @@ public interface AnswerMapper  {
     }
 
 
-    default Answer answerPatchDtoToAnswer(MemberService memberService, AnswerService answerService,  AnswerDto.Patch answerPatchDto){
+    default Answer answerPatchDtoToAnswer(MemberService memberService, AnswerService answerService,QuestionService questionService,  AnswerDto.Patch answerPatchDto){
         Answer answer = new Answer();
 
         answer.setAnswerId(answerPatchDto.getAnswerId());
@@ -42,7 +42,7 @@ public interface AnswerMapper  {
         answerDtoResponse.setContent(answer.getContent());
         answerDtoResponse.setCreatedAt(answer.getCreatedAt());
         answerDtoResponse.setUpdatedAt(answer.getUpdatedAt());
-
+        answerDtoResponse.setVote(answer.getVote());
         answerDtoResponse.setMemberId(answer.getMember().getMemberId());
         answerDtoResponse.setQuestionId(answer.getQuestion().getQuestionId());
 

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { Answerdata } from '../model/type';
 import { useForm } from 'react-hook-form';
 import { AnswerForm, Button } from '../styles';
@@ -12,8 +12,21 @@ const AnswerInfo = async (data: Answerdata) => {
   );
   return response.data;
 };
+const DeleteAnswer = async (id: string) => {
+  const response = await axios.delete(
+    'http://localhost:8080/questions/answers/',
+    {
+      params: { id },
+    },
+  );
+  return response.data;
+};
 function Answer() {
-  const { handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [text, setText] = useState<string>('');
 
   const mutation = useMutation(AnswerInfo, {
@@ -25,6 +38,9 @@ function Answer() {
       console.log(response);
     },
   });
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setText(e.target.value);
+  };
   const handleClick = async () => {
     const data = {
       memberId: '2',
@@ -36,6 +52,11 @@ function Answer() {
   return (
     <AnswerForm onSubmit={handleSubmit(handleClick)}>
       <h3>Your Answer</h3>
+      {/* <input
+        {...register('Content', { required: true })}
+        value={text}
+        onChange={onChange}
+      /> */}
       <Editor value={text} onChange={setText} />
       <Button type="submit">Post Your Answer</Button>
     </AnswerForm>
