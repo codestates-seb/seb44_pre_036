@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { GetIdTokenType } from '../../../common/type';
 
-function useGetIdToken() {
-  const [idToken, setIdToken] = useState();
+function useGetIdToken(): GetIdTokenType {
+  const [idToken, setIdToken] = useState<string>();
   const googleSignInRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
