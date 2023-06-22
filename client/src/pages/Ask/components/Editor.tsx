@@ -1,10 +1,15 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-interface Props {
-  value: string;
-  onChange: (content: string) => void;
-}
-function Editor({ value, onChange }: Props) {
+import { useDispatch } from 'react-redux';
+import { setQuestion } from '../store/AskStore';
+
+function Editor() {
+  const dispatch = useDispatch();
+
+  const handleTextChange = (value: string) => {
+    dispatch(setQuestion(value));
+  };
+
   const modules = {
     toolbar: [
       //[{ 'font': [] }],
@@ -42,12 +47,11 @@ function Editor({ value, onChange }: Props) {
 
   return (
     <ReactQuill
-      style={{ width: '100%', height: '400px' }}
       theme="snow"
       modules={modules}
       formats={formats}
-      value={value || ''}
-      onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
+      value={''}
+      onChange={handleTextChange}
     />
   );
 }

@@ -7,6 +7,7 @@ import Ask from './pages/Ask/views/Ask';
 import SignUp from './pages/SignUp/views/SignUp';
 import Detail from './pages/Detail/views/Detail';
 import Answer from './common/Answer/views/Answer';
+import Edit from './pages/Edit/views/Edit';
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/ask/:id/:name" element={<Ask />} />
       <Route path="/detail/:id" element={<Detail />} />
+      <Route path="/edit/:id" element={<Edit />} />
       <Route path="/answer" element={<Answer />} />
     </Routes>
   );
