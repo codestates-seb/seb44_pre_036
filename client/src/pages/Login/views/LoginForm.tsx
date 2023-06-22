@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../common/store/RootStore';
 import axios from 'axios';
-import CryptoJS from 'crypto-js';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
+import useEncryptToken from '../../../common/utils/customHook/useEncryptToken';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   ErrorMsg,
@@ -27,16 +30,6 @@ import {
 } from '../../../common/utils/constants';
 import ConfirmButton from '../../SignUp/components/ConfirmButton';
 import { MembershipUrl } from '../../../common/utils/enum';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../common/store/RootStore';
-
-const secretKey = import.meta.env.VITE_SECRET_KEY;
-
-// Encrypt the access token
-const encryptToken = (token: string) => {
-  return CryptoJS.AES.encrypt(token, secretKey).toString();
-};
 
 const postData = async (data: IUserInfoLogin) => {
   const response = await axios.post(MembershipUrl.Login, data);
@@ -46,6 +39,7 @@ const postData = async (data: IUserInfoLogin) => {
 
 function LoginForm() {
   const [isClicked, setIsClicked] = useState(false);
+  const encryptToken = useEncryptToken();
   const {
     register,
     handleSubmit,
