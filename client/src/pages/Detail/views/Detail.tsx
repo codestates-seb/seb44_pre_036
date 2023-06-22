@@ -21,10 +21,16 @@ const Detail = () => {
   };
   // 더미 데이터
 
+  const user = {
+    id: '1234',
+    name: 'Mooobi',
+  };
+  // 더미 데이터
+
   return (
     <Page>
-      <Header item={item} />
-      <Main item={item} />
+      <Header item={item} user={user} />
+      <Main item={item} user={user} />
     </Page>
   );
 };

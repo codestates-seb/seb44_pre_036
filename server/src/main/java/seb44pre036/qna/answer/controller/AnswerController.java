@@ -12,6 +12,7 @@ import seb44pre036.qna.answer.dto.AnswerDto;
 import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.answer.mapper.AnswerMapper;
 import seb44pre036.qna.answer.service.AnswerService;
+import seb44pre036.qna.exception.BusinessLogicException;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.service.QuestionService;
@@ -29,7 +30,7 @@ public class AnswerController {
     private QuestionService questionService;
 
     @Autowired
-    public void AnswerController(AnswerMapper answerMapper ,AnswerService answerService, MemberService memberService){
+    public void AnswerController(AnswerMapper answerMapper ,AnswerService answerService, MemberService memberService, QuestionService questionService){
         this.answerMapper = answerMapper;
         this.answerService = answerService;
         this.memberService = memberService;
@@ -46,7 +47,7 @@ public class AnswerController {
 
         return new ResponseEntity(response, HttpStatus.OK);
     }
-    // 전체 답변 조회 필요시 구현
+
 
     //생성
     @PostMapping("/")
@@ -54,9 +55,7 @@ public class AnswerController {
 
 
         Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,questionService,requestBody);
-
-
-        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer, member.getMemberId()));
+        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
 
         return new ResponseEntity(response,HttpStatus.CREATED);
     }
@@ -67,8 +66,6 @@ public class AnswerController {
 
 
         Answer answer = answerMapper.answerPatchDtoToAnswer(memberService,answerService,requestBody);
-
-        //문제 발생
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.updateAnswer(answer));
 
         return new ResponseEntity(response,HttpStatus.OK);
@@ -81,6 +78,14 @@ public class AnswerController {
         answerService.deleteAnswer(answerId);
     }
 
-    //채택 기능 추가필요
+    //채택
+    @PatchMapping("/select")
+    private ResponseEntity selectAnswer(@RequestBody AnswerDto.Select requestBody){
+
+        Answer answer = answerService.selectingAnswer(requestBody.getAnswerId(), requestBody.getMemberId());
+        AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answer);
+
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
 
 }

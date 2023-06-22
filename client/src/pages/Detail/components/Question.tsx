@@ -3,8 +3,9 @@ import { QuestionContainer, QuestionContent, QuestionInfo } from '../style';
 import { item } from '../type';
 import Vote from './Vote';
 import Author from './Author';
+import { user } from '../../Board/type';
 
-const Qeustion = ({ item }: { item: item }) => {
+const Qeustion = ({ item, user }: { item: item; user: user }) => {
   return (
     <QuestionContainer>
       <Vote item={item} />
@@ -12,7 +13,7 @@ const Qeustion = ({ item }: { item: item }) => {
         <p>{item.question}</p>
         <QuestionInfo>
           <Link to={`/edit/${item.id}`}>Edit</Link>
-          <Author item={item} />
+          <Author item={item} user={user} />
         </QuestionInfo>
       </QuestionContent>
     </QuestionContainer>

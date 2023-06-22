@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axios from 'axios';
-import useGetMe from '../../../common/utils/customHook/useGetMe';
+// import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
@@ -26,8 +26,7 @@ import {
   name,
   email,
   password,
-  ACCESS_TOKEN,
-  REFRESH_TOKEN,
+  // ACCESS_TOKEN,
   PASSWORD_MIN_LENGTH,
   EMAIL_REGEX,
   PASSWORD_REGEX,
@@ -43,9 +42,13 @@ import { MembershipUrl } from '../../../common/utils/enum';
 import { ErrorMsg } from '../../../common/style';
 
 const postData = async (data: IUserInfoSignUp) => {
+  console.log('1. 준기님께 보내는 유저 정보', data);
   const response = await axios.post(MembershipUrl.SignUp, data);
+  console.log('2. 준기님께 계정 정보 전달 후 받아온 데이터', response);
 
-  return response.data;
+  console.log('3. 준기님께 계정 정보 전달 후 받아온 헤더', response.headers);
+
+  return response.headers;
 };
 
 function SignUpForm() {
@@ -57,21 +60,26 @@ function SignUpForm() {
     formState: { errors },
   } = useForm<IUserInfoSignUp>();
 
-  const { refetch: refetchGetMe } = useGetMe();
+  // const { refetch: refetchGetMe } = useGetMe();
 
   const mutation = useMutation(postData, {
-    onSuccess: async (data) => {
-      console.log('준기님께 계정 정보 전달 후 받아온 데이터', data);
-      if (!data) {
-        return;
-      }
-      const { accessToken, refreshToken } = data.tokens;
+    onSuccess: async (headers) => {
+      console.log('3. 준기님께 계정 정보 전달 후 받아온 데이터', headers);
+      return null;
+      // if (!headers) {
+      //   return;
+      // }
+      // const accessToken = headers.Authorization;
 
-      localStorage.setItem(ACCESS_TOKEN, accessToken);
-      localStorage.setItem(REFRESH_TOKEN, refreshToken);
+      // console.log(
+      //   '4. 준기님께 계정 정보 전달 후 받아온 accessToken',
+      //   accessToken,
+      // );
 
-      const { data: userData } = await refetchGetMe();
-      console.log(userData);
+      // localStorage.setItem(ACCESS_TOKEN, accessToken);
+
+      // const { data: userData } = await refetchGetMe();
+      // console.log(userData);
     },
     onError: (error) => {
       console.error(error);
@@ -83,7 +91,7 @@ function SignUpForm() {
   });
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
-    console.log('준기님께 보내는 유저 정보', userData);
+    console.log('1. 준기님께 보내는 유저 정보', userData);
     setIsClicked(true);
     await mutation.mutateAsync(userData);
   };
@@ -165,11 +173,7 @@ function SignUpForm() {
           invitations, company announcements, and digests.
         </Text2>
       </TextWrapper2>
-      <ConfirmButton
-        type="submit"
-        setIsClicked={setIsClicked}
-        buttontext={'Sign Up'}
-      />
+      <ConfirmButton setIsClicked={setIsClicked} buttontext={'Sign Up'} />
       <TextWrapper>
         <Text>
           By clicking “Sign up”, you agree to our terms of service and

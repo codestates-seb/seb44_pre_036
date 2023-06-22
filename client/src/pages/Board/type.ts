@@ -11,3 +11,9 @@ export type item = {
   question: string;
   voteCount: number;
 };
+
+export type user = {
+  id: string;
+  name: string;
+};
+// 임시 타입 지정

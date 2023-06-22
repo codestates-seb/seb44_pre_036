@@ -1,8 +1,6 @@
 package seb44pre036.qna.question.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.member.entity.Member;
@@ -17,6 +15,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

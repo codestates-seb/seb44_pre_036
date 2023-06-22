@@ -16,23 +16,29 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import seb44pre036.qna.auth.filter.JwtAuthenticationFilter;
 import seb44pre036.qna.auth.filter.JwtVerificationFilter;
 import seb44pre036.qna.auth.handler.MemberAccessDeniedHandler;
 import seb44pre036.qna.auth.handler.MemberAuthenticationEntryPoint;
 import seb44pre036.qna.auth.handler.MemberAuthenticationFailureHandler;
 import seb44pre036.qna.auth.handler.MemberAuthenticationSuccessHandler;
+import seb44pre036.qna.auth.interceptor.JwtParseInterceptor;
 import seb44pre036.qna.auth.jwt.JwtTokenizer;
 import seb44pre036.qna.auth.utils.CustomAuthorityUtils;
+import seb44pre036.qna.auth.utils.JwtUtils;
+
 import java.util.Arrays;
 
 
 
 @Configuration
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+public class SecurityConfiguration implements WebMvcConfigurer {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final JwtUtils jwtUtils;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -53,11 +59,10 @@ public class SecurityConfiguration {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .antMatchers(HttpMethod.POST, "/*/members").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
-                        .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST, "/questions").authenticated()
+                        .antMatchers(HttpMethod.PATCH, "/questions/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/questions").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/member/**").hasRole("USER")
                         .anyRequest().permitAll()
                 );
 
@@ -72,11 +77,11 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:3001", "http://ec2-13-125-39-247.ap-northeast-2.compute.amazonaws.com:3000"));
+        configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더 허용
-        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
-        configuration.setAllowCredentials(true); // 인증 정보 전달 허용
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh, MemberId"));
+//        configuration.setAllowCredentials(true); // 인증 정보 전달 허용
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
@@ -92,10 +97,22 @@ public class SecurityConfiguration {
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtUtils, authorityUtils);
 
             builder.addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new JwtParseInterceptor(jwtUtils))
+                .addPathPatterns("/questions/**")
+                .addPathPatterns("/answervote/**")
+                .addPathPatterns("/questionvote/**")
+                .addPathPatterns("/answeranswers/**")
+                .addPathPatterns("/answers/**")
+                .addPathPatterns("/questionanswers/**")
+                .addPathPatterns("/members/**");
     }
 }

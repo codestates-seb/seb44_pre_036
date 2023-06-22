@@ -73,8 +73,8 @@ export const QuestionContent = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  min-width: 37.5rem;
-  max-width: 37.5rem;
+  min-width: 43.5rem;
+  max-width: 43.5rem;
 `;
 
 export const QuestionInfo = styled.div`

@@ -3,6 +3,7 @@ package seb44pre036.qna.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
+    ANSWER_NOT_CREATED(406,"Answer not created"),
     ANSWER_NOT_EXIST(409,"Answer not exist"),
     ANSWER_NOT_FOUND(404,"Answer not found"),
     MEMBER_NOT_FOUND(404, "Member not found"),
