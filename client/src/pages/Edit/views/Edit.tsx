@@ -11,6 +11,7 @@ const Edit = () => {
     title: 'how to use react hook',
     date: new Date().toLocaleDateString(),
     author: {
+      id: '1234',
       name: 'Mooobi',
       avatar:
         'https://lh3.googleusercontent.com/a/AAcHTtf_r7CBglmE-aDKLINfK78xcsVPtrg5Q7sHnOHW=k-s256',
