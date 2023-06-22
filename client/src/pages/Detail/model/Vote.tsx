@@ -11,7 +11,6 @@ export const VoteUp = ({ item }: { item: item }) => {
   const voteUpMutation = useMutation(async () => {
     try {
       const response = await axios.post('/api/post/vote', {
-        //! api 입력
         id: window.location.pathname.split('/')[2],
         voteType: 'up',
       });

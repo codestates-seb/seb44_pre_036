@@ -10,6 +10,8 @@ export const GET_ME_URL_EXAMPLE = 'https://localhost:5000/api/v1/users/me';
 
 export const ACCESS_TOKEN: Token = 'accessToken';
 
+export const REFRESH_TOKEN: Token = 'refreshToken';
+
 export const PASSWORD_MIN_LENGTH: number = 8;
 
 export const EMAIL_REGEX: RegExp =

@@ -2,7 +2,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 interface Props {
   value: string;
-  onChange: (content: string) => void;
+  onChange: (editor: string) => void;
 }
 function Editor({ value, onChange }: Props) {
   const modules = {
@@ -47,7 +47,7 @@ function Editor({ value, onChange }: Props) {
       modules={modules}
       formats={formats}
       value={value || ''}
-      onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
+      onChange={onChange}
     />
   );
 }

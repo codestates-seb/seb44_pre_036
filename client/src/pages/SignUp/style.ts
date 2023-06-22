@@ -70,7 +70,7 @@ export const TextWrapper3 = styled(TextWrapper)`
   width: 360px;
 `;
 
-export const RobotBoxContainer = styled.section`
+export const RobotBoxContainer = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;

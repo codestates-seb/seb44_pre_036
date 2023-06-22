@@ -40,7 +40,7 @@ export const TitleInputContainer = styled.div`
   }
 `;
 
-export const TitleInputBox = styled.input`
+export const TitleInput = styled.input`
   width: 100%;
   border: 1px solid #babfc5;
   padding: 0.5rem;
@@ -68,7 +68,6 @@ export const QuestionInputContainer = styled.div`
   padding: 1rem;
   margin-bottom: 1rem;
   background: #ffffff;
-  border-radius: 3px;
 
   & > * {
     margin-bottom: 0.5rem;
@@ -84,12 +83,10 @@ export const QuestionInputContainer = styled.div`
 
     & > :first-child {
       border-bottom: none;
-      border-radius: 3px 3px 0 0;
     }
 
     & > :nth-child(2) {
       height: 13rem;
-      border-radius: 0 0 3px 3px;
     }
   }
 `;
