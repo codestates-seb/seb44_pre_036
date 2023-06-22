@@ -21,9 +21,9 @@ function useGetIdToken(): GetIdTokenType {
       });
 
       window.google.accounts.id.renderButton(googleSignInRef.current!, {
-        theme: 'filled_blue',
+        theme: 'white',
         size: 'large',
-        text: 'Sign in with Google',
+        width: '300px',
       });
     };
 
