@@ -1,15 +1,21 @@
+import { useQuery } from 'react-query';
 import Header from '../components/Header';
 import List from '../components/List';
+import { getList } from '../model/getList';
 import { Page } from '../style';
 import { data } from '../type';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../common/store/RootStore';
 
 const Board = () => {
+  // const { data: data } = useQuery('data', getList);
   const data: data = [
     {
       id: '1234',
       title: 'how to use react hook',
       date: new Date().toLocaleDateString(),
       author: {
+        id: '1234',
         name: 'Mooobi',
         avatar:
           'https://lh3.googleusercontent.com/a/AAcHTtf_r7CBglmE-aDKLINfK78xcsVPtrg5Q7sHnOHW=k-s256',
@@ -22,6 +28,7 @@ const Board = () => {
   ];
   // 더미 데이터
 
+  // const user = useSelector((state: RootState) => state.userInfo);
   const user = {
     id: '1234',
     name: 'Mooobi',
