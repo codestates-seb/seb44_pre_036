@@ -7,7 +7,7 @@ const TitleInput = () => {
   const dispatch = useDispatch();
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setTitle(`${event.target.value}`));
+    dispatch(setTitle({ title: event.target.value }));
   };
 
   return (

@@ -4,31 +4,41 @@ export const askSlice = createSlice({
   name: 'ask',
   initialState: {
     title: '',
-    date: '',
-    userId: '',
-    userName: '',
-    userAvatar: '',
-    question: '',
+    content: '',
+    viewCount: 0,
+    createdAt: new Date().toLocaleDateString(),
+    updatedAt: new Date().toLocaleDateString(),
+    memberId: 0,
+    name: 'Mooobi',
+    userAvatar:
+      'https://lh3.googleusercontent.com/a/AAcHTtf_r7CBglmE-aDKLINfK78xcsVPtrg5Q7sHnOHW=k-s256',
+    answers: [],
     voteCount: 0,
   },
   reducers: {
     setTitle: (state, action) => {
       state.title = action.payload.title;
     },
-    setDate: (state, action) => {
-      state.date = action.payload.date;
+    setContent: (state, action) => {
+      state.content = action.payload.content;
     },
-    setUserId: (state, action) => {
-      state.userId = action.payload.userId;
+    setViewCount: (state, action) => {
+      state.viewCount = action.payload.viewCount;
     },
-    setUserName: (state, action) => {
-      state.userName = action.payload.userName;
+    setCreatedAt: (state, action) => {
+      state.createdAt = action.payload.createdAt;
+    },
+    setUpdatedAt: (state, action) => {
+      state.updatedAt = action.payload.updatedAt;
+    },
+    setMemberId: (state, action) => {
+      state.memberId = action.payload.memberId;
+    },
+    setName: (state, action) => {
+      state.name = action.payload.name;
     },
     setUserAvatar: (state, action) => {
       state.userAvatar = action.payload.userAvatar;
-    },
-    setQuestion: (state, action) => {
-      state.question = action.payload.question;
     },
   },
 });
@@ -39,9 +49,11 @@ export const store = configureStore({
 
 export const {
   setTitle,
-  setDate,
-  setUserId,
-  setUserName,
+  setContent,
+  setViewCount,
+  setCreatedAt,
+  setUpdatedAt,
+  setMemberId,
+  setName,
   setUserAvatar,
-  setQuestion,
 } = askSlice.actions;

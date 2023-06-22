@@ -5,29 +5,34 @@ import QuestionInput from '../components/QuestionInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
 import {
-  setDate,
+  setCreatedAt,
+  setMemberId,
+  setName,
   setUserAvatar,
-  // setUserId,
-  setUserName,
 } from '../store/AskStore';
 import { useEffect } from 'react';
+import { postData } from '../model/postData';
+import { useMutation } from 'react-query';
 
 const Ask = () => {
   const user = useSelector((state: RootState) => state.userInfo);
 
   const ask = useSelector((state: RootState) => state.ask);
 
+  const askMutation = useMutation(postData);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setDate(new Date().toLocaleDateString()));
-    // dispatch(setUserId(user.id));
-    dispatch(setUserName(user.name));
-    dispatch(setUserAvatar(user.profileImageUrl));
+    dispatch(setCreatedAt({ createdAt: new Date().toLocaleDateString() }));
+    dispatch(setMemberId({ memberId: user.memberId }));
+    dispatch(setName({ name: user.name }));
+    dispatch(setUserAvatar({ userAvatar: user.profileImageUrl }));
   }, []);
 
   const handleSubmit = () => {
     console.log(ask);
+    askMutation.mutate(ask);
   };
 
   return (
