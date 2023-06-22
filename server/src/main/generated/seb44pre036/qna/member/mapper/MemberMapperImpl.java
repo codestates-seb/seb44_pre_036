@@ -7,7 +7,7 @@ import seb44pre036.qna.member.entity.Member;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-20T10:00:03+0900",
+    date = "2023-06-21T15:14:29+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component

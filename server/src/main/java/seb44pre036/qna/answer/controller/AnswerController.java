@@ -17,8 +17,11 @@ import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.service.QuestionService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 import javax.websocket.server.PathParam;
+import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/questions/answers")
@@ -51,8 +54,7 @@ public class AnswerController {
 
     //생성
     @PostMapping("/")
-    private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody){
-
+    private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody) throws IOException {
 
         Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,questionService,requestBody);
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
@@ -62,7 +64,7 @@ public class AnswerController {
 
     //수정
     @PatchMapping("/")
-    private ResponseEntity patchAnswer( @RequestBody AnswerDto.Patch requestBody){
+    private ResponseEntity patchAnswer(@RequestBody AnswerDto.Patch requestBody){
 
 
         Answer answer = answerMapper.answerPatchDtoToAnswer(memberService,answerService,requestBody);

@@ -1,30 +1,43 @@
 package seb44pre036.qna.auth.filter;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.WebUtils;
 import seb44pre036.qna.auth.utils.CustomAuthorityUtils;
 import seb44pre036.qna.auth.utils.JwtUtils;
+import seb44pre036.qna.exception.BusinessLogicException;
+import seb44pre036.qna.exception.ExceptionCode;
+import seb44pre036.qna.member.entity.Member;
+import seb44pre036.qna.member.repository.MemberRepository;
 
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
-@RequiredArgsConstructor
+@Slf4j
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final CustomAuthorityUtils authorityUtils;
 
+    public JwtVerificationFilter(JwtUtils jwtUtils, CustomAuthorityUtils authorityUtils) {
+        this.jwtUtils = jwtUtils;
+        this.authorityUtils = authorityUtils;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -49,21 +62,13 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         return authorization == null || !authorization.startsWith("Bearer");
     }
 
-//    private Map<String, Object> verifyJws(HttpServletRequest request) {
-//        String jws = request.getHeader("Authorization").replace("Bearer ", "");
-//        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-//        Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
-//
-//        return claims;
-//    }
-
     private void setAuthenticationToContext(Map<String, Object> claims) {
         String username = (String) claims.get("username");
-//        List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List) claims.get("roles"));
         List<?> roles = (List<?>) claims.get("roles");
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities(roles);
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
     }
+
 }
