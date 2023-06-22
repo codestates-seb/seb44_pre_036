@@ -1,8 +1,8 @@
 import SignUpForm from './SignUpForm';
 import { SignUpContainer } from '../style';
 import StackoverflowJoinBenefit from '../components/StackoverflowJoinBenefit';
-import { SignUpArea } from '../style';
 import GoogleLoginBtn from '../../../common/components/GoogleLoginBtn';
+import { SignUpArea } from '../style';
 
 function SignUp() {
   return (
