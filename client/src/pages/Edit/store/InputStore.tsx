@@ -1,17 +1,17 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-export const filterSlice = createSlice({
-  name: 'filter',
+export const previewSlice = createSlice({
+  name: 'preview',
   initialState: '',
   reducers: {
-    setFilter: (_state, action) => {
+    setPreview: (_state, action) => {
       return action.payload;
     },
   },
 });
 
 export const store = configureStore({
-  reducer: filterSlice.reducer,
+  reducer: previewSlice.reducer,
 });
 
-export const { setFilter } = filterSlice.actions;
+export const { setPreview } = previewSlice.actions;
