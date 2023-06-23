@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import axios from 'axios';
-// import useGetMe from '../../../common/utils/customHook/useGetMe';
+import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import {
   StyledInput,
@@ -26,7 +26,7 @@ import {
   name,
   email,
   password,
-  // ACCESS_TOKEN,
+  ACCESS_TOKEN,
   PASSWORD_MIN_LENGTH,
   EMAIL_REGEX,
   PASSWORD_REGEX,
@@ -40,6 +40,7 @@ import {
 import ConfirmButton from '../components/ConfirmButton';
 import { MembershipUrl } from '../../../common/utils/enum';
 import { ErrorMsg } from '../../../common/style';
+import useEncryptToken from '../../../common/utils/customHook/useEncryptToken';
 
 const postData = async (data: IUserInfoSignUp) => {
   console.log('1. 준기님께 보내는 유저 정보', data);
@@ -53,6 +54,7 @@ const postData = async (data: IUserInfoSignUp) => {
 
 function SignUpForm() {
   const [isClicked, setIsClicked] = useState(false);
+  const encrypt = useEncryptToken();
   const {
     register,
     handleSubmit,
@@ -60,32 +62,31 @@ function SignUpForm() {
     formState: { errors },
   } = useForm<IUserInfoSignUp>();
 
-  // const { refetch: refetchGetMe } = useGetMe();
+  const { refetch: refetchGetMe } = useGetMe();
 
   const mutation = useMutation(postData, {
     onSuccess: async (headers) => {
       console.log('3. 준기님께 계정 정보 전달 후 받아온 데이터', headers);
-      return null;
-      // if (!headers) {
-      //   return;
-      // }
-      // const accessToken = headers.Authorization;
 
-      // console.log(
-      //   '4. 준기님께 계정 정보 전달 후 받아온 accessToken',
-      //   accessToken,
-      // );
+      if (!headers) {
+        return;
+      }
+      const accessToken = headers.authorization;
 
-      // localStorage.setItem(ACCESS_TOKEN, accessToken);
+      console.log(
+        '4. 준기님께 계정 정보 전달 후 받아온 accessToken',
+        accessToken,
+      );
 
-      // const { data: userData } = await refetchGetMe();
-      // console.log(userData);
+      localStorage.setItem(ACCESS_TOKEN, encrypt(accessToken));
+
+      const { data: userData } = await refetchGetMe();
+      console.log(userData);
     },
     onError: (error) => {
       console.error(error);
       // TODO: 에러 처리
       // 유효성 검사 에러 (400)
-      // 중복된 이메일 에러는 처리할 필요 없음 -> 로그인 시켜주면 된다. (409)
       // 서버 에러 (500)
     },
   });
