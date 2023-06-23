@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { BlueButton, TextWrapper, Text } from '../../common/style';
+import { StyledForm, BlueButton, TextWrapper, Text } from '../../common/style';
 import { BlueButtonProps } from '../SignUp/type';
-import { StyledForm } from '../../common/style';
 
 export const SignUpContainer = styled.div`
   display: flex;
@@ -20,6 +19,11 @@ export const JoinBenefitContainer = styled.section`
 export const BlueButtonMembership = styled(BlueButton)<BlueButtonProps>`
   width: 260px;
   margin: 20px;
+`;
+
+export const SignUpArea = styled.section`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const SignUpBox = styled(StyledForm)`
@@ -102,4 +106,28 @@ export const Text3 = styled(Text)`
 export const TextWrapper4 = styled(TextWrapper)`
   margin: 0 0 0 3px;
   width: 130px;
+`;
+
+export const TextWrapper5 = styled(TextWrapper)`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  width: 300px;
+`;
+
+export const TextWrapper6 = styled(TextWrapper5)`
+  margin-left: 20px;
+`;
+
+export const Text4 = styled(Text)`
+  font-size: 15px;
+  font-weight: 350;
+  color: black;
+`;
+
+export const Text5 = styled(Text4)`
+  margin-left: 5px;
+  color: #0074cc;
 `;

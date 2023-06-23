@@ -1,13 +1,13 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch } from 'react-redux';
-import { setQuestion } from '../store/AskStore';
+import { setContent } from '../store/AskStore';
 
 function Editor() {
   const dispatch = useDispatch();
 
   const handleTextChange = (value: string) => {
-    dispatch(setQuestion(value));
+    dispatch(setContent({ content: value }));
   };
 
   const modules = {
@@ -50,7 +50,7 @@ function Editor() {
       theme="snow"
       modules={modules}
       formats={formats}
-      value={''}
+      defaultValue={''}
       onChange={handleTextChange}
     />
   );

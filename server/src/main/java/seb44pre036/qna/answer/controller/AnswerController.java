@@ -26,6 +26,8 @@ import seb44pre036.qna.question.service.QuestionService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
 import javax.websocket.server.PathParam;
+import java.io.IOException;
+
 import java.util.Map;
 
 @RestController
@@ -73,9 +75,9 @@ public class AnswerController {
 
     //생성
     @PostMapping("/")
-    private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody){
 
-        requestBody.setMemberId(JwtParseInterceptor.getAuthenticatedMemberId());
+    private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody) throws IOException {
+
 
         Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,questionService,requestBody);
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
@@ -87,7 +89,7 @@ public class AnswerController {
 
     //수정
     @PatchMapping("/")
-    private ResponseEntity patchAnswer( @RequestBody AnswerDto.Patch requestBody){
+    private ResponseEntity patchAnswer(@RequestBody AnswerDto.Patch requestBody){
 
         // 수정을 요청한 유저 Id
         requestBody.setMemberId(JwtParseInterceptor.getAuthenticatedMemberId());
