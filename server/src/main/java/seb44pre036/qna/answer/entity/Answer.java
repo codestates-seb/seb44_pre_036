@@ -4,12 +4,15 @@ package seb44pre036.qna.answer.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.question.entity.Question;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -45,6 +48,9 @@ public class Answer {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
+    @OneToMany(mappedBy = "answer")
+    private List<AnswerVote> answerVotes = new ArrayList<>();
+
 
     public enum AnswerStatus {
         ANSWER_NOT_SELECTED("채택이 되지 않은 답변"),
@@ -58,5 +64,7 @@ public class Answer {
         }
     }
 
-
+    //public void addVotedMembers(AnswerVote vote){
+      //  this.votedMembers.add(vote);
+    //}
 }

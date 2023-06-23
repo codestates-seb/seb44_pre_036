@@ -1,20 +1,43 @@
-export type data = item[];
+import { Answerdata } from '../../common/Answer/model/type';
 
-export type item = {
-  id: string;
+export type postItem = {
   title: string;
-  date: string;
-  author: {
-    id: string;
-    name: string;
-    avatar: string;
-  };
-  question: string;
+  content: string;
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  memberId: number;
+  name: string;
+  userAvatar: string;
+  answers: Answerdata[];
   voteCount: number;
 };
 
-export type user = {
-  id: string;
+export type getItem = {
+  questionId: number;
+  title: string;
+  content: string;
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  memberId: number;
   name: string;
+  userAvatar: string;
+  answers: Answerdata[];
+  voteCount: number;
 };
-// 임시 타입 지정
+
+export type list = [
+  {
+    questionId: number;
+    title: string;
+    content: string;
+    viewCount: number;
+    createdAt: string;
+    updatedAt: string;
+    memberId: number;
+    name: string;
+    userAvatar: string;
+    voteCount: number;
+  },
+];
