@@ -46,6 +46,7 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
+
 //    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
 //    private List<QuestionVote> voteMembers = new ArrayList<>();
 
