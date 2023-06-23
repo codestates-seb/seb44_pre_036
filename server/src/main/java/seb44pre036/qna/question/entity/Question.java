@@ -43,12 +43,9 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
-
-//    public void addAnswers(Answer answer) {
-//        answers.add(answer);
-//        if(answer.getQuestion() != this){
-//            answer.addQuestion(this);
-//        }
-//    }
+    public void addAnswer(Answer answer) {
+      answers.add(answer);
+      //if(answer.getQuestion() != this){     answer.addQuestion(this); }
+  }
 
 }
