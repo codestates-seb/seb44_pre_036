@@ -1,6 +1,6 @@
 import { VoteContainer } from '../style';
 import { VoteDown, VoteUp } from '../model/postVote';
-import { getItem } from '../../Board/type';
+import { getItem } from '../../../common/type';
 
 const Vote = ({ item }: { item: getItem }) => {
   return (

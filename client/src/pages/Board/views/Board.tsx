@@ -1,51 +1,62 @@
-// import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../components/Header';
 import List from '../components/List';
-// import { getList } from '../model/getList';
-import { Page } from '../style';
-import { list } from '../type';
+import { getList } from '../model/getList';
+import { Page, Wrapper } from '../style';
 import { RootState } from '../../../common/store/RootStore';
-// import { LISTCRUD_URL } from '../../../common/utils/enum';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../../../common/store/RootStore';
+import { LISTCRUD_URL } from '../../../common/utils/constants';
+import { useEffect } from 'react';
+import { setFilter } from '../../../common/store/FilterStore';
+import { setPage } from '../../../common/store/PageStore';
+import { setList } from '../../../common/store/ListStore';
+import Pagination from '../components/Pagination';
 
 const Board = () => {
-  // const page = 1;
-  // const size = 10;
-  // const tab = 'Newest';
-
-  // const { data } = useQuery('questionList', () => getList(`${LISTCRUD_URL}/questions`, page, size, tab));
-
-  const data: list = [
-    {
-      questionId: 1,
-      title: 'how to use react hook',
-      content: `I'm stucked with a simple configuration of Traefik to pass requests from my IP to my application.
-
-    Supposing my ip is 192.0.0.1, I need to pass all requests from this host to my application that is running inside this server on 0.0.0.0:8001. I've seen various configurations but nothing works :/. I don't know what am I doing wrong and I want to understand why and the operation of Traefik.`,
-      viewCount: 1,
-      createdAt: new Date().toLocaleDateString(),
-      updatedAt: new Date().toLocaleDateString(),
-      memberId: 1234,
-      name: 'Mooobi',
-      userAvatar:
-        'https://lh3.googleusercontent.com/a/AAcHTtf_r7CBglmE-aDKLINfK78xcsVPtrg5Q7sHnOHW=k-s256',
-      voteCount: 0,
-    },
-  ];
-  // 더미 데이터
-
+  const dispatch = useDispatch();
+  const list = useSelector((state: RootState) => state.list.data);
+  const tab = useSelector((state: RootState) => state.filter) || 'Newest';
+  const page = useSelector((state: RootState) => state.page);
+  const size = 10;
   const user = useSelector((state: RootState) => state.userInfo);
-  console.log(user);
 
-  // 더미 데이터
+  useEffect(() => {
+    dispatch(setFilter('Newest'));
+    dispatch(setPage(1));
+  }, []);
+
+  useEffect(() => {
+    const fetchList = async () => {
+      const data = await getList(`${LISTCRUD_URL}/questions`, page, size, tab);
+      dispatch(setList(data));
+    };
+    fetchList();
+  }, [page, tab]);
+
+  const handleNextPage = () => {
+    if (list && list.length === size) {
+      dispatch(setPage(page + 1));
+    } else if (list && list.length === 0) {
+      dispatch(setPage(page - 1));
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (page > 1) {
+      dispatch(setPage(page - 1));
+    }
+  };
 
   return (
-    <Page>
-      <Header data={data} user={user} />
-      <List data={data} user={user} />
-    </Page>
+    <Wrapper>
+      <Page>
+        {list && <Header data={list} user={user} />}
+        {list && <List data={list} user={user} />}
+        <Pagination
+          handleNextPage={handleNextPage}
+          handlePrevPage={handlePrevPage}
+        />
+      </Page>
+    </Wrapper>
   );
 };
 
