@@ -40,14 +40,19 @@ function Editor({ value, onChange }: Props) {
     'background',
   ];
 
+  const handleText = () => {
+    onChange;
+  };
+
   return (
     <ReactQuill
-      style={{ width: '100%', height: '400px' }}
+      style={{ width: '100%', height: '300px' }}
       theme="snow"
       modules={modules}
       formats={formats}
       value={value || ''}
-      onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
+      // onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
+      onChange={handleText}
     />
   );
 }
