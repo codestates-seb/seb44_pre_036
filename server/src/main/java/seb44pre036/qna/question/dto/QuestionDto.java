@@ -41,6 +41,7 @@ public class QuestionDto {
         private String title;
         private String content;
         private long viewCount;
+        private long voteCount;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private long memberId;
@@ -57,11 +58,22 @@ public class QuestionDto {
         private String title;
         private String content;
         private long viewCount;
+        private long voteCount;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         private long memberId;
         private String name;
 
     }
+
+//    @Getter
+//    @Setter
+//    public static class Vote {
+//        private long memberId;
+//
+//        private long questionId;
+//
+//        private boolean isVoted;
+//    }
 
 }

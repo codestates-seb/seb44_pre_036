@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import seb44pre036.qna.answer.mapper.AnswerMapper;
 import seb44pre036.qna.auth.interceptor.JwtParseInterceptor;
 import seb44pre036.qna.question.dto.MultiResponseDto;
 import seb44pre036.qna.question.dto.QuestionDto;
@@ -12,9 +13,13 @@ import seb44pre036.qna.question.entity.Question;
 import seb44pre036.qna.question.mapper.QuestionMapper;
 import seb44pre036.qna.question.service.QuestionService;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,10 +28,22 @@ public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/questions";
     private final QuestionMapper questionMapper;
     private final QuestionService questionService;
+    private final AnswerMapper answerMapper;
 
-    public QuestionController(QuestionMapper questionMapper, QuestionService questionService) {
+    public QuestionController(QuestionMapper questionMapper, QuestionService questionService, AnswerMapper answerMapper) {
         this.questionMapper = questionMapper;
         this.questionService = questionService;
+        this.answerMapper = answerMapper;
+    }
+    @PostConstruct
+    public void postConstruct() {
+        Question question1 = new Question(1L, "제목 테스트1", "본문 테스트1",0,0,LocalDateTime.now(),LocalDateTime.now(),null,null);
+        Question question2 = new Question(2L, "제목 테스트2", "본문 테스트2",0,0,LocalDateTime.now(),LocalDateTime.now(),null,null);
+        Question question3 = new Question(3L, "제목 테스트3", "본문 테스트3",0,0,LocalDateTime.now(),LocalDateTime.now(),null,null);
+
+        questionService.createQuestion(question1, 2L);
+        questionService.createQuestion(question2, 2L);
+        questionService.createQuestion(question3, 2L);
     }
 
     @PostMapping()
@@ -56,15 +73,17 @@ public class QuestionController {
 
         Question question = questionService.updateQuestion(questionMapper.questionPatchToQuestion(requestBody), authenticatedMemberId);
 
-        return new ResponseEntity<>(questionMapper.questionToQuestionResponseDto(question), HttpStatus.OK);
+        return new ResponseEntity<>(questionMapper.questionToQuestionResponseDto(question, answerMapper), HttpStatus.OK);
 
     }
 
     @GetMapping("/{question-id}")
-    public ResponseEntity getQuestion(@Positive @PathVariable("question-id") long questionId) {
+    public ResponseEntity getQuestion(@Positive @PathVariable("question-id") long questionId,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) {
         Question question = questionService.findQuestion(questionId);
-
-        return new ResponseEntity<>(questionMapper.questionToQuestionResponseDto(question),HttpStatus.OK);
+        questionService.viewCountValidation(question, request, response);
+        return new ResponseEntity<>(questionMapper.questionToQuestionResponseDto(question, answerMapper),HttpStatus.OK);
     }
 
     @GetMapping
@@ -100,4 +119,13 @@ public class QuestionController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PatchMapping("/edit/vote/{question-id}")
+    public ResponseEntity patchQuestionVote(@PathVariable("question-id") @Positive long questionId,
+                                            @RequestParam String updown) {
+        long authenticatedMemberId = JwtParseInterceptor.getAuthenticatedMemberId();
+
+        Question question = questionService.updateVote(questionId, authenticatedMemberId, updown);
+
+        return new ResponseEntity<>(questionMapper.questionToQuestionResponseDto(question, answerMapper), HttpStatus.OK);
+    }
 }
