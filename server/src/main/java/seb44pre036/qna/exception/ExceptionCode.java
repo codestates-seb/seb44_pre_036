@@ -9,7 +9,8 @@ public enum ExceptionCode {
     MEMBER_NOT_FOUND(404, "Member not found"),
     MEMBER_EMAIL_EXIST(409, "Email exist"),
     QUESTION_NOT_FOUND(404, "Question not found"),
-    ACCESS_DENIED(403, "Access Denied");
+    ACCESS_DENIED(403, "Access Denied"),
+    REFRESH_TOKEN_EXPIRED(401, "Refresh token expired");
 
 
     @Getter

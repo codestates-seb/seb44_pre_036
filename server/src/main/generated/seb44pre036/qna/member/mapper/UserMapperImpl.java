@@ -1,4 +1,4 @@
-package seb44pre036.qna.answer.mapper;
+package seb44pre036.qna.member.mapper;
 
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
-public class AnswerMapperImpl implements AnswerMapper {
+public class UserMapperImpl implements UserMapper {
 }
