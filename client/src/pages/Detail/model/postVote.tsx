@@ -4,7 +4,7 @@ import { VoteButton } from '../style';
 import { ReactComponent as UpIcon } from '../../../common/assets/icons/VoteUp.svg';
 import { ReactComponent as DownIcon } from '../../../common/assets/icons/VoteDown.svg';
 import { getItem } from '../../Board/type';
-import { LISTCRUD_URL } from '../../../common/utils/enum';
+import { LISTCRUD_URL } from '../../../common/utils/constants';
 
 interface PatchData {
   questionId: number;

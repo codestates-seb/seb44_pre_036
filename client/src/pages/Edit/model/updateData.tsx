@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getItem } from '../../Board/type';
-import { LISTCRUD_URL } from '../../../common/utils/enum';
+import { LISTCRUD_URL } from '../../../common/utils/constants';
 
 export const updateData = async (questionId: number, data: getItem) => {
   try {

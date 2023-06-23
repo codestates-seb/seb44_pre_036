@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LISTCRUD_URL } from '../../../common/utils/enum';
+import { LISTCRUD_URL } from '../../../common/utils/constants';
 
 export const getListItem = async (id: string | undefined) => {
   try {

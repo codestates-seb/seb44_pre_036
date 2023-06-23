@@ -7,5 +7,3 @@ export enum MembershipUrl {
   GetMe = `${BASE_URL}/members/me`,
   Withdrawal = `${BASE_URL}/members/delete`,
 }
-
-export const LISTCRUD_URL = 'https://9bf0-58-237-124-214.ngrok-free.app';
