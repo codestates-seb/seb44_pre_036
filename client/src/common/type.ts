@@ -1,7 +1,9 @@
 import { RefObject } from 'react';
+import { Answerdata } from './Answer/model/type';
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     google: any;
   }
 }
@@ -23,3 +25,43 @@ export enum GoogleLoginBtnStyle {
   size = 'large',
   width = '300px',
 }
+
+export type postItem = {
+  title: string;
+  content: string;
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  memberId: number;
+  name: string;
+  userAvatar: string;
+  answers: Answerdata[];
+  voteCount: number;
+};
+
+export type getItem = {
+  questionId: number;
+  title: string;
+  content: string;
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  memberId: number;
+  name: string;
+  userAvatar: string;
+  answers: Answerdata[];
+  voteCount: number;
+};
+
+export type list = {
+  questionId: number;
+  title: string;
+  content: string;
+  viewCount: number;
+  createdAt: string;
+  updatedAt: string;
+  memberId: number;
+  name: string;
+  userAvatar: string;
+  voteCount: number;
+};

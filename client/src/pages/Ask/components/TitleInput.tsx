@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { BlueButton } from '../../../common/style';
 import { TitleInputBox, TitleInputContainer } from '../style';
 import { setTitle } from '../store/AskStore';
 
@@ -13,13 +12,15 @@ const TitleInput = () => {
   return (
     <TitleInputContainer>
       <h4>Title</h4>
-      <p>Be specific and imagine you’re asking a question to another person.</p>
+      <p>
+        Be specific and imagine you’re asking a question to another person.
+        Minimum 10 characters.
+      </p>
       <TitleInputBox
         type="text"
         placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
         onChange={handleTextChange}
       />
-      <BlueButton>Next</BlueButton>
     </TitleInputContainer>
   );
 };

@@ -1,4 +1,4 @@
-import { getItem } from '../../Board/type';
+import { getItem } from '../../../common/type';
 import { BodyInputContainer } from '../style';
 import Editor from './Editor';
 

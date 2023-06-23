@@ -1,4 +1,4 @@
-const BASE_URL = 'https://9bf0-58-237-124-214.ngrok-free.app';
+const BASE_URL = 'https://2bc2-58-237-124-214.ngrok-free.app';
 
 export enum MembershipUrl {
   GoogleGsiClient = 'https://accounts.google.com/gsi/client',

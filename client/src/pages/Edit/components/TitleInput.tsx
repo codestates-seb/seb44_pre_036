@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import { getItem } from '../../Board/type';
 import { TitleInputBox, TitleInputContainer } from '../style';
 import { setTitle } from '../store/EditStore';
+import { getItem } from '../../../common/type';
 
 const TitleInput = ({ item }: { item: getItem }) => {
   const dispatch = useDispatch();

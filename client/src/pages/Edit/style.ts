@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const Page = styled.main`
   padding: 1rem;
   font-size: 0.875rem;
@@ -58,6 +64,7 @@ export const BodyInputContainer = styled.div`
 
   & > :last-child {
     margin-bottom: 0;
+    width: 100%;
 
     & > :first-child {
       border-radius: 3px 3px 0 0;

@@ -19,6 +19,8 @@ const Ask = () => {
 
   const ask = useSelector((state: RootState) => state.ask);
 
+  const isButtonDisabled = ask.title.length < 10 || ask.content.length < 20;
+
   const askMutation = useMutation(postData);
 
   const dispatch = useDispatch();
@@ -31,7 +33,6 @@ const Ask = () => {
   }, []);
 
   const handleSubmit = () => {
-    console.log(ask);
     askMutation.mutate(ask);
   };
 
@@ -41,7 +42,7 @@ const Ask = () => {
         <h1>Ask a public question</h1>
         <TitleInput />
         <QuestionInput />
-        <BlueButton onClick={() => handleSubmit()}>
+        <BlueButton onClick={() => handleSubmit()} disabled={isButtonDisabled}>
           Post your question
         </BlueButton>
       </AskContainer>
