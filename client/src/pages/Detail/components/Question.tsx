@@ -3,35 +3,30 @@ import { QuestionContainer, QuestionContent, QuestionInfo } from '../style';
 import Vote from './Vote';
 import Author from './Author';
 import { IUserInfo } from '../../../common/model/UserInfo';
-import { getItem } from '../../Board/type';
 import { useMutation } from 'react-query';
 import { deleteItem } from '../model/deleteItem';
+import { getItem } from '../../../common/type';
 
-const Qeustion = ({ item, user }: { item: getItem; user: IUserInfo }) => {
+const Question = ({ item, user }: { item: getItem; user: IUserInfo }) => {
   const deleteMutation = useMutation(deleteItem);
 
   const handleDeleteItem = () => {
-    console.log('deleted');
-    deleteMutation.mutate(item.questionId);
+    if (window.confirm('Are you sure you want to delete this question?')) {
+      deleteMutation.mutate(item.questionId);
+    }
   };
 
   return (
     <QuestionContainer>
       <Vote item={item} />
       <QuestionContent>
-        <p>{item?.content}</p>
+        <p>
+          <div dangerouslySetInnerHTML={{ __html: item?.content }} />
+        </p>
         <QuestionInfo>
           <div>
             <Link to={`/edit/${item?.questionId}`}>Edit</Link>
-            <a
-              onClick={() =>
-                window.confirm(
-                  'Are you sure you want to delete this question?',
-                ) && handleDeleteItem()
-              }
-            >
-              Delete
-            </a>
+            <a onClick={handleDeleteItem}>Delete</a>
           </div>
           <Author item={item} user={user} />
         </QuestionInfo>
@@ -40,4 +35,4 @@ const Qeustion = ({ item, user }: { item: getItem; user: IUserInfo }) => {
   );
 };
 
-export default Qeustion;
+export default Question;

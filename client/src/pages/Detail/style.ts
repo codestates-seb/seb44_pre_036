@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const Page = styled.main`
   padding: 1rem;
   font-size: 0.875rem;
-  max-width: 1100px;
+  max-width: 47rem;
 `;
 
 export const HeaderContainer = styled.header`
@@ -73,8 +79,8 @@ export const QuestionContent = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  min-width: 43.5rem;
-  max-width: 43.5rem;
+  min-width: 41.5rem;
+  max-width: 41.5rem;
 `;
 
 export const QuestionInfo = styled.div`
@@ -123,7 +129,7 @@ export const AuthorContainer = styled.section`
     justify-content: start;
     align-items: start;
 
-    & > img {
+    & > svg {
       height: 2.25rem;
       border-radius: 3px;
       margin-right: 0.25rem;

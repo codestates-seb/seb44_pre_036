@@ -1,9 +1,9 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { getItem } from '../../Board/type';
 import { useDispatch } from 'react-redux';
 import { setPreview } from '../store/PreviewStore';
 import { setContent } from '../store/EditStore';
+import { getItem } from '../../../common/type';
 
 function Editor({ item }: { item: getItem }) {
   const dispatch = useDispatch();
