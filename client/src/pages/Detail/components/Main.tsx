@@ -1,9 +1,9 @@
 import { MainContainer } from '../style';
-import { item } from '../type';
 import Question from '../components/Question';
-import { user } from '../../Board/type';
+import { IUserInfo } from '../../../common/model/UserInfo';
+import { getItem } from '../../Board/type';
 
-const Main = ({ item, user }: { item: item; user: user }) => {
+const Main = ({ item, user }: { item: getItem; user: IUserInfo }) => {
   return (
     <MainContainer>
       <Question item={item} user={user}></Question>

@@ -1,10 +1,15 @@
+import { MouseEventHandler } from 'react';
 import { BlueButton } from '../../../common/style';
 import { ButtonsContainer, TransparentButton } from '../style';
 
-const Buttons = () => {
+const Buttons = ({
+  handleUpdate,
+}: {
+  handleUpdate: MouseEventHandler<HTMLButtonElement>;
+}) => {
   return (
     <ButtonsContainer>
-      <BlueButton>Save edits</BlueButton>
+      <BlueButton onClick={handleUpdate}>Save edits</BlueButton>
       <TransparentButton>Cancel</TransparentButton>
     </ButtonsContainer>
   );

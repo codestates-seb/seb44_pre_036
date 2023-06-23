@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
 import { AuthorContainer } from '../style';
-import { item } from '../type';
-import { user } from '../../Board/type';
+import { IUserInfo } from '../../../common/model/UserInfo';
+import { getItem } from '../../Board/type';
 
-const Author = ({ item, user }: { item: item; user: user }) => {
+const Author = ({ item, user }: { item: getItem; user: IUserInfo }) => {
   return (
     <AuthorContainer>
       <p>
         <span>Asked </span>
-        <span>{item.date}</span>
+        <span>{item?.createdAt}</span>
       </p>
       <p>
-        <img src={item.author.avatar} alt={item.author.name} />
-        <Link to={`/mypage/${user.id}/${user.name}`}>
-          <span>{item.author.name}</span>
+        <img src={item?.userAvatar} alt={item?.name} />
+        <Link to={`/mypage/${user.memberId}/${user.name}`}>
+          <span>{item?.name}</span>
         </Link>
       </p>
     </AuthorContainer>
