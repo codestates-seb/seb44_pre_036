@@ -67,12 +67,13 @@ function LoginForm() {
 
       navigate('/');
     },
-    onError: (error) => {
-      console.log(error);
+    onError: (error: any) => {
+      console.log(error.response.status);
       // TODO: 에러 처리
       // 이메일 형식이 잘못됨 (400) -> The email is not a valid email address.
-      // 비밀번호가 잘못됨 (401) -> The email or password is incorrect.
-      // 이메일이 존재하지 않음 (404) -> No user found with matching email
+      // 비밀번호가 잘못됨 (404) -> The email or password is incorrect.
+      // 이메일이 존재하지 않음 (404) 해결!
+      //
       // 서버 에러 (500)
     },
   });
@@ -91,13 +92,17 @@ function LoginForm() {
     navigate('/');
   };
 
+  const myInfo = useSelector((state: RootState) => state.userInfo);
   const memberId = useSelector((state: RootState) => state.userInfo.memberId);
+  console.log(myInfo, '!!!!!!!');
   const handleWithdrawal = async () => {
     localStorage.removeItem(ACCESS_TOKEN);
     await axios.delete(MembershipUrl.Withdrawal + `/${memberId}`);
     navigate('/');
   };
-
+  // U2FsdGVkX18IDSp5DehBW9+HIJMk4LMvSXmv1WsA+BFxqNYJ+pB+NUaJrvFXFtgJfPEHZ/2s25eEFKw1DczXuuLnienz8MtMQr2VgUSEUV862Ke4n/RGo5Uig13FZzCv4Tg5IVLEj5UbkPqrbs6TIANsuc70b1DLYHbjVLBmE1hkr856L
+  // U2FsdGVkX18FTcU2DGZmHDogNwNMdVTztPDGNdnxk+I+xrRbs4aRZQ9bnW5x6tzonlW+pVwkioWD3a8rD6/+y8Xw5v4pz4uW11Wzo/9bgcMVT6/q2zAsfhqJowq/F2CsmOjANZTvQIWSV8mXV7VUthQAVo7Gk5QPjnVwVihZs7qh8BfCQ
+  // U2FsdGVkX18q9uB4sa/BNvRGmFbcZwmbZcsj1scOkT5/Jws7fa47xHRKl20gM/VIH/mcWW/vPRlRB0N+PSjxZbz0wO1td5GXpg2ZNkOX/f+Kuz3GMkt+E2cgCPmYgbb7TuHOgRpUMPTVYm87kIzyLWG5jXXQiZCX5PVbSDg4KP49kwVjb
   return (
     <>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
