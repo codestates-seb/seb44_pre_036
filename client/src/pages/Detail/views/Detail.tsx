@@ -8,6 +8,7 @@ import { setItem } from '../store/ItemStore.tsx';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { getListItem } from '../model/getListItem.tsx';
+import Answer from '../../../common/Answer/views/Answer.tsx';
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const Detail = () => {
     <Page>
       <Header item={item?.data} user={user} />
       <Main item={item?.data} user={user} />
+      <Answer />
     </Page>
   );
 };
