@@ -1,27 +1,18 @@
 import { UseQueryResult, useQuery } from 'react-query';
 import axios from 'axios';
-import CryptoJS from 'crypto-js';
 import { ACCESS_TOKEN } from '../constants';
 import { useDispatch } from 'react-redux';
 import { createUserInfo } from '../../store/UserInfoStore';
 import { IUserInfo } from '../../model/UserInfo';
 import { MembershipUrl } from '../enum';
-
-const secretKey = import.meta.env.VITE_SECRET_KEY;
-
-// Encrypt the access token
-const encryptToken = (tokenToEncrypt: string) => {
-  return CryptoJS.AES.encrypt(tokenToEncrypt, secretKey).toString();
-};
-
-// Decrypt the access token
-const decryptToken = (encryptedToken: string) => {
-  const bytes = CryptoJS.AES.decrypt(encryptedToken, secretKey);
-  return bytes.toString(CryptoJS.enc.Utf8);
-};
+import useEncryptToken from './useEncryptToken';
+import useDecryptToken from './useDecryptToken';
 
 function useGetMe(): UseQueryResult<IUserInfo | null> {
   const dispatch = useDispatch();
+  const encryptToken = useEncryptToken();
+  const decryptToken = useDecryptToken();
+
   const getMe = async (): Promise<IUserInfo | null | undefined> => {
     const encryptedAccessToken = localStorage.getItem(ACCESS_TOKEN);
 

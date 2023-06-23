@@ -1,4 +1,14 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${GOOGLE_CLIENT_ID}
+            clientSecret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
   h2:
     console:
       enabled: true
@@ -32,5 +42,5 @@ mail:
     admin: admin@gmail.com
 jwt:
   key: ${JWT_SECRET_KEY}
-  access-token-expiration-minutes: 40
-  refresh-token-expiration-minutes: 420
+  access-token-expiration-minutes: 1
+  refresh-token-expiration-minutes: 180

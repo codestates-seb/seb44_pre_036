@@ -6,34 +6,36 @@ import {
   ListItemContainer,
   RightSection,
 } from '../style';
-import { data, user } from '../type';
+import { list } from '../type';
+import { IUserInfo } from '../../../common/model/UserInfo';
 
-const ListItem = ({ data, user }: { data: data; user: user }) => {
+const ListItem = ({ data, user }: { data: list; user: IUserInfo }) => {
   return (
     <ul>
       {data.map((item) => {
         return (
-          <ListItemContainer key={item.id}>
+          <ListItemContainer key={item.memberId}>
             <LeftSection>
-              <div>{item.voteCount} votes</div>
+              <div>votes</div>
+              {/* {item.voteCount} 일단 삭제 */}
             </LeftSection>
             <RightSection>
               <ContentSection>
-                <Link to={`/detail/${item.id}`}>
+                <Link to={`/detail/${item.memberId}`}>
                   <div>{item.title}</div>
                 </Link>
                 <div>
-                  {item.question.length > 199
-                    ? `${item.question.slice(0, 199)}...`
-                    : item.question}
+                  {item.content.length > 199
+                    ? `${item.content.slice(0, 199)}...`
+                    : item.content}
                 </div>
               </ContentSection>
               <AuthorSection>
-                <Link to={`/mypage/${user.id}/${user.name}`}>
-                  <img src={item.author.avatar} alt={item.author.name} />
-                  <div>{item.author.name}</div>
+                <Link to={`/mypage/${user.memberId}/${user.name}`}>
+                  <img src={item.userAvatar} alt={item.name} />
+                  <div>{item.name}</div>
                 </Link>
-                <div>asked {item.date}</div>
+                <div>asked {item.createdAt}</div>
               </AuthorSection>
             </RightSection>
           </ListItemContainer>
