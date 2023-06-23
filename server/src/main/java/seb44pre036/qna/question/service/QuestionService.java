@@ -13,6 +13,9 @@ import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.entity.Question;
 import seb44pre036.qna.question.repository.QuestionRepository;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -52,7 +55,6 @@ public class QuestionService {
     @Transactional(readOnly = true)
     public Question findQuestion(long questionId) {
         Question findedQuestion = findVerifiedQuestion(questionId);
-        findedQuestion.setViewCount(findedQuestion.getViewCount() + 1);
 
         return questionRepository.save(findedQuestion);
     }
@@ -97,5 +99,52 @@ public class QuestionService {
         if(!question.getMember().getMemberId().equals(authenticatedMemberId)) {
             throw new BusinessLogicException(ExceptionCode.ACCESS_DENIED);
         }
+    }
+
+    public void viewCountValidation(Question question, HttpServletRequest request, HttpServletResponse response) {
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("postView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+           if(!oldCookie.getValue().contains("[" + question.getQuestionId() + "]")) {
+               addViewCount(question);
+               oldCookie.setValue(oldCookie.getValue() + "_[" + question.getQuestionId() + "]");
+               oldCookie.setPath("/");
+               oldCookie.setMaxAge(60 * 60 * 24);
+               response.addCookie(oldCookie);
+           }
+        } else {
+            addViewCount(question);
+            Cookie newCookie =  new Cookie("postView", "[" + question.getQuestionId() + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(newCookie);
+        }
+    }
+    private void addViewCount(Question question) {
+        question.setViewCount(question.getViewCount() + 1);
+
+        questionRepository.save(question);
+    }
+
+    public Question updateVote(long questionId, long memberId, String updown) {
+        memberService.findVerifiedMember(memberId);
+        Question findQuestion = findVerifiedQuestion(questionId);
+
+        if (updown.equals("up")) {
+            findQuestion.setVoteCount(findQuestion.getVoteCount() + 1);
+        } else if(updown.equals("down")) {
+            findQuestion.setVoteCount(findQuestion.getVoteCount() - 1);
+        }
+
+        return questionRepository.save(findQuestion);
     }
 }

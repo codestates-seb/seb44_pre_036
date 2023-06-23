@@ -1,12 +1,12 @@
 import { VoteContainer } from '../style';
-import { item } from '../type';
-import { VoteDown, VoteUp } from '../model/Vote';
+import { VoteDown, VoteUp } from '../model/postVote';
+import { getItem } from '../../Board/type';
 
-const Vote = ({ item }: { item: item }) => {
+const Vote = ({ item }: { item: getItem }) => {
   return (
     <VoteContainer>
       <VoteUp item={item} />
-      <p>{item.voteCount}</p>
+      <p>{item?.voteCount}</p>
       <VoteDown item={item} />
     </VoteContainer>
   );

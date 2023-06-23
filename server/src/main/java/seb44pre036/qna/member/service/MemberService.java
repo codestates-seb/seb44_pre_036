@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import seb44pre036.qna.auth.utils.CustomAuthorityUtils;
 import seb44pre036.qna.exception.BusinessLogicException;
 import seb44pre036.qna.exception.ExceptionCode;
+import seb44pre036.qna.member.dto.MemberDto;
 import seb44pre036.qna.member.entity.Member;
 import seb44pre036.qna.member.repository.MemberRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

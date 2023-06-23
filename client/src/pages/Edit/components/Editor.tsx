@@ -1,19 +1,20 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { item } from '../../Board/type';
+import { getItem } from '../../Board/type';
 import { useDispatch } from 'react-redux';
-import { setPreview } from '../store/InputStore';
+import { setPreview } from '../store/PreviewStore';
+import { setContent } from '../store/EditStore';
 
-function Editor({ item }: { item: item }) {
+function Editor({ item }: { item: getItem }) {
   const dispatch = useDispatch();
 
   const handleTextChange = (value: string) => {
     dispatch(setPreview(value));
+    dispatch(setContent({ content: value }));
   };
 
   const modules = {
     toolbar: [
-      //[{ 'font': [] }],
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
       [
@@ -29,7 +30,6 @@ function Editor({ item }: { item: item }) {
   };
 
   const formats = [
-    //'font',
     'header',
     'bold',
     'italic',
@@ -51,7 +51,7 @@ function Editor({ item }: { item: item }) {
       theme="snow"
       modules={modules}
       formats={formats}
-      value={item.question}
+      defaultValue={item.content}
       onChange={handleTextChange}
     />
   );

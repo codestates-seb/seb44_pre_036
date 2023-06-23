@@ -3,6 +3,7 @@ package seb44pre036.qna.answer.mapper;
 import org.mapstruct.Mapper;
 import seb44pre036.qna.answer.dto.AnswerDto;
 import seb44pre036.qna.answer.entity.Answer;
+import seb44pre036.qna.answer.entity.AnswerVote;
 import seb44pre036.qna.answer.repository.AnswerRepository;
 import seb44pre036.qna.answer.service.AnswerService;
 import seb44pre036.qna.member.dto.MemberDto;
@@ -35,6 +36,18 @@ public interface AnswerMapper  {
         return answer;
     }
 
+    default AnswerVote answerVoteDtoToAnswerVote(AnswerService answerService,AnswerDto.Vote answerVoteDto){
+        AnswerVote vote = new AnswerVote();
+
+        vote.setVotedMemberId(answerVoteDto.getMemberId());
+
+        // answer가 등록이 안됨
+        vote.setAnswer(answerService.findVerifiedAnswer(answerVoteDto.getAnswerId()));
+
+        vote.setRecommend(answerVoteDto.getRecommend());
+        return vote;
+    }
+
     default AnswerDto.Response answerToAnswerDtoResponse(Answer answer){
         AnswerDto.Response answerDtoResponse = new AnswerDto.Response();
         answerDtoResponse.setAnswerId(answer.getAnswerId());
@@ -48,5 +61,4 @@ public interface AnswerMapper  {
 
         return answerDtoResponse;
     }
-
 }

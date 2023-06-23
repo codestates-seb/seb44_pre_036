@@ -3,10 +3,12 @@ package seb44pre036.qna.auth.filter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 import seb44pre036.qna.auth.dto.LoginDto;
 import seb44pre036.qna.auth.jwt.JwtTokenizer;
 import seb44pre036.qna.member.entity.Member;
@@ -33,6 +35,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+
         return authenticationManager.authenticate(authenticationToken);
     }
 
@@ -50,7 +53,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Cookie refreshTokenCookie = new Cookie("RefreshToken", refreshToken);
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setPath("/");
-        refreshTokenCookie.setMaxAge(86400); // 유효 기간 설정 (예: 24시간)
+        refreshTokenCookie.setMaxAge(86400);
         response.addCookie(refreshTokenCookie);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
