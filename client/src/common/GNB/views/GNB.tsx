@@ -51,7 +51,11 @@ function GNB() {
           </form>
         </InputWrap>
         <NavMenu>
-          <li onClick={() => navigate(`/mypage/${user.memberId}/${user.name}`)}>
+          <li
+            onClick={() =>
+              navigate(`/mypage/${user.memberId}/${user.name}/profile`)
+            }
+          >
             <img src="/header_svg/user.svg" alt="user" />
           </li>
           <li>

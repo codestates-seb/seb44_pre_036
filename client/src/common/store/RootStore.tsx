@@ -7,6 +7,7 @@ import { itemSlice } from '../../pages/Detail/store/ItemStore';
 import { editSlice } from '../../pages/Edit/store/EditStore';
 import { pageSlice } from './PageStore';
 import { listSlice } from './ListStore';
+import { tabSlice } from '../../pages/MyPage/store/TabStore';
 
 const rootReducer = combineReducers({
   userInfo: userInfo.reducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   edit: editSlice.reducer,
   page: pageSlice.reducer,
   list: listSlice.reducer,
+  tab: tabSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
