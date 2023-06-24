@@ -5,11 +5,16 @@ import Preview from '../components/Preview';
 import TitleInput from '../components/TitleInput';
 import { Page, Wrapper } from '../style';
 import { updateData } from '../model/updateData';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
 import { getItem } from '../../../common/type';
+import { createUserInfo } from '../../../common/store/UserInfoStore';
 
 const Edit = () => {
+  const user = useSelector((state: RootState) => state.userInfo);
+
+  const dispatch = useDispatch();
+
   let item = useSelector((state: RootState) => state.item);
 
   const updatedItem = useSelector((state: RootState) => state.edit);
@@ -26,6 +31,12 @@ const Edit = () => {
       updatedAt: new Date().toLocaleDateString(),
     };
     updateMutation.mutate(item);
+    dispatch(
+      createUserInfo({
+        ...user,
+        modifiedTime: new Date().toLocaleDateString(),
+      }),
+    );
   };
 
   return (
