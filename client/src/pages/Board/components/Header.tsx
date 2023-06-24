@@ -3,9 +3,15 @@ import { HeaderContainer } from '../style';
 import { BlueButton } from '../../../common/style';
 import FilterButtons from './FilterButtons';
 import { IUserInfo } from '../../../common/model/UserInfo';
-import { list } from '../../../common/type';
+import { pageInfo } from '../../../common/type';
 
-const Header = ({ data, user }: { data: list[]; user: IUserInfo }) => {
+const Header = ({
+  pageInfo,
+  user,
+}: {
+  pageInfo: pageInfo;
+  user: IUserInfo;
+}) => {
   return (
     <HeaderContainer>
       <section>
@@ -15,7 +21,7 @@ const Header = ({ data, user }: { data: list[]; user: IUserInfo }) => {
         </Link>
       </section>
       <section>
-        <p>{`${data?.length} questions`}</p>
+        <p>{`${pageInfo && pageInfo.totalElements} questions`}</p>
         <FilterButtons />
       </section>
     </HeaderContainer>

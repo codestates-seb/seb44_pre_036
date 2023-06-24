@@ -35,6 +35,8 @@ const Home = () => {
   const handleNextPage = () => {
     if (list && list.data.length === size) {
       dispatch(setPage(page + 1));
+    } else if (list && list.data.length === 0) {
+      dispatch(setPage(page - 1));
     }
   };
 
