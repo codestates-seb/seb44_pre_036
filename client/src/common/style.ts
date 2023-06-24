@@ -8,6 +8,10 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  ::-webkit-scrollbar {
+  width: 0;
+  }
+
   html, body, #root {
     width: 100%;
     min-height: 100%;
