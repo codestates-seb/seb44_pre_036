@@ -68,7 +68,7 @@ public class AnswerService {
             // 회원이 작성한 답변 추가
             user.addAnswer(createAnswer);
             // 질문에 작성된 답변 추가
-            question.addAnswer(createAnswer);
+            question.addAnswers(createAnswer);
             return createAnswer;
         }
 

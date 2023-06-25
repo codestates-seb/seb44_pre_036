@@ -1,6 +1,7 @@
 package seb44pre036.qna.answer.dto;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -120,6 +121,14 @@ public class AnswerDto {
         public void setRecommend(boolean recommend){
             this.recommend=recommend;
         }
+    }
+
+    @Getter
+    @Builder
+    public static class AnswerMemberResponseForList {
+        private Long questionId;
+        private Long answerId;
+        private String content;
     }
 
 

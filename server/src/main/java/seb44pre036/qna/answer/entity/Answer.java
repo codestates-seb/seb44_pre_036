@@ -2,6 +2,8 @@ package seb44pre036.qna.answer.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import seb44pre036.qna.member.entity.Member;
@@ -40,11 +42,12 @@ public class Answer {
     @Column(name="STATUS")
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_NOT_SELECTED;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JsonBackReference
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 

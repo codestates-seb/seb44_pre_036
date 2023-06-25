@@ -3,6 +3,8 @@ package seb44pre036.qna.auth.utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import seb44pre036.qna.auth.jwt.JwtTokenizer;
+import seb44pre036.qna.exception.BusinessLogicException;
+import seb44pre036.qna.exception.ExceptionCode;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;

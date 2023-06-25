@@ -3,6 +3,7 @@ package seb44pre036.qna.member.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import seb44pre036.qna.answer.entity.Answer;
