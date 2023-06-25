@@ -9,11 +9,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
 import { getItem } from '../../../common/type';
 import { createUserInfo } from '../../../common/store/UserInfoStore';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Edit = () => {
   const user = useSelector((state: RootState) => state.userInfo);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   let item = useSelector((state: RootState) => state.item);
 
@@ -22,6 +26,12 @@ const Edit = () => {
   const updateMutation = useMutation((data: getItem) =>
     updateData(item.questionId, data),
   );
+
+  useEffect(() => {
+    if (!user.memberId) {
+      navigate('/login');
+    }
+  });
 
   const handleUpdate = () => {
     item = {

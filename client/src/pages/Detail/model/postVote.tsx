@@ -7,36 +7,26 @@ import { LISTCRUD_URL } from '../../../common/utils/constants';
 import { getItem } from '../../../common/type';
 
 export const VoteUp = ({ item }: { item: getItem }) => {
-  const queryClient = useQueryClient();
+  const voteUpMutation = useMutation(async () => {
+    // const accessToken = localStorage.getItem('accessToken');
 
-  const voteUpMutation = useMutation(
-    async () => {
-      const accessToken = localStorage.getItem('accessToken');
+    const accessToken =
+      'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sImVtYWlsIjoicG90YXRvQG5hdmVyLmNvbSIsIm1lbWJlcklkIjoyLCJzdWIiOiJwb3RhdG9AbmF2ZXIuY29tIiwiaWF0IjoxNjg3NjU1NjE3LCJleHAiOjE2ODc2NTgwMTd9.NUBf36NbM05Xejr-_b7oTwQDRem5ilgHKtVTGdNHKTU';
 
-      const headers = {
-        'ngrok-skip-browser-warning': 'true',
-        Authorization: `Bearer ${accessToken}`,
-      };
+    const headers = {
+      'ngrok-skip-browser-warning': 'true',
+      Authorization: `Bearer ${accessToken}`,
+    };
 
-      await axios.patch(
-        `${LISTCRUD_URL}/questions/vote/${item.questionId}?updown=up`,
-        null,
-        { headers },
-      );
-    },
-    {
-      onSuccess: () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (queryClient.setQueryData as any)(
-          ['item', item.questionId],
-          (prevData: { voteCount: number }) => ({
-            ...prevData,
-            voteCount: prevData.voteCount + 1,
-          }),
-        );
+    await axios.patch(
+      `${LISTCRUD_URL}/questions/vote`,
+      {
+        questionId: item.questionId,
+        vote: true,
       },
-    },
-  );
+      { headers },
+    );
+  });
 
   const handleVoteUp = () => {
     voteUpMutation.mutate();
@@ -54,7 +44,10 @@ export const VoteDown = ({ item }: { item: getItem }) => {
 
   const voteDownMutation = useMutation(
     async () => {
-      const accessToken = localStorage.getItem('accessToken');
+      // const accessToken = localStorage.getItem('accessToken');
+
+      const accessToken =
+        'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sImVtYWlsIjoicG90YXRvQG5hdmVyLmNvbSIsIm1lbWJlcklkIjoyLCJzdWIiOiJwb3RhdG9AbmF2ZXIuY29tIiwiaWF0IjoxNjg3NjU1NjE3LCJleHAiOjE2ODc2NTgwMTd9.NUBf36NbM05Xejr-_b7oTwQDRem5ilgHKtVTGdNHKTU';
 
       const headers = {
         'ngrok-skip-browser-warning': 'true',
@@ -62,8 +55,11 @@ export const VoteDown = ({ item }: { item: getItem }) => {
       };
 
       await axios.patch(
-        `${LISTCRUD_URL}/questions/vote/${item.questionId}?updown=down`,
-        null,
+        `${LISTCRUD_URL}/questions/vote`,
+        {
+          questionId: item.questionId,
+          vote: false,
+        },
         { headers },
       );
     },

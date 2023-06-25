@@ -1,8 +1,9 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { pageInfo } from '../type';
 
 export const listSlice = createSlice({
   name: 'list',
-  initialState: { data: [] },
+  initialState: { data: [], pageInfo: {} as pageInfo },
   reducers: {
     setList: (_state, action) => {
       return action.payload;

@@ -17,13 +17,16 @@ import {
   SignBtn,
 } from '../styles';
 import Dropdown from '../components/Dropdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/RootStore';
+import { setTab } from '../../../pages/MyPage/store/TabStore';
 
 function GNB() {
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.userInfo);
   const isLogin = user.memberId !== 0;
@@ -58,9 +61,10 @@ function GNB() {
           <>
             <NavMenu>
               <li
-                onClick={() =>
+                onClick={() => {
                   navigate(`/mypage/${user.memberId}/${user.name}/profile`)
-                }
+              dispatch(setTab('Profile'));
+            }}
               >
                 <UserImg>
                   {user.profileImageUrl ? (
@@ -76,7 +80,6 @@ function GNB() {
               <li onClick={() => handleClick(2)}>
                 <img src="/header_svg/cup.svg" alt="cup" />
               </li>
-
               <li onClick={() => handleClick(3)}>
                 <img src="/header_svg/help.svg" alt="help" />
               </li>

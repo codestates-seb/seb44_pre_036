@@ -1,12 +1,19 @@
 package seb44pre036.qna.member.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import seb44pre036.qna.answer.dto.AnswerDto;
+import seb44pre036.qna.answer.entity.Answer;
+import seb44pre036.qna.question.dto.QuestionResponseDto;
+import seb44pre036.qna.question.entity.Question;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 public class MemberDto {
@@ -50,5 +57,18 @@ public class MemberDto {
         private Long memberId;
         private String email;
         private String name;
+    }
+
+    @Getter
+    @Builder
+    public static class ResponseMyPage {
+        private Long memberId;
+        private String name;
+        private String email;
+        private LocalDateTime createdTime;
+        private LocalDateTime modifiedTime;
+        private List<String> authorities;
+        private List<QuestionResponseDto.QuestionMemberResponseForList> questions;
+        private List<AnswerDto.AnswerMemberResponseForList> answers;
     }
 }

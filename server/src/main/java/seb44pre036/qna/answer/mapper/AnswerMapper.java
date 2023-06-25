@@ -12,6 +12,8 @@ import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.entity.Question;
 import seb44pre036.qna.question.service.QuestionService;
 
+import java.util.List;
+
 
 @Mapper(componentModel = "spring")
 public interface AnswerMapper  {
@@ -60,5 +62,15 @@ public interface AnswerMapper  {
         answerDtoResponse.setQuestionId(answer.getQuestion().getQuestionId());
 
         return answerDtoResponse;
+    }
+
+    default AnswerDto.Responses AnswersToAnswerDtoResponses (List<Answer> answers){
+        AnswerDto.Responses responses = new AnswerDto.Responses();
+
+        for(Answer answer:answers){
+            responses.addResponse(answerToAnswerDtoResponse(answer));
+        }
+
+        return responses;
     }
 }

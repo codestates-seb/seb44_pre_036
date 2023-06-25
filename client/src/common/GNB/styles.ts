@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
 export const Header = styled.div`
+  position: sticky;
+  top: 0;
+  background: white;
   width: 100%;
   border-bottom: 1px solid #d4d4d4;
   border-top: 3px solid #fe7214;
 `;
 
 export const Container = styled.div`
+  background: white;
   width: 79rem;
   max-width: 100%;
   margin: 0 auto;

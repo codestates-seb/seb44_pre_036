@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
+import { deleteUserInfo } from '../../../common/store/UserInfoStore';
 import axios from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import useEncryptToken from '../../../common/utils/customHook/useEncryptToken';
@@ -39,6 +40,7 @@ const postData = async (data: IUserInfoLogin) => {
 
 function LoginForm() {
   const [isClicked, setIsClicked] = useState(false);
+  const dispatch = useDispatch();
   const encryptToken = useEncryptToken();
   const {
     register,
@@ -89,6 +91,7 @@ function LoginForm() {
 
   const handleLogout = () => {
     localStorage.removeItem(ACCESS_TOKEN);
+    dispatch(deleteUserInfo());
     navigate('/');
   };
 
@@ -98,8 +101,10 @@ function LoginForm() {
   const handleWithdrawal = async () => {
     localStorage.removeItem(ACCESS_TOKEN);
     await axios.delete(MembershipUrl.Withdrawal + `/${memberId}`);
+    dispatch(deleteUserInfo());
     navigate('/');
   };
+
   return (
     <>
       <StyledForm onSubmit={handleSubmit(onSubmit)}>

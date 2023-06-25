@@ -12,6 +12,10 @@ const Header = ({ item, user }: { item: getItem; user: IUserInfo }) => {
         <p>
           <span>Asked </span>
           <span>{item?.createdAt.slice(0, 10)}</span>
+          <span> Modified </span>
+          <span>{item?.updatedAt.slice(0, 10)}</span>
+          <span> Viewed </span>
+          <span>{item?.viewCount}</span>
         </p>
       </section>
       <section>
