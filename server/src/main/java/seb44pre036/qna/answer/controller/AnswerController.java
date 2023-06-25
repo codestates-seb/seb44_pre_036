@@ -28,6 +28,7 @@ import javax.validation.constraints.Positive;
 import javax.websocket.server.PathParam;
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -60,14 +61,12 @@ public class AnswerController {
     }
 
     // 특정 질문의 모든 답변 조회
+
     @GetMapping("/find")
     private ResponseEntity getAnswers(@RequestBody AnswerDto.Find find) {
-        AnswerDto.Responses responses = new AnswerDto.Responses();
 
-        for(Answer element : answerService.findAnswersSortedByHighestScore(find)){
-            AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(element);
-            responses.addResponse(response);
-        }
+        List<Answer> sortedAnswers = answerService.findAnswers(find);
+        AnswerDto.Responses responses = answerMapper.AnswersToAnswerDtoResponses(sortedAnswers);
 
         return new ResponseEntity(responses,HttpStatus.OK);
     }
@@ -77,7 +76,7 @@ public class AnswerController {
     @PostMapping("/")
 
     private ResponseEntity postAnswer(@RequestBody AnswerDto.Post requestBody) throws IOException {
-
+        requestBody.setMemberId(JwtParseInterceptor.getAuthenticatedMemberId());
 
         Answer answer = answerMapper.answerPostDtoToAnswer(memberService,answerService,questionService,requestBody);
         AnswerDto.Response response = answerMapper.answerToAnswerDtoResponse(answerService.postAnswer(answer));
