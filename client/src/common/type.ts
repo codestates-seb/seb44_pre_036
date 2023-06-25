@@ -64,3 +64,14 @@ export type list = {
   data: getItem[];
   pageInfo: pageInfo;
 };
+
+export type AnswerInfo = {
+  answerId: string;
+  content: string;
+  isAccepted: string;
+  createdAt: string;
+  updatedAt: string;
+  vote: number;
+  questionId: string;
+  memberId: string;
+};

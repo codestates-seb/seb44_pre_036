@@ -15,13 +15,23 @@ import {
   AnswerContentIn,
 } from '../styles';
 import { Listdata } from '../model/type';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAnswer } from '../store/AnswerStore';
+import { RootState } from '../../store/RootStore';
 
-function AnswerList({ data, length }: Listdata) {
-  const { data: answerList } = GetMutation('1');
+function AnswerList() {
+  const { id = '' } = useParams();
   const [count, setCount] = useState(0);
+
+  const { data: answerList } = GetMutation(id);
+  const dispatch = useDispatch();
+  const Answerlength = useSelector((state: RootState) => state.item);
+
   useEffect(() => {
-    console.log(answerList);
-  }, answerList);
+    dispatch(getAnswer(answerList));
+  }, [answerList]);
+
   const UpCount = () => {
     setCount(count + 1);
   };
@@ -32,9 +42,13 @@ function AnswerList({ data, length }: Listdata) {
     <div>
       <Header>
         <Item>
-          {data === null ? <h2>Answer</h2> : <h2>{length} Answer</h2>}
+          {answerList === null ? (
+            <h2>Answer</h2>
+          ) : (
+            <h2>{Answerlength.answers.length} Answer</h2>
+          )}
         </Item>
-        {length ? null : (
+        {Answerlength.answers.length ? null : (
           <Item2>
             <label>Sorted by:</label>
             <Select>
@@ -59,7 +73,7 @@ function AnswerList({ data, length }: Listdata) {
           </AnswerVoteIn>
         </AnswerVote>
         <AnswerContent>
-          <AnswerContentIn>{data[0].content}</AnswerContentIn>
+          <AnswerContentIn>{answerList.content}</AnswerContentIn>
         </AnswerContent>
       </AnswerContainer>
     </div>

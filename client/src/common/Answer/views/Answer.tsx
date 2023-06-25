@@ -17,7 +17,7 @@ function Answer() {
   ];
   return (
     <>
-      <AnswerList data={data} length={data.length} />
+      <AnswerList />
       <AnswerEditor />
     </>
   );
