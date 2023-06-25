@@ -4,6 +4,7 @@ import lombok.*;
 
 import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.member.entity.Member;
+import seb44pre036.qna.questionVote.entity.QuestionVote;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -46,11 +47,21 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVotes = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
-//    private List<QuestionVote> voteMembers = new ArrayList<>();
-
-    public void addAnswers(Answer answer) {
+    public void addAnswer(Answer answer) {
         this.answers.add(answer);
+    }
+
+    public int getVoteCountSum() {
+        int voteCount = this.questionVotes.stream()
+                .map(questionVote -> questionVote.getQuestionVoteStatus().getScore())
+                .mapToInt(N->N)
+                .sum();
+
+        this.voteCount = voteCount;
+
+        return voteCount;
     }
 }
