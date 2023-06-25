@@ -18,6 +18,12 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
+export const MembershipPageStyle = createGlobalStyle`
+  body {
+    background-color: #f5f5f5 ;
+  }
+`;
+
 export const BlueButton = styled.button`
   background-color: #0a95ff;
   height: 2.25rem;
@@ -59,6 +65,7 @@ export const StyledForm = styled.form`
   border-radius: 10px;
   width: 300px;
   height: 237px;
+  background-color: white;
 `;
 
 export const StyledInput = styled.input`

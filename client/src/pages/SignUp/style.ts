@@ -12,7 +12,6 @@ export const SignUpContainer = styled.div`
 export const JoinBenefitContainer = styled.section`
   display: flex;
   flex-direction: column;
-  border: 1px solid #e0e0e0;
   width: 500px;
 `;
 
@@ -56,16 +55,26 @@ export const Title = styled.h1`
   margin: 0 45px 20px 0;
 `;
 
-export const JoinBenefitWrapper = styled.ul`
+export const JoinBenefitLine = styled.div`
+  display: flex;
+  width: 420px;
+  flex-direction: row;
+  margin-top: 10px;
+`;
+
+export const SvgWrapper = styled.span`
+  padding: 7px 10px 5px 5px;
+`;
+
+export const JoinBenefitsWrapper = styled.ul`
   display: flex;
   flex-direction: column;
-  margin: 0 25px 20px 32px;
-  border: 1px solid #e0e0e0;
+  margin: 0 0 20px 0;
   width: 370px;
 `;
 
-export const JoinBenefit = styled.li`
-  text-decoration: none;
+export const JoinBenefitText = styled.li`
+  list-style: none;
   margin: 10px 0 10px 0;
   font-size: 16px;
 `;
