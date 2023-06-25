@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 export const Page = styled.main`
   padding: 1rem;
   font-size: 0.875rem;
-  width: 43.5rem;
+  width: 47rem;
 `;
 
 export const TitleInputContainer = styled.div`

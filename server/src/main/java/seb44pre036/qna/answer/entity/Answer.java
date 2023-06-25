@@ -2,6 +2,8 @@ package seb44pre036.qna.answer.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import seb44pre036.qna.member.entity.Member;
@@ -10,6 +12,8 @@ import seb44pre036.qna.question.entity.Question;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +44,12 @@ public class Answer {
     @Column(name="STATUS")
     private AnswerStatus answerStatus = AnswerStatus.ANSWER_NOT_SELECTED;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 
-    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JsonBackReference
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
@@ -64,7 +69,19 @@ public class Answer {
         }
     }
 
-    //public void addVotedMembers(AnswerVote vote){
-      //  this.votedMembers.add(vote);
-    //}
+    public void addVotedMembers(AnswerVote vote){
+        this.answerVotes.add(vote);
+    }
+    public long getMilliCreatedAt(){
+        ZonedDateTime zdt = ZonedDateTime.of(this.createdAt, ZoneId.systemDefault());
+        long date = zdt.toInstant().toEpochMilli();
+
+        return date;
+    }
+    public long getMilliUpdatedAt(){
+        ZonedDateTime zdt = ZonedDateTime.of(this.updatedAt, ZoneId.systemDefault());
+        long date = zdt.toInstant().toEpochMilli();
+
+        return date;
+    }
 }

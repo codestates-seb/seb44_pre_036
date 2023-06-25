@@ -66,14 +66,4 @@ public class QuestionDto {
 
     }
 
-//    @Getter
-//    @Setter
-//    public static class Vote {
-//        private long memberId;
-//
-//        private long questionId;
-//
-//        private boolean isVoted;
-//    }
-
 }

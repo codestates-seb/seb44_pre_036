@@ -5,12 +5,12 @@ export const Page = styled.main`
   justify-content: center;
   padding-bottom: 1.75rem;
   min-height: 100%;
+  width: 65rem;
 `;
 
 export const AskContainer = styled.section`
   padding: 1rem;
   font-size: 0.875rem;
-  width: 49.25rem;
 
   & > :first-child {
     font-size: 1.75rem;
