@@ -1,5 +1,5 @@
-//import React, { useEffect } from 'react';
-//import { GetMutation } from '../queries';
+import { useEffect } from 'react';
+import { GetMutation } from '../queries';
 import { useState } from 'react';
 import {
   Header,
@@ -17,11 +17,11 @@ import {
 import { Listdata } from '../model/type';
 
 function AnswerList({ data, length }: Listdata) {
-  // const { data: answerList } = GetMutation('1');
+  const { data: answerList } = GetMutation('1');
   const [count, setCount] = useState(0);
-  // useEffect(() => {
-  //   console.log(answerList);
-  // }, answerList);
+  useEffect(() => {
+    console.log(answerList);
+  }, answerList);
   const UpCount = () => {
     setCount(count + 1);
   };
