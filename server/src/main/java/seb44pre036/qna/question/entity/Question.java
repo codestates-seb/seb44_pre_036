@@ -1,5 +1,7 @@
 package seb44pre036.qna.question.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import seb44pre036.qna.answer.entity.Answer;
@@ -40,11 +42,12 @@ public class Question {
     @Column(name = "UPDATED_AT")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
