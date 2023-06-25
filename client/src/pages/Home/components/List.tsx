@@ -1,12 +1,16 @@
 import { IUserInfo } from '../../../common/model/UserInfo';
-import { list } from '../../../common/type';
+import { getItem } from '../../../common/type';
 import { ListContainer } from '../style';
 import ListItem from './ListItem';
+import SideBar from './Sidebar';
 
-const List = ({ data, user }: { data: list[]; user: IUserInfo }) => {
+const List = ({ data, user }: { data: getItem[]; user: IUserInfo }) => {
   return (
     <ListContainer>
-      <ListItem data={data} user={user} />
+      <div>
+        <ListItem data={data} user={user} />
+        <SideBar />
+      </div>
     </ListContainer>
   );
 };
