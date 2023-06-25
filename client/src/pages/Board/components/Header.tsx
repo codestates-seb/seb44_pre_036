@@ -21,7 +21,9 @@ const Header = ({
         </Link>
       </section>
       <section>
-        <p>{`${pageInfo && pageInfo.totalElements} questions`}</p>
+        <p>{`${
+          pageInfo.totalElements ? pageInfo.totalElements : '0'
+        } questions`}</p>
         <FilterButtons />
       </section>
     </HeaderContainer>

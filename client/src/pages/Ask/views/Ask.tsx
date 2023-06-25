@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { postData } from '../model/postData';
 import { useMutation } from 'react-query';
 import { createUserInfo } from '../../../common/store/UserInfoStore';
+import { useNavigate } from 'react-router-dom';
 
 const Ask = () => {
   const user = useSelector((state: RootState) => state.userInfo);
@@ -26,6 +27,8 @@ const Ask = () => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(setCreatedAt({ createdAt: new Date().toLocaleDateString() }));
     dispatch(setMemberId({ memberId: user.memberId }));
@@ -34,10 +37,17 @@ const Ask = () => {
   }, []);
 
   const handleSubmit = () => {
-    askMutation.mutate(ask);
-    dispatch(
-      createUserInfo({ ...user, createdTime: new Date().toLocaleDateString() }),
-    );
+    if (user.memberId) {
+      askMutation.mutate(ask);
+      dispatch(
+        createUserInfo({
+          ...user,
+          createdTime: new Date().toLocaleDateString(),
+        }),
+      );
+    } else {
+      navigate('/login');
+    }
   };
 
   return (

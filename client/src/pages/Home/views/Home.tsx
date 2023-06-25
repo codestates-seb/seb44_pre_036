@@ -49,8 +49,8 @@ const Home = () => {
   return (
     <Wrapper>
       <Page>
-        {list && <Header pageInfo={list.pageInfo} user={user} />}
-        {list && <List data={list.data} user={user} />}
+        <Header pageInfo={list.pageInfo} user={user} />
+        <List data={list.data} user={user} />
         <Pagination
           handleNextPage={handleNextPage}
           handlePrevPage={handlePrevPage}

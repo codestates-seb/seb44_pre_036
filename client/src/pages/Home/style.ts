@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 export const Page = styled.main`
   padding-top: 1rem;
   font-size: 0.875rem;
-  width: 47rem;
+  width: 65rem;
 `;
 
 export const HeaderContainer = styled.header`
@@ -19,6 +19,7 @@ export const HeaderContainer = styled.header`
   flex-direction: column;
   justify-content: center;
   border-bottom: 1px solid #e3e6e8;
+  width: 43rem;
 
   & > :first-child {
     display: flex;
@@ -109,10 +110,51 @@ export const ListContainer = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 47rem;
+  width: 100%;
 
-  & > ul {
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
     width: 100%;
+    & > ul {
+      width: 100%;
+    }
+
+    aside {
+      border-right: 1px solid #f1e6bb;
+      border-left: 1px solid #f1e6bb;
+      border-bottom: 1px solid #f1e6bb;
+      margin-left: 2rem;
+      margin-top: 1rem;
+      border-radius: 5px;
+
+      & > :first-child {
+        border-radius: 5px 5px 0 0;
+      }
+
+      & > :last-child {
+        border-radius: 0 0 5px 5px;
+      }
+
+      h4 {
+        background: #fcf3d5;
+        border-bottom: 1px solid #f1e6bb;
+        border-top: 1px solid #f1e6bb;
+        padding: 0.5rem;
+        color: #525960;
+      }
+
+      div {
+        background: #fdf7e2;
+        padding: 0.5rem;
+
+        p {
+          padding-bottom: 0.5rem;
+          color: #3b4044;
+        }
+      }
+    }
   }
 `;
 
@@ -197,4 +239,5 @@ export const PaginationContainer = styled.div`
   margin: 2rem 0;
   display: flex;
   justify-content: space-around;
+  max-width: 42.247rem;
 `;

@@ -1,8 +1,15 @@
 import { Side, SideContainer, Nav, NavOl, NavLi } from '../styles';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../store/RootStore';
+import { setTab } from '../../../pages/MyPage/store/TabStore';
 
 function GSB() {
+  const user = useSelector((state: RootState) => state.userInfo);
+
+  const dispatch = useDispatch();
+
   const [selectedItem, setSelectedItem] = useState(0);
   const navigate = useNavigate();
   const handleClick = (index: number) => {
@@ -10,6 +17,9 @@ function GSB() {
       navigate('/');
     } else if (index === 1) {
       navigate('/board');
+    } else if (index === 3) {
+      navigate(`/mypage/${user.memberId}/${user.name}/profile`);
+      dispatch(setTab('Profile'));
     }
     setSelectedItem(index);
   };

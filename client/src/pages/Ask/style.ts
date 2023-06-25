@@ -5,7 +5,7 @@ export const Page = styled.main`
   justify-content: center;
   padding-bottom: 1.75rem;
   min-height: 100%;
-  width: 47rem;
+  width: 65rem;
 `;
 
 export const AskContainer = styled.section`
