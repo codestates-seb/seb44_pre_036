@@ -13,6 +13,7 @@ import {
 import { useEffect } from 'react';
 import { postData } from '../model/postData';
 import { useMutation } from 'react-query';
+import { createUserInfo } from '../../../common/store/UserInfoStore';
 
 const Ask = () => {
   const user = useSelector((state: RootState) => state.userInfo);
@@ -34,6 +35,9 @@ const Ask = () => {
 
   const handleSubmit = () => {
     askMutation.mutate(ask);
+    dispatch(
+      createUserInfo({ ...user, createdTime: new Date().toLocaleDateString() }),
+    );
   };
 
   return (

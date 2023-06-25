@@ -8,6 +8,10 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  ::-webkit-scrollbar {
+  width: 0;
+  }
+
   html, body, #root {
     width: 100%;
     min-height: 100%;
@@ -114,4 +118,10 @@ export const StackoverflowLogo = styled.div`
   background-position: center;
   width: 45px;
   height: 45px;
+`;
+
+export const Layout = styled.div`
+  display: flex;
+  max-width: 1264px;
+  justify-content: center;
 `;

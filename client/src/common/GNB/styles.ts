@@ -2,21 +2,22 @@ import styled from 'styled-components';
 
 export const Header = styled.div`
   width: 100%;
-  background-color: aliceblue;
+  border-bottom: 1px solid #d4d4d4;
+  border-top: 3px solid #fe7214;
 `;
 
 export const Container = styled.div`
-  width: 97.2307692rem;
+  width: 79rem;
   max-width: 100%;
   margin: 0 auto;
-  height: 60px;
+  height: 52px;
   display: flex;
   align-items: center;
-  background-color: aliceblue;
 `;
 export const LogoBox = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 100%;
   cursor: pointer;
   &:hover {
@@ -32,6 +33,7 @@ export const LogoBox2 = styled.div`
   height: 100%;
   margin-left: 10px;
   padding-top: 5px;
+  padding-bottom: 5px;
   cursor: pointer;
   &:hover {
     background-color: #cecece;
@@ -42,10 +44,10 @@ export const LogoBox2 = styled.div`
 `;
 
 export const Logo = styled.img`
-  height: 90%;
+  height: 100%;
 `;
 export const Logo2 = styled.img`
-  height: 80%;
+  height: 100%;
 `;
 
 export const InputWrap = styled.div`
@@ -57,19 +59,20 @@ export const InputWrap = styled.div`
 export const SearchImg = styled.img`
   display: inline;
   position: absolute;
-  top: 7px;
+  top: 4px;
   left: 14px;
 `;
 
 export const InputStyles = styled.input`
   width: 100%;
+  height: 80%;
   border: 1px solid #d1d1d3;
   outline: none;
   font-size: 18px;
   border-radius: 20px;
   line-height: 30px;
   padding: 5px 12px;
-  padding-left: 50px;
+  padding-left: 45px;
   &:focus {
     border-color: #0969da;
     box-shadow: inset 0 0 0 1px #0969da;
@@ -90,11 +93,15 @@ export const NavMenu = styled.ul`
     margin-right: 4px;
     cursor: pointer;
     &:hover {
-      background-color: #cecece;
+      background-color: #dfdfdf;
     }
     .active {
       display: none;
     }
+  }
+  img {
+    width: 33px;
+    height: 30px;
   }
   @media screen and (max-width: 600px) {
     display: none;
