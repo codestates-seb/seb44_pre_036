@@ -1,26 +1,19 @@
-import { Link } from 'react-router-dom';
-import LoginForm from './LoginForm';
-import { LoginPageContainer } from '../style';
+import { MembershipPageStyle, StackoverflowLogo } from '../../../common/style';
 import GoogleLoginBtn from '../../../common/components/GoogleLoginBtn';
-import { StackoverflowLogo } from '../../../common/style';
-import { TextWrapper5, Text4, Text5 } from '../../SignUp/style';
+import LoginForm from './LoginForm';
+import TextLeadingToSignUpPage from '../components/TextLeadingToSignUpPage';
+import TextLeadingToSignUpOnTalentPage from '../components/TextLeadingToSignUpOnTalentPage';
+import { LoginPageContainer } from '../style';
 
 function Login() {
   return (
     <LoginPageContainer>
+      <MembershipPageStyle />
       <StackoverflowLogo />
       <GoogleLoginBtn />
       <LoginForm />
-      <TextWrapper5>
-        <Text4>Don’t have an account?</Text4>
-        <Link to="/signup">
-          <Text5>Sign Up</Text5>
-        </Link>
-      </TextWrapper5>
-      <TextWrapper5>
-        <Text4>Are you an employer?</Text4>
-        <Text5>Sign up on Talent</Text5>
-      </TextWrapper5>
+      <TextLeadingToSignUpPage />
+      <TextLeadingToSignUpOnTalentPage />
     </LoginPageContainer>
   );
 }

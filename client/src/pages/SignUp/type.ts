@@ -6,3 +6,8 @@ export type ConfirmButtonProps = {
 export type BlueButtonProps = {
   onClick: () => void;
 };
+
+export type JoinBenefitProps = {
+  svgNumber: number;
+  text: string;
+};
