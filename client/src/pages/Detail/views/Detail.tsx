@@ -26,9 +26,11 @@ const Detail = () => {
     };
 
     fetchItem();
-  }, [id]);
+  }, [id, dispatch]);
 
-  const item = useQuery('question', () => getListItem(id));
+  const item = useQuery('question', () => getListItem(id), {
+    refetchOnWindowFocus: true,
+  });
 
   const user = useSelector((state: RootState) => state.userInfo);
 
@@ -37,6 +39,7 @@ const Detail = () => {
       <Page>
         <Header item={item?.data} user={user} />
         <Main item={item?.data} user={user} />
+        <Answer />
       </Page>
     </Wrapper>
   );

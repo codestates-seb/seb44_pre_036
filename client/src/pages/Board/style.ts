@@ -126,7 +126,7 @@ export const ListItemContainer = styled.li`
 export const LeftSection = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: space-between;
   align-items: end;
   width: 6.75rem;
   margin-right: 1rem;
