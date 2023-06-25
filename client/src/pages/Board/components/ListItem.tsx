@@ -8,9 +8,9 @@ import {
 } from '../style';
 import { IUserInfo } from '../../../common/model/UserInfo';
 import { ReactComponent as Profile } from '../../../common/assets/icons/Profile.svg';
-import { list } from '../../../common/type';
+import { getItem } from '../../../common/type';
 
-const ListItem = ({ data, user }: { data: list[]; user: IUserInfo }) => {
+const ListItem = ({ data, user }: { data: getItem[]; user: IUserInfo }) => {
   return (
     <ul>
       {data &&
@@ -19,6 +19,7 @@ const ListItem = ({ data, user }: { data: list[]; user: IUserInfo }) => {
             <ListItemContainer key={item.questionId}>
               <LeftSection>
                 <div>{`${item.voteCount} votes`}</div>
+                <div>{`${item.answers?.length || 0} answers`}</div>
                 <div>{`${item.viewCount} viewed`}</div>
               </LeftSection>
               <RightSection>
@@ -35,7 +36,7 @@ const ListItem = ({ data, user }: { data: list[]; user: IUserInfo }) => {
                   </div>
                 </ContentSection>
                 <AuthorSection>
-                  <Link to={`/mypage/${user.memberId}/${user.name}`}>
+                  <Link to={`/mypage/${user.memberId}/${user.name}/profile`}>
                     {/* <img src={item.userAvatar} alt={item.name} /> */}
                     <Profile />
                     <div>{item.name}</div>

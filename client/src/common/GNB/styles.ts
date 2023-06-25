@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
 export const Header = styled.div`
+  position: sticky;
+  top: 0;
+  background: white;
   width: 100%;
   border-bottom: 1px solid #d4d4d4;
   border-top: 3px solid #fe7214;
 `;
 
 export const Container = styled.div`
+  background: white;
   width: 79rem;
   max-width: 100%;
   margin: 0 auto;
@@ -119,5 +123,63 @@ export const List = styled.div`
   }
   @media screen and (min-width: 600px) {
     display: none;
+  }
+`;
+
+export const UserImg = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 35px;
+  height: 24px;
+  img {
+    border-radius: 3px;
+    width: 24px;
+    height: 100%;
+  }
+`;
+
+export const NavMenu2 = styled.ul`
+  list-style: none;
+  display: flex;
+  margin-right: 5px;
+  height: 100%;
+  li {
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+    margin-right: 4px;
+    .active {
+      display: none;
+    }
+  }
+  img {
+    width: 33px;
+    height: 30px;
+  }
+`;
+
+export const LoginBtn = styled.button`
+  padding: 8px 10px;
+  cursor: pointer;
+  border: 1px solid #1567ff;
+  border-radius: 3px;
+  background-color: #b0deff;
+  color: #399cff;
+  font-weight: normal;
+  &:hover {
+    background-color: #73c4ff;
+  }
+`;
+
+export const SignBtn = styled.button`
+  padding: 8px 10px;
+  cursor: pointer;
+  border: 1px solid #1567ff;
+  border-radius: 3px;
+  background-color: #3179ff;
+  color: #ffffff;
+  font-weight: normal;
+  &:hover {
+    background-color: #0056f4;
   }
 `;

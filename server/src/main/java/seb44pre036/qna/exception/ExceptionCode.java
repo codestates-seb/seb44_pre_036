@@ -3,6 +3,7 @@ package seb44pre036.qna.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
+    ANSWER_NOT_EXIST_FUNCTION(409,"It's a function that does not exist. "),
     ANSWER_ALREADY_VOTED(403,"Answer already voted"),
     ANSWER_NOT_CREATED(406,"Answer not created"),
     ANSWER_NOT_EXIST(409,"Answer not exist"),

@@ -10,21 +10,23 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import seb44pre036.qna.auth.filter.JwtAuthenticationFilter;
 import seb44pre036.qna.auth.filter.JwtVerificationFilter;
 import seb44pre036.qna.auth.handler.*;
+import seb44pre036.qna.auth.interceptor.JwtParseInterceptor;
 import seb44pre036.qna.auth.jwt.JwtTokenizer;
 import seb44pre036.qna.auth.utils.CustomAuthorityUtils;
 import seb44pre036.qna.auth.utils.JwtUtils;
 import seb44pre036.qna.member.repository.MemberRepository;
+import seb44pre036.qna.member.service.MemberService;
 
 import java.util.Arrays;
 
@@ -36,11 +38,14 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final JwtUtils jwtUtils;
-
+    private final MemberRepository memberRepository;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .headers().frameOptions().sameOrigin()
+                .and()
+                .oauth2Login()
+                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, memberService()))
                 .and()
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
@@ -56,25 +61,13 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers("/v1/oauth/login").permitAll()
                         .antMatchers(HttpMethod.POST, "/questions").authenticated()
                         .antMatchers(HttpMethod.PATCH, "/questions/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/questions").permitAll()
                         .antMatchers(HttpMethod.DELETE, "/member/**").hasRole("USER")
-                        .anyRequest().permitAll()
+                        .anyRequest().permitAll());
 
-                )
-                .oauth2Login()
-                .loginPage("/auth/login/oauth2")
-                .permitAll()
-        ;
-//                .oauth2Login(oauth2 -> oauth2
-//                        .loginPage("/oauth2/login") // OAuth2 로그인 페이지 경로 설정
-//                        .defaultSuccessUrl("/oauth2/callback") // OAuth2 로그인 성공 후 콜백 경로 설정
-//                        .failureUrl("/oauth2/error") // OAuth2 로그인 실패 시 경로 설정
-//                        .userInfoEndpoint()
-//                        .userService(oAuth2UserService())// 사용자 정보 엔드포인트 설정
-//                        .and()
-//                        .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, authorityUtils, memberService)));
 
         return http.build();
     }
@@ -87,7 +80,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://seb-44-pre-036.web.app"));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더 허용
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Refresh, MemberId"));
@@ -110,7 +103,8 @@ public class SecurityConfiguration implements WebMvcConfigurer {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtUtils, authorityUtils);
 
             builder.addFilter(jwtAuthenticationFilter)
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
+                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
     }
 
@@ -128,10 +122,16 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 //                .maxAge(3600);
 //    }
 //
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new JwtParseInterceptor(jwtUtils))
-////                .addPathPatterns("/questions/**")
-//                .addPathPatterns("/members/**");
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new JwtParseInterceptor(jwtUtils))
+                .addPathPatterns("/questions/**")
+                .addPathPatterns("/members/**");
+    }
+
+
+    public MemberService memberService() {
+        return new MemberService(memberRepository, passwordEncoder(), authorityUtils);
+    }
+
 }

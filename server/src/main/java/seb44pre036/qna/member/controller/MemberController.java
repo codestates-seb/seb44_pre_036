@@ -11,9 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import seb44pre036.qna.auth.interceptor.JwtParseInterceptor;
 import seb44pre036.qna.auth.jwt.JwtTokenizer;
 import seb44pre036.qna.auth.jwt.TokenProvider;
 import seb44pre036.qna.auth.utils.JwtUtils;
+import seb44pre036.qna.exception.BusinessLogicException;
+import seb44pre036.qna.exception.ExceptionCode;
 import seb44pre036.qna.member.dto.MemberDto;
 import seb44pre036.qna.member.dto.UserDto;
 import seb44pre036.qna.member.entity.Member;
@@ -29,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.Enumeration;
 import java.util.Map;
 
 @Slf4j
@@ -45,14 +49,14 @@ public class MemberController {
     private final JwtUtils jwtUtils;
     private final TokenProvider tokenProvider;
 
-    @PostConstruct
-    public void postConstruct() {
-        Member member1 = new Member("admin@gmail.com", "어드민", "12345qwert");
-        Member member2 = new Member("potato@naver.com", "김감자", "12345qwert");
-
-        memberService.createMember(member1);
-        memberService.createMember(member2);
-    }
+//    @PostConstruct
+//    public void postConstruct() {
+//        Member member1 = new Member("admin@gmail.com", "어드민", "12345qwert");
+//        Member member2 = new Member("potato@naver.com", "김감자", "12345qwert");
+//
+//        memberService.createMember(member1);
+//        memberService.createMember(member2);
+//    }
 
     @PostMapping
     public ResponseEntity<?> postSignUp(@Valid @RequestBody MemberDto.post memberDto, HttpServletResponse response) {
@@ -81,22 +85,23 @@ public class MemberController {
 
         return ResponseEntity.created(location).build();
     }
-
     @GetMapping("/me")
-    public ResponseEntity<?> getLoggedInUserDetails(HttpServletRequest request) {
-        Map<String, Object> jwsClaims = jwtUtils.getJwsClaimsFromRequest(request);
-        int memberId = (int) jwsClaims.get("memberId");
-        Member findmember = memberService.findMember(memberId);
-        UserDto userDto = userMapper.memberToUserDto(findmember);
-
-        log.info("내 정보 응답완료");
-//        response.setHeader("Access-Control-Allow-Origin", "*");
-//        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//        response.setHeader("Access-Control-Allow-Headers", "authorization, content-type");
-//        response.setHeader("Access-Control-Max-Age", "3600");
-
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    public ResponseEntity getMemberMyPage(HttpServletRequest request) {
+        long authenticationMemberId = JwtParseInterceptor.getAuthenticatedMemberId();
+        return new ResponseEntity<>(mapper.memberToMyPage
+                (memberService.findMember(authenticationMemberId)), HttpStatus.OK);
     }
+
+//    @GetMapping("/me")
+//    public ResponseEntity<?> getLoggedInUserDetails(HttpServletRequest request) {
+//        Map<String, Object> jwsClaims = jwtUtils.getJwsClaimsFromRequest(request);
+//        int memberId = (int) jwsClaims.get("memberId");
+//        Member findmember = memberService.findMember(memberId);
+//        UserDto userDto = userMapper.memberToUserDto(findmember);
+//
+//        log.info("내 정보 응답완료");
+//        return new ResponseEntity<>(userDto, HttpStatus.OK);
+//    }
 
 
 

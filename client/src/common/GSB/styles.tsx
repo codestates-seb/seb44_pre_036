@@ -19,11 +19,13 @@ export const Side = styled.div`
   width: 158px;
   height: 100vh;
   border-right: 1px solid #d4d4d4;
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
 `;
 
 export const SideContainer = styled.div`
   padding-top: 24px;
-  height: 680px;
 `;
 
 export const Nav = styled.nav`

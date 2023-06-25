@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Page = styled.main`
   padding: 1rem 0 0 1rem;
   font-size: 0.875rem;
-  width: 47rem;
+  width: 65rem;
 `;
 
 export const HeaderContainer = styled.header`

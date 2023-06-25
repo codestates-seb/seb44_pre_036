@@ -8,7 +8,7 @@ export const AnswerForm = styled.form`
   max-width: 752px;
   min-width: 470px;
   margin: 0 auto;
-  box-shadow: 12px 24px 24px #ededed;
+  /* box-shadow: 12px 24px 24px #ededed; */
   h3 {
     margin-bottom: 10px;
   }

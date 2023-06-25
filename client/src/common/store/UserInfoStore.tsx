@@ -43,8 +43,11 @@ export const userInfo = createSlice({
         questions: action.payload.questions,
       };
     },
+    deleteUserInfo: () => {
+      return initialState;
+    },
   },
 });
 
 export const store = configureStore({ reducer: userInfo.reducer });
-export const { createUserInfo } = userInfo.actions;
+export const { createUserInfo, deleteUserInfo } = userInfo.actions;

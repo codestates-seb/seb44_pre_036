@@ -10,18 +10,26 @@ import {
   InputWrap,
   InputStyles,
   NavMenu,
+  NavMenu2,
   SearchImg,
+  UserImg,
+  LoginBtn,
+  SignBtn,
 } from '../styles';
 import Dropdown from '../components/Dropdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/RootStore';
+import { setTab } from '../../../pages/MyPage/store/TabStore';
 
 function GNB() {
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const user = useSelector((state: RootState) => state.userInfo);
+  const isLogin = user.memberId !== 0;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -49,33 +57,54 @@ function GNB() {
             />
           </form>
         </InputWrap>
-        <NavMenu>
-          <li
-            onClick={() =>
-              navigate(`/mypage/${user.memberId}/${user.name}/profile`)
-            }
-          >
-            <img src="/header_svg/user.svg" alt="user" />
-          </li>
-          <li onClick={() => handleClick(1)}>
-            <img src="/header_svg/message.svg" />
-          </li>
-          <li onClick={() => handleClick(2)}>
-            <img src="/header_svg/cup.svg" />
-          </li>
+        {isLogin ? (
+          <>
+            <NavMenu>
+              <li
+                onClick={() => {
+                  navigate(`/mypage/${user.memberId}/${user.name}/profile`)
+              dispatch(setTab('Profile'));
+            }}
+              >
+                <UserImg>
+                  {user.profileImageUrl ? (
+                    <img src={user.profileImageUrl} alt="user" />
+                  ) : (
+                    <img src="/header_svg/user.svg" alt="user" />
+                  )}
+                </UserImg>
+              </li>
+              <li onClick={() => handleClick(1)}>
+                <img src="/header_svg/message.svg" alt="message" />
+              </li>
+              <li onClick={() => handleClick(2)}>
+                <img src="/header_svg/cup.svg" alt="cup" />
+              </li>
+              <li onClick={() => handleClick(3)}>
+                <img src="/header_svg/help.svg" alt="help" />
+              </li>
 
-          <li onClick={() => handleClick(3)}>
-            <img src="/header_svg/help.svg" />
-          </li>
-
-          <li onClick={() => handleClick(4)}>
-            <img src="/header_svg/list.svg" />
-          </li>
-        </NavMenu>
-        {isOpen === 1 ? <Dropdown Id={1} /> : null}
-        {isOpen === 2 ? <Dropdown Id={2} /> : null}
-        {isOpen === 3 ? <Dropdown Id={3} /> : null}
-        {isOpen === 4 ? <Dropdown Id={4} /> : null}
+              <li onClick={() => handleClick(4)}>
+                <img src="/header_svg/list.svg" alt="list" />
+              </li>
+            </NavMenu>
+            {isOpen === 1 ? <Dropdown Id={1} /> : null}
+            {isOpen === 2 ? <Dropdown Id={2} /> : null}
+            {isOpen === 3 ? <Dropdown Id={3} /> : null}
+            {isOpen === 4 ? <Dropdown Id={4} /> : null}
+          </>
+        ) : (
+          <>
+            <NavMenu2>
+              <li>
+                <LoginBtn onClick={() => navigate('/login')}>Login</LoginBtn>
+              </li>
+              <li>
+                <SignBtn onClick={() => navigate('/signup')}>SignUp</SignBtn>
+              </li>
+            </NavMenu2>
+          </>
+        )}
       </Container>
     </Header>
   );

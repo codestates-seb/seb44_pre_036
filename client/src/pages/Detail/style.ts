@@ -9,7 +9,15 @@ export const Wrapper = styled.div`
 export const Page = styled.main`
   padding: 1rem;
   font-size: 0.875rem;
-  max-width: 47rem;
+  max-width: 65rem;
+
+  & > :nth-child(3) {
+    width: 45rem;
+  }
+
+  & > :nth-child(4) {
+    width: 45rem;
+  }
 `;
 
 export const HeaderContainer = styled.header`
@@ -32,12 +40,67 @@ export const HeaderContainer = styled.header`
       & > :first-child {
         color: #6a737c;
       }
+
+      & > :nth-child(3) {
+        margin-left: 0.5rem;
+        color: #6a737c;
+      }
+
+      & > :nth-child(5) {
+        margin-left: 0.5rem;
+        color: #6a737c;
+      }
     }
   }
 `;
 
 export const MainContainer = styled.main`
   display: flex;
+
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    width: 100%;
+    & > ul {
+      width: 100%;
+    }
+
+    aside {
+      border-right: 1px solid #f1e6bb;
+      border-left: 1px solid #f1e6bb;
+      border-bottom: 1px solid #f1e6bb;
+      margin-left: 2rem;
+      margin-top: 1rem;
+      border-radius: 5px;
+
+      & > :first-child {
+        border-radius: 5px 5px 0 0;
+      }
+
+      & > :last-child {
+        border-radius: 0 0 5px 5px;
+      }
+
+      h4 {
+        background: #fcf3d5;
+        border-bottom: 1px solid #f1e6bb;
+        border-top: 1px solid #f1e6bb;
+        padding: 0.5rem;
+        color: #525960;
+      }
+
+      div {
+        background: #fdf7e2;
+        padding: 0.5rem;
+
+        p {
+          padding-bottom: 0.5rem;
+          color: #3b4044;
+        }
+      }
+    }
+  }
 `;
 
 export const VoteContainer = styled.div`

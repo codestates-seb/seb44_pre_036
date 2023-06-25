@@ -13,7 +13,7 @@ import Pagination from '../components/Pagination';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const list = useSelector((state: RootState) => state.list.data);
+  const list = useSelector((state: RootState) => state.list);
   const tab = useSelector((state: RootState) => state.filter) || 'View';
   const page = useSelector((state: RootState) => state.page);
   const size = 10;
@@ -33,13 +33,15 @@ const Home = () => {
   }, [page, tab]);
 
   const handleNextPage = () => {
-    if (list && list.length === size) {
+    if (list && list.data.length === size) {
       dispatch(setPage(page + 1));
+    } else if (list && list.data.length === 0) {
+      dispatch(setPage(page - 1));
     }
   };
 
   const handlePrevPage = () => {
-    if (page > 1) {
+    if (list && list.data && page > 1) {
       dispatch(setPage(page - 1));
     }
   };
@@ -47,8 +49,8 @@ const Home = () => {
   return (
     <Wrapper>
       <Page>
-        {list && <Header data={list} user={user} />}
-        {list && <List data={list} user={user} />}
+        <Header pageInfo={list.pageInfo} user={user} />
+        <List data={list.data} user={user} />
         <Pagination
           handleNextPage={handleNextPage}
           handlePrevPage={handlePrevPage}
