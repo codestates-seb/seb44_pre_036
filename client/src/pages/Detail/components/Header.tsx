@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { HeaderContainer } from '../style';
 import { BlueButton } from '../../../common/style';
-import { getItem } from '../../Board/type';
 import { IUserInfo } from '../../../common/model/UserInfo';
+import { getItem } from '../../../common/type';
 
 const Header = ({ item, user }: { item: getItem; user: IUserInfo }) => {
   return (
@@ -11,7 +11,7 @@ const Header = ({ item, user }: { item: getItem; user: IUserInfo }) => {
         <h2>{item?.title}</h2>
         <p>
           <span>Asked </span>
-          <span>{item?.createdAt}</span>
+          <span>{item?.createdAt.slice(0, 10)}</span>
         </p>
       </section>
       <section>

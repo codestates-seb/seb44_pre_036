@@ -1,7 +1,7 @@
 import { MainContainer } from '../style';
 import Question from '../components/Question';
 import { IUserInfo } from '../../../common/model/UserInfo';
-import { getItem } from '../../Board/type';
+import { getItem } from '../../../common/type';
 
 const Main = ({ item, user }: { item: getItem; user: IUserInfo }) => {
   return (

@@ -13,11 +13,14 @@ import {
 import { useEffect } from 'react';
 import { postData } from '../model/postData';
 import { useMutation } from 'react-query';
+import { createUserInfo } from '../../../common/store/UserInfoStore';
 
 const Ask = () => {
   const user = useSelector((state: RootState) => state.userInfo);
 
   const ask = useSelector((state: RootState) => state.ask);
+
+  const isButtonDisabled = ask.title.length < 10 || ask.content.length < 20;
 
   const askMutation = useMutation(postData);
 
@@ -31,8 +34,10 @@ const Ask = () => {
   }, []);
 
   const handleSubmit = () => {
-    console.log(ask);
     askMutation.mutate(ask);
+    dispatch(
+      createUserInfo({ ...user, createdTime: new Date().toLocaleDateString() }),
+    );
   };
 
   return (
@@ -41,7 +46,7 @@ const Ask = () => {
         <h1>Ask a public question</h1>
         <TitleInput />
         <QuestionInput />
-        <BlueButton onClick={() => handleSubmit()}>
+        <BlueButton onClick={() => handleSubmit()} disabled={isButtonDisabled}>
           Post your question
         </BlueButton>
       </AskContainer>

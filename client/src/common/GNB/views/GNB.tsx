@@ -11,20 +11,23 @@ import {
   InputStyles,
   NavMenu,
   SearchImg,
-  List,
 } from '../styles';
 import Dropdown from '../components/Dropdown';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/RootStore';
 
 function GNB() {
   const [input, setInput] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<number | null>(null);
   const navigate = useNavigate();
+
+  const user = useSelector((state: RootState) => state.userInfo);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
-  const handleClick = () => {
-    setIsOpen(!isOpen);
+  const handleClick = (id: number) => {
+    setIsOpen((prevId) => (prevId === id ? null : id)); // 클릭한 li 요소의 Id를 toggle하여 열고 닫음
   };
   return (
     <Header>
@@ -47,17 +50,32 @@ function GNB() {
           </form>
         </InputWrap>
         <NavMenu>
-          <li onClick={() => navigate('/mypage')}>
+          <li
+            onClick={() =>
+              navigate(`/mypage/${user.memberId}/${user.name}/profile`)
+            }
+          >
             <img src="/header_svg/user.svg" alt="user" />
           </li>
-          <li>
-            <img src="/header_svg/logout.svg" alt="logout" />
+          <li onClick={() => handleClick(1)}>
+            <img src="/header_svg/message.svg" />
+          </li>
+          <li onClick={() => handleClick(2)}>
+            <img src="/header_svg/cup.svg" />
+          </li>
+
+          <li onClick={() => handleClick(3)}>
+            <img src="/header_svg/help.svg" />
+          </li>
+
+          <li onClick={() => handleClick(4)}>
+            <img src="/header_svg/list.svg" />
           </li>
         </NavMenu>
-        <List onClick={() => handleClick()}>
-          <img src="/header_svg/list.svg" />
-          {isOpen ? <Dropdown /> : null}
-        </List>
+        {isOpen === 1 ? <Dropdown Id={1} /> : null}
+        {isOpen === 2 ? <Dropdown Id={2} /> : null}
+        {isOpen === 3 ? <Dropdown Id={3} /> : null}
+        {isOpen === 4 ? <Dropdown Id={4} /> : null}
       </Container>
     </Header>
   );

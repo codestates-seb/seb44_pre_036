@@ -12,7 +12,7 @@ function Router() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/mypage/:id/:name" element={<MyPage />} />
+      <Route path="/mypage/:id/:name/:tab" element={<MyPage />} />
       <Route path="/board" element={<Board />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />

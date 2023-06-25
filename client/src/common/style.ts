@@ -8,9 +8,19 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  ::-webkit-scrollbar {
+  width: 0;
+  }
+
   html, body, #root {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+  }
+`;
+
+export const MembershipPageStyle = createGlobalStyle`
+  body {
+    background-color: #f5f5f5 ;
   }
 `;
 
@@ -33,6 +43,12 @@ export const BlueButton = styled.button`
   &:active {
     background: #0063bf;
   }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+  }
 `;
 
 export const StyledLabel = styled.label`
@@ -49,6 +65,7 @@ export const StyledForm = styled.form`
   border-radius: 10px;
   width: 300px;
   height: 237px;
+  background-color: white;
 `;
 
 export const StyledInput = styled.input`
@@ -101,4 +118,10 @@ export const StackoverflowLogo = styled.div`
   background-position: center;
   width: 45px;
   height: 45px;
+`;
+
+export const Layout = styled.div`
+  display: flex;
+  max-width: 1264px;
+  justify-content: center;
 `;

@@ -1,42 +1,42 @@
 import axios from 'axios';
-import { QueryClient, useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { VoteButton } from '../style';
 import { ReactComponent as UpIcon } from '../../../common/assets/icons/VoteUp.svg';
 import { ReactComponent as DownIcon } from '../../../common/assets/icons/VoteDown.svg';
-import { getItem } from '../../Board/type';
-import { LISTCRUD_URL } from '../../../common/utils/enum';
-
-interface PatchData {
-  questionId: number;
-  title: string;
-  content: string;
-}
+import { LISTCRUD_URL } from '../../../common/utils/constants';
+import { getItem } from '../../../common/type';
 
 export const VoteUp = ({ item }: { item: getItem }) => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
-  const voteUpMutation = useMutation(async () => {
-    try {
-      const patchData: PatchData = {
-        questionId: item.questionId,
-        title: item.title,
-        content: item.content,
+  const voteUpMutation = useMutation(
+    async () => {
+      const accessToken = localStorage.getItem('accessToken');
+
+      const headers = {
+        'ngrok-skip-browser-warning': 'true',
+        Authorization: `Bearer ${accessToken}`,
       };
 
-      const response = await axios.patch(
-        `${LISTCRUD_URL}/questions/edit/${item.questionId}`,
-        patchData,
+      await axios.patch(
+        `${LISTCRUD_URL}/questions/vote/${item.questionId}?updown=up`,
+        null,
+        { headers },
       );
-
-      const data = response.data;
-
-      data.voteCount = item.voteCount + 1;
-
-      queryClient.setQueryData(['item', item.questionId], data);
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    },
+    {
+      onSuccess: () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (queryClient.setQueryData as any)(
+          ['item', item.questionId],
+          (prevData: { voteCount: number }) => ({
+            ...prevData,
+            voteCount: prevData.voteCount + 1,
+          }),
+        );
+      },
+    },
+  );
 
   const handleVoteUp = () => {
     voteUpMutation.mutate();
@@ -50,30 +50,36 @@ export const VoteUp = ({ item }: { item: getItem }) => {
 };
 
 export const VoteDown = ({ item }: { item: getItem }) => {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
-  const voteDownMutation = useMutation(async () => {
-    try {
-      const patchData: PatchData = {
-        questionId: item.questionId,
-        title: item.title,
-        content: item.content,
+  const voteDownMutation = useMutation(
+    async () => {
+      const accessToken = localStorage.getItem('accessToken');
+
+      const headers = {
+        'ngrok-skip-browser-warning': 'true',
+        Authorization: `Bearer ${accessToken}`,
       };
 
-      const response = await axios.patch(
-        `${LISTCRUD_URL}/questions/edit/${item.questionId}`,
-        patchData,
+      await axios.patch(
+        `${LISTCRUD_URL}/questions/vote/${item.questionId}?updown=down`,
+        null,
+        { headers },
       );
-
-      const data = response.data;
-
-      data.voteCount = item.voteCount - 1;
-
-      queryClient.setQueryData(['item', item.questionId], data);
-    } catch (err) {
-      console.log(err);
-    }
-  });
+    },
+    {
+      onSuccess: () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (queryClient.setQueryData as any)(
+          ['item', item.questionId],
+          (prevData: { voteCount: number }) => ({
+            ...prevData,
+            voteCount: prevData.voteCount + 1,
+          }),
+        );
+      },
+    },
+  );
 
   const handleVoteDown = () => {
     voteDownMutation.mutate();

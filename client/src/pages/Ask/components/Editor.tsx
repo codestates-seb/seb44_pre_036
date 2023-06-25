@@ -12,7 +12,6 @@ function Editor() {
 
   const modules = {
     toolbar: [
-      //[{ 'font': [] }],
       [{ header: [1, 2, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
       [
@@ -28,7 +27,6 @@ function Editor() {
   };
 
   const formats = [
-    //'font',
     'header',
     'bold',
     'italic',

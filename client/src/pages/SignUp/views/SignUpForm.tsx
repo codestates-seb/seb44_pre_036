@@ -4,22 +4,7 @@ import { useMutation } from 'react-query';
 import axios from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
-import {
-  StyledInput,
-  TextWrapper,
-  UserInfoWrapper,
-  Text,
-} from '../../../common/style';
-import {
-  Text2,
-  Text3,
-  TextWrapper2,
-  TextWrapper4,
-  CheckBox,
-  CheckBoxWrapper,
-  RobotBoxContainer,
-  RobotBox,
-} from '../style';
+import { StyledInput, UserInfoWrapper } from '../../../common/style';
 import { SignUpBox } from '../style';
 import { IUserInfoSignUp } from '../model/UserInfoSignUp';
 import {
@@ -35,12 +20,15 @@ import {
   WARNING_MESSAGE_PASSWORD_EMPTY,
   WARNING_MESSAGE_EMAIL_EMPTY,
   WARNING_MESSAGE_PASSWORD_WEAK,
-  PASSWORD_RULE_MESSAGE,
 } from '../../../common/utils/constants';
 import ConfirmButton from '../components/ConfirmButton';
 import { MembershipUrl } from '../../../common/utils/enum';
 import { ErrorMsg } from '../../../common/style';
 import useEncryptToken from '../../../common/utils/customHook/useEncryptToken';
+import NotificationBeforeSignUp from '../components/NotificationBeforeSignUp';
+import TextAllowingToReceiveServices from '../components/TextAllowingToReceiveServices';
+import ImNotARobotBox from '../components/ImNotARobotBox';
+import PasswordRuleMessage from '../components/PasswordRuleMessage';
 
 const postData = async (data: IUserInfoSignUp) => {
   console.log('1. 준기님께 보내는 유저 정보', data);
@@ -154,34 +142,11 @@ function SignUpForm() {
           <ErrorMsg>{errors.password.message}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
-      <TextWrapper>
-        <Text>{PASSWORD_RULE_MESSAGE}</Text>
-      </TextWrapper>
-      <RobotBoxContainer>
-        <RobotBox>
-          <TextWrapper4>
-            <StyledInput type="checkbox" />
-            <Text3>I'm not a robot</Text3>
-          </TextWrapper4>
-        </RobotBox>
-      </RobotBoxContainer>
-      <TextWrapper2>
-        <CheckBoxWrapper>
-          <CheckBox type="checkbox" />
-        </CheckBoxWrapper>
-        <Text2>
-          Opt-in to receive occasional product updates, user research
-          invitations, company announcements, and digests.
-        </Text2>
-      </TextWrapper2>
+      <PasswordRuleMessage />
+      <ImNotARobotBox />
+      <TextAllowingToReceiveServices />
       <ConfirmButton setIsClicked={setIsClicked} buttontext={'Sign Up'} />
-      <TextWrapper>
-        <Text>
-          By clicking “Sign up”, you agree to our terms of service and
-          acknowledge that you have read and understand our privacy policy and
-          code of conduct.
-        </Text>
-      </TextWrapper>
+      <NotificationBeforeSignUp />
     </SignUpBox>
   );
 }
