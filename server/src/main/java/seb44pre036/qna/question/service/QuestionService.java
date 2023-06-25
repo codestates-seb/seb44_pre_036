@@ -135,16 +135,4 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    public Question updateVote(long questionId, long memberId, String updown) {
-        memberService.findVerifiedMember(memberId);
-        Question findQuestion = findVerifiedQuestion(questionId);
-
-        if (updown.equals("up")) {
-            findQuestion.setVoteCount(findQuestion.getVoteCount() + 1);
-        } else if(updown.equals("down")) {
-            findQuestion.setVoteCount(findQuestion.getVoteCount() - 1);
-        }
-
-        return questionRepository.save(findQuestion);
-    }
 }

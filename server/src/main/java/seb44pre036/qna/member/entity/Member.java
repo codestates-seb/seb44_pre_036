@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import seb44pre036.qna.answer.entity.Answer;
 import seb44pre036.qna.question.entity.Question;
+import seb44pre036.qna.questionVote.entity.QuestionVote;
 
 
 import javax.persistence.*;
@@ -43,6 +44,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVotes = new ArrayList<>();
 
     public void addAnswer(Answer answer) {
         this.answers.add(answer);
