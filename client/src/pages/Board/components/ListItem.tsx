@@ -36,7 +36,7 @@ const ListItem = ({ data, user }: { data: getItem[]; user: IUserInfo }) => {
                   </div>
                 </ContentSection>
                 <AuthorSection>
-                  <Link to={`/mypage/${user.memberId}/${user.name}`}>
+                  <Link to={`/mypage/${user.memberId}/${user.name}/profile`}>
                     {/* <img src={item.userAvatar} alt={item.name} /> */}
                     <Profile />
                     <div>{item.name}</div>

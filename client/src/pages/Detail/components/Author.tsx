@@ -14,7 +14,7 @@ const Author = ({ item, user }: { item: getItem; user: IUserInfo }) => {
       <p>
         {/* <img src={item?.userAvatar} alt={item?.name} /> */}
         <Profile />
-        <Link to={`/mypage/${user.memberId}/${user.name}`}>
+        <Link to={`/mypage/${user.memberId}/${user.name}/profile`}>
           <span>{item?.name}</span>
         </Link>
       </p>
