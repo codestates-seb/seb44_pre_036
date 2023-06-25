@@ -1,5 +1,4 @@
 import { QuestionInputContainer } from '../style';
-import { BlueButton } from '../../../common/style';
 import Editor from './Editor';
 
 const QuestionInput = () => {
@@ -11,7 +10,6 @@ const QuestionInput = () => {
         20 characters.
       </p>
       <Editor />
-      <BlueButton>Next</BlueButton>
     </QuestionInputContainer>
   );
 };

@@ -1,35 +1,23 @@
 import { useMutation } from 'react-query';
-import { getItem } from '../../Board/type';
 import BodyInput from '../components/BodyInput';
 import Buttons from '../components/Buttons';
 import Preview from '../components/Preview';
 import TitleInput from '../components/TitleInput';
-import { Page } from '../style';
+import { Page, Wrapper } from '../style';
 import { updateData } from '../model/updateData';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
+import { getItem } from '../../../common/type';
+import { createUserInfo } from '../../../common/store/UserInfoStore';
 
 const Edit = () => {
-  // const item = useSelector((state: RootState) => state.item);
+  const user = useSelector((state: RootState) => state.userInfo);
+
+  const dispatch = useDispatch();
+
+  let item = useSelector((state: RootState) => state.item);
 
   const updatedItem = useSelector((state: RootState) => state.edit);
-
-  let item: getItem = {
-    questionId: 4,
-    title: 'how to use react hook',
-    content: `I'm stucked with a simple configuration of Traefik to pass requests from my IP to my application.
-  `,
-    viewCount: 1,
-    createdAt: new Date().toLocaleDateString(),
-    updatedAt: new Date().toLocaleDateString(),
-    memberId: 1234,
-    name: 'Mooobi',
-    userAvatar:
-      'https://lh3.googleusercontent.com/a/AAcHTtf_r7CBglmE-aDKLINfK78xcsVPtrg5Q7sHnOHW=k-s256',
-    answers: [],
-    voteCount: 0,
-  };
-  // 더미 데이터
 
   const updateMutation = useMutation((data: getItem) =>
     updateData(item.questionId, data),
@@ -43,15 +31,23 @@ const Edit = () => {
       updatedAt: new Date().toLocaleDateString(),
     };
     updateMutation.mutate(item);
+    dispatch(
+      createUserInfo({
+        ...user,
+        modifiedTime: new Date().toLocaleDateString(),
+      }),
+    );
   };
 
   return (
-    <Page>
-      <TitleInput item={item} />
-      <BodyInput item={item} />
-      <Preview />
-      <Buttons handleUpdate={handleUpdate} />
-    </Page>
+    <Wrapper>
+      <Page>
+        <TitleInput item={item} />
+        <BodyInput item={item} />
+        <Preview />
+        <Buttons handleUpdate={handleUpdate} />
+      </Page>
+    </Wrapper>
   );
 };
 

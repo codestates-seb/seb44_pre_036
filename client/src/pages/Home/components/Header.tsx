@@ -1,23 +1,22 @@
 import { Link } from 'react-router-dom';
 import { HeaderContainer } from '../style';
 import { BlueButton } from '../../../common/style';
+import FilterButtons from './FilterButtons';
 import { IUserInfo } from '../../../common/model/UserInfo';
-import { getItem } from '../../../common/type';
+import { list } from '../../../common/type';
 
-const Header = ({ item, user }: { item: getItem; user: IUserInfo }) => {
+const Header = ({ data, user }: { data: list[]; user: IUserInfo }) => {
   return (
     <HeaderContainer>
       <section>
-        <h2>{item?.title}</h2>
-        <p>
-          <span>Asked </span>
-          <span>{item?.createdAt.slice(0, 10)}</span>
-        </p>
-      </section>
-      <section>
+        <h2>Top Questions</h2>
         <Link to={`/ask/${user.memberId}/${user.name}`}>
           <BlueButton>Ask Question</BlueButton>
         </Link>
+      </section>
+      <section>
+        <p>{`${data?.length} questions`}</p>
+        <FilterButtons />
       </section>
     </HeaderContainer>
   );

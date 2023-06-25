@@ -13,11 +13,15 @@ import {
   SearchImg,
 } from '../styles';
 import Dropdown from '../components/Dropdown';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/RootStore';
 
 function GNB() {
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const navigate = useNavigate();
+
+  const user = useSelector((state: RootState) => state.userInfo);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -46,10 +50,16 @@ function GNB() {
           </form>
         </InputWrap>
         <NavMenu>
+          <li
+            onClick={() =>
+              navigate(`/mypage/${user.memberId}/${user.name}/profile`)
+            }
+          >
+            <img src="/header_svg/user.svg" alt="user" />
+          </li>
           <li onClick={() => handleClick(1)}>
             <img src="/header_svg/message.svg" />
           </li>
-
           <li onClick={() => handleClick(2)}>
             <img src="/header_svg/cup.svg" />
           </li>

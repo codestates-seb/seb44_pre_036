@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 export const Page = styled.main`
-  background: #f8f9f9;
-  height: calc(100% - 60px);
   display: flex;
   justify-content: center;
   padding-bottom: 1.75rem;
+  min-height: 100%;
 `;
 
 export const AskContainer = styled.section`

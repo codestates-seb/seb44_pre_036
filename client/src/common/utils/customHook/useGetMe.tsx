@@ -23,6 +23,7 @@ function useGetMe(): UseQueryResult<IUserInfo | null> {
 
     const accessToken = decryptToken(encryptedAccessToken);
     console.log('마지막으로 찍혀야할 요주의 accessToken', accessToken);
+
     const headers = {
       'ngrok-skip-browser-warning': 'true',
       Authorization: `Bearer ${accessToken}`,
