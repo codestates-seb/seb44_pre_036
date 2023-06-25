@@ -14,9 +14,9 @@ import seb44pre036.qna.member.service.MemberService;
 import seb44pre036.qna.question.entity.Question;
 import seb44pre036.qna.question.service.QuestionService;
 
-import java.io.IOException;
+
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -71,31 +71,47 @@ public class AnswerService {
             question.addAnswer(createAnswer);
             return createAnswer;
         }
-
     }
 
     public Answer findAnswer(long answerId) {
         return findVerifiedAnswer(answerId);
     }
 
-    // Highest score(default)
-    public List<Answer> findAnswersSortedByHighestScore(AnswerDto.Find requestBody){
-    Question question = questionService.findVerifiedQuestion(requestBody.getQuestionId());
-    List<Answer> answers = question.getAnswers();
 
-    if(requestBody.getSortBy()=="HighestScore"){
-    answers.stream().sorted(Comparator.comparing(Answer::getVote)).collect(Collectors.toList());}
+    public List<Answer> findAnswers(AnswerDto.Find requestBody){
 
-    // 일단 이거 두개 안먹힘 ( localdatetime을 정수형으로 고치면 될듯? // 2023-06-22T18:19:21.287854" -> (long) 20230622181921)
-    else if (requestBody.getSortBy()=="DateModified") {
+        // 질문 정보 가져오기
+        Question question = questionService.findVerifiedQuestion(requestBody.getQuestionId());
 
-    //answers.stream().sorted(Comparator.comparing(Answer::getUpdatedAt))).collect(Collectors.toList());
-    }
-    else {answers.stream().sorted(Comparator.comparing(Answer::getCreatedAt)).collect(Collectors.toList());
-    }
+        // 질문에 등록된 답변들 불러오기
+
+        List<Answer> answers = new ArrayList<>();
+        for(Answer answer : question.getAnswers()){
+            answers.add(answer);
+        }
 
 
-        return answers;
+        //HighestScore
+        if(requestBody.getSortBy()==1){
+            return answers.stream().sorted(Comparator.comparing(Answer::getVote,Comparator.reverseOrder())).collect(Collectors.toList());
+        }
+        // Newest
+        else if (requestBody.getSortBy()==2) {
+            //return answerRepository.sortedByScore(requestBody.getQuestionId());
+            return answerRepository.sortedByCreatedAtDesc(question.getQuestionId());}
+
+        // Oldest
+        else if (requestBody.getSortBy()==3){
+            //return answers.stream().sorted(Comparator.comparing(Answer::getUpdatedAt)).collect(Collectors.toList());
+            return answerRepository.sortedByCreatedAtAsc(question.getQuestionId());
+        }
+
+        // Only Selected
+        else if (requestBody.getSortBy()==4){
+            return answerRepository.filterBySelected(question.getQuestionId());
+        }
+
+        throw new BusinessLogicException(ExceptionCode.ANSWER_NOT_EXIST_FUNCTION);
     }
 
     public Answer findVerifiedAnswer(long answerId) {
@@ -185,6 +201,8 @@ public class AnswerService {
         else{
             answer.setVote(vote-1);
         }
+
+        answer.addVotedMembers(answerVote);
         answerVoteRepository.save(answerVote);
 
         return findAnswer(answerVote.getAnswer().getAnswerId());
