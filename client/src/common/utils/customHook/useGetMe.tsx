@@ -14,6 +14,7 @@ function useGetMe(): UseQueryResult<IUserInfo | null> {
   const decryptToken = useDecryptToken();
 
   const getMe = async (): Promise<IUserInfo | null | undefined> => {
+    console.log('getMe 호출');
     const encryptedAccessToken = localStorage.getItem(ACCESS_TOKEN);
 
     if (!encryptedAccessToken) {
@@ -21,7 +22,7 @@ function useGetMe(): UseQueryResult<IUserInfo | null> {
     }
 
     const accessToken = decryptToken(encryptedAccessToken);
-
+    console.log('마지막으로 찍혀야할 요주의 accessToken', accessToken);
     const headers = {
       'ngrok-skip-browser-warning': 'true',
       Authorization: `Bearer ${accessToken}`,
@@ -33,13 +34,14 @@ function useGetMe(): UseQueryResult<IUserInfo | null> {
         withCredentials: true,
       });
 
-      const userData: IUserInfo = response.data;
+      const userData = response.data;
+      console.log('getMe 호출 후 받아온 userData', typeof userData, userData);
+
+      dispatch(createUserInfo(userData));
 
       if (!userData || !response?.headers.authorization) {
         return null;
       }
-
-      dispatch(createUserInfo(userData));
 
       //   accessToken이 만료되었을 경우 재발급
       const newAccessToken = response.headers.authorization.split(' ')[1];
