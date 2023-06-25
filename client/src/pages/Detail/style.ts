@@ -32,6 +32,16 @@ export const HeaderContainer = styled.header`
       & > :first-child {
         color: #6a737c;
       }
+
+      & > :nth-child(3) {
+        margin-left: 0.5rem;
+        color: #6a737c;
+      }
+
+      & > :nth-child(5) {
+        margin-left: 0.5rem;
+        color: #6a737c;
+      }
     }
   }
 `;
