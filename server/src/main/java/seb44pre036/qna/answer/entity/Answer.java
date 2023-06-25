@@ -10,6 +10,8 @@ import seb44pre036.qna.question.entity.Question;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +66,19 @@ public class Answer {
         }
     }
 
-    //public void addVotedMembers(AnswerVote vote){
-      //  this.votedMembers.add(vote);
-    //}
+    public void addVotedMembers(AnswerVote vote){
+        this.answerVotes.add(vote);
+    }
+    public long getMilliCreatedAt(){
+        ZonedDateTime zdt = ZonedDateTime.of(this.createdAt, ZoneId.systemDefault());
+        long date = zdt.toInstant().toEpochMilli();
+
+        return date;
+    }
+    public long getMilliUpdatedAt(){
+        ZonedDateTime zdt = ZonedDateTime.of(this.updatedAt, ZoneId.systemDefault());
+        long date = zdt.toInstant().toEpochMilli();
+
+        return date;
+    }
 }

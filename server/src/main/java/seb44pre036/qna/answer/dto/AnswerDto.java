@@ -66,16 +66,15 @@ public class AnswerDto {
     @Getter
     @Setter
     public static class Find {
-        //@NotBlank(message="맴버 ID 입력이 필요합니다")
+
         private long memberId;
 
         @NotBlank(message="질문 ID 입력이 필요합니다")
         private long questionId;
 
-
-        // Highest score , Date Modified , Date created
+        // 1 : Hightest Score , 2 : DateUpdate , 3 : DateCreate , 4 : SeletedAnswers
         @NotBlank(message = "정렬 기준을 입력해주세요")
-        private String sortBy;
+        private long sortBy;
     }
 
     @Getter
@@ -111,6 +110,7 @@ public class AnswerDto {
         @NotBlank(message = "투표할 질문 정보를 입력해주세요")
         private long answerId;
 
+        //true -> vote+=1 , false -> vote-=1
         @NotBlank(message = "추천 여부를 입력해주세요")
         private boolean recommend;
 
