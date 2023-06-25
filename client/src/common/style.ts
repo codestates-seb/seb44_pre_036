@@ -112,3 +112,9 @@ export const StackoverflowLogo = styled.div`
   width: 45px;
   height: 45px;
 `;
+
+export const Layout = styled.div`
+  display: flex;
+  max-width: 1264px;
+  justify-content: center;
+`;
