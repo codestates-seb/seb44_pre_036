@@ -2,9 +2,14 @@ import { useDispatch } from 'react-redux';
 import { TitleInputBox, TitleInputContainer } from '../style';
 import { setTitle } from '../store/EditStore';
 import { getItem } from '../../../common/type';
+import { useEffect } from 'react';
 
 const TitleInput = ({ item }: { item: getItem }) => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitle({ title: item.title }));
+  }, []);
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setTitle({ title: event.target.value }));

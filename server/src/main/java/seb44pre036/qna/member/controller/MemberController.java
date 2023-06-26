@@ -49,14 +49,14 @@ public class MemberController {
     private final JwtUtils jwtUtils;
     private final TokenProvider tokenProvider;
 
-    @PostConstruct
-    public void postConstruct() {
-        Member member1 = new Member("admin@gmail.com", "어드민", "12345qwert");
-        Member member2 = new Member("potato@naver.com", "김감자", "12345qwert");
-
-        memberService.createMember(member1);
-        memberService.createMember(member2);
-    }
+//    @PostConstruct
+//    public void postConstruct() {
+//        Member member1 = new Member("admin@gmail.com", "어드민", "12345qwert");
+//        Member member2 = new Member("potato@naver.com", "김감자", "12345qwert");
+//
+//        memberService.createMember(member1);
+//        memberService.createMember(member2);
+//    }
 
     @PostMapping
     public ResponseEntity<?> postSignUp(@Valid @RequestBody MemberDto.post memberDto, HttpServletResponse response) {

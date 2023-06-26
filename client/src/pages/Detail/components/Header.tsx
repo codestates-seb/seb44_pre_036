@@ -19,7 +19,9 @@ const Header = ({ item, user }: { item: getItem; user: IUserInfo }) => {
         </p>
       </section>
       <section>
-        <Link to={`/ask/${user.memberId}/${user.name}`}>
+        <Link
+          to={user.memberId ? `/ask/${user.memberId}/${user.name}` : '/login'}
+        >
           <BlueButton>Ask Question</BlueButton>
         </Link>
       </section>

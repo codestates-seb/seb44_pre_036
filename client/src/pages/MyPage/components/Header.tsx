@@ -16,9 +16,11 @@ const Header = () => {
       <section>
         <h1>{user.name}</h1>
         <div>
-          <p>{`Last post creation ${user.createdTime || `doesn't exist`}`}</p>
+          <p>{`Last post creation ${
+            user.createdTime.slice(0, 10) || `doesn't exist`
+          }`}</p>
           <p>{`Last post modification ${
-            user.modifiedTime || `doesn't exist`
+            user.modifiedTime.slice(0, 10) || `doesn't exist`
           }`}</p>
         </div>
       </section>

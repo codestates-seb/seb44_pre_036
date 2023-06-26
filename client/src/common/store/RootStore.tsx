@@ -9,6 +9,7 @@ import { pageSlice } from './PageStore';
 import { listSlice } from './ListStore';
 import { tabSlice } from '../../pages/MyPage/store/TabStore';
 import { AnswerSlice } from '../Answer/store/AnswerStore';
+import { voteCountSlice } from '../../pages/Detail/store/voteCountStore';
 
 const rootReducer = combineReducers({
   userInfo: userInfo.reducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   list: listSlice.reducer,
   tab: tabSlice.reducer,
   answer: AnswerSlice.reducer,
+  voteCount: voteCountSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

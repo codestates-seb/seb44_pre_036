@@ -29,14 +29,7 @@ export enum GoogleLoginBtnStyle {
 export type postItem = {
   title: string;
   content: string;
-  viewCount: number;
-  createdAt: string;
-  updatedAt: string;
   memberId: number;
-  name: string;
-  userAvatar: string;
-  answers: Answerdata[];
-  voteCount: number;
 };
 
 export type getItem = {
@@ -74,4 +67,10 @@ export type AnswerInfo = {
   vote: number;
   questionId: string;
   memberId: string;
+};
+
+export type editItem = {
+  questionId: number;
+  title: string;
+  content: string;
 };

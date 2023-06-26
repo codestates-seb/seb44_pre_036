@@ -18,8 +18,10 @@ function GSB() {
     } else if (index === 1) {
       navigate('/board');
     } else if (index === 3) {
-      navigate(`/mypage/${user.memberId}/${user.name}/profile`);
-      dispatch(setTab('Profile'));
+      if (user.memberId) {
+        navigate(`/mypage/${user.memberId}/${user.name}/profile`);
+        dispatch(setTab('Profile'));
+      }
     }
     setSelectedItem(index);
   };
