@@ -31,11 +31,7 @@ import ImNotARobotBox from '../components/ImNotARobotBox';
 import PasswordRuleMessage from '../components/PasswordRuleMessage';
 
 const postData = async (data: IUserInfoSignUp) => {
-  console.log('1. 준기님께 보내는 유저 정보', data);
   const response = await axios.post(MembershipUrl.SignUp, data);
-  console.log('2. 준기님께 계정 정보 전달 후 받아온 데이터', response);
-
-  console.log('3. 준기님께 계정 정보 전달 후 받아온 헤더', response.headers);
 
   return response.headers;
 };
@@ -55,17 +51,10 @@ function SignUpForm() {
 
   const mutation = useMutation(postData, {
     onSuccess: async (headers) => {
-      console.log('3. 준기님께 계정 정보 전달 후 받아온 데이터', headers);
-
       if (!headers) {
         return;
       }
       const accessToken = headers.authorization;
-
-      console.log(
-        '4. 준기님께 계정 정보 전달 후 받아온 accessToken',
-        accessToken,
-      );
 
       localStorage.setItem(ACCESS_TOKEN, encrypt(accessToken));
 
@@ -94,7 +83,6 @@ function SignUpForm() {
   });
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
-    console.log('1. 준기님께 보내는 유저 정보', userData);
     setIsClicked(true);
     await mutation.mutateAsync(userData);
   };
