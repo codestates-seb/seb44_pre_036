@@ -40,6 +40,7 @@ function Router() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/board" element={<Board />} />
       </Routes>
     );
 }

@@ -58,6 +58,17 @@ export type list = {
   pageInfo: pageInfo;
 };
 
+export type AnswerInfo = {
+  answerId: string;
+  content: string;
+  isAccepted: string;
+  createdAt: string;
+  updatedAt: string;
+  vote: number;
+  questionId: string;
+  memberId: string;
+};
+
 export type editItem = {
   questionId: number;
   title: string;

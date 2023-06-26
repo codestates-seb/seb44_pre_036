@@ -8,6 +8,7 @@ import { editSlice } from '../../pages/Edit/store/EditStore';
 import { pageSlice } from './PageStore';
 import { listSlice } from './ListStore';
 import { tabSlice } from '../../pages/MyPage/store/TabStore';
+import { AnswerSlice } from '../Answer/store/AnswerStore';
 import { voteCountSlice } from '../../pages/Detail/store/voteCountStore';
 
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   page: pageSlice.reducer,
   list: listSlice.reducer,
   tab: tabSlice.reducer,
+  answer: AnswerSlice.reducer,
   voteCount: voteCountSlice.reducer,
 });
 

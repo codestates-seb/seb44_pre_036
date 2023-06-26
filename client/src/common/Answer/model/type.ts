@@ -1,6 +1,5 @@
 export interface Answerdata {
-  memberId: string;
-  questionId: string;
+  questionId: number;
   content: string;
 }
 
@@ -9,16 +8,12 @@ export interface Patchdata {
   content: string;
 }
 
-export interface DummyData {
+export interface AnswerData {
   answerId: string;
   content: string;
   isAccepted: string;
   createdAt: Date;
   updatedAt: Date;
-  questionId: string;
-  memberId: string;
-}
-export interface Listdata {
-  data: DummyData[];
-  length: number;
+  questionId: number;
+  memberId: number;
 }
