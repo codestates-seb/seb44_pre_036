@@ -111,3 +111,16 @@ export const ActivityContainer = styled.section`
     }
   }
 `;
+
+export const LogoutBtnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const LogoutBtn = styled.button`
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  border: none;
+  height: 30px;
+`;
