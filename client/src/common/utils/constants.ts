@@ -10,6 +10,8 @@ export const ACCESS_TOKEN: Token = 'accessToken';
 
 export const PASSWORD_MIN_LENGTH: number = 8;
 
+export const PASSWORD_MAX_LENGTH: number = 16;
+
 export const EMAIL_REGEX: RegExp =
   /^[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i;
 

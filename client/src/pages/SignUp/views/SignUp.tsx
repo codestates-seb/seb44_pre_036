@@ -1,7 +1,7 @@
 import SignUpForm from './SignUpForm';
 import { SignUpContainer } from '../style';
 import StackoverflowJoinBenefit from '../components/StackoverflowJoinBenefit';
-import GoogleLoginBtn from '../../../common/components/GoogleLoginBtn';
+// import GoogleLoginBtn from '../../../common/components/GoogleLoginBtn';
 import { SignUpArea } from '../style';
 import { MembershipPageStyle } from '../../../common/style';
 
@@ -11,7 +11,7 @@ function SignUp() {
       <MembershipPageStyle />
       <StackoverflowJoinBenefit />
       <SignUpArea>
-        <GoogleLoginBtn />
+        {/* <GoogleLoginBtn /> */}
         <SignUpForm />
       </SignUpArea>
     </SignUpContainer>

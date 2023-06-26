@@ -1,5 +1,5 @@
 import { UseQueryResult, useQuery } from 'react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ACCESS_TOKEN } from '../constants';
 import { useDispatch } from 'react-redux';
 import { createUserInfo, deleteUserInfo } from '../../store/UserInfoStore';
@@ -7,6 +7,7 @@ import { IUserInfo } from '../../model/UserInfo';
 import { MembershipUrl } from '../enum';
 import useEncryptToken from './useEncryptToken';
 import useDecryptToken from './useDecryptToken';
+import { sendAccessTokenType } from '../../type';
 
 function useGetMe(): UseQueryResult<IUserInfo | null> {
   const dispatch = useDispatch();
@@ -14,7 +15,6 @@ function useGetMe(): UseQueryResult<IUserInfo | null> {
   const decryptToken = useDecryptToken();
 
   const getMe = async (): Promise<IUserInfo | null | undefined> => {
-    console.log('getMe 호출');
     const encryptedAccessToken: string | null =
       localStorage.getItem(ACCESS_TOKEN);
 
@@ -23,10 +23,8 @@ function useGetMe(): UseQueryResult<IUserInfo | null> {
     }
 
     const accessToken: string = decryptToken(encryptedAccessToken);
-    console.log('마지막으로 찍혀야할 요주의 accessToken', accessToken);
 
-    const headers = {
-      // 'ngrok-skip-browser-warning': 'true',
+    const headers: sendAccessTokenType = {
       Authorization: `Bearer ${accessToken}`,
     };
 
@@ -38,8 +36,6 @@ function useGetMe(): UseQueryResult<IUserInfo | null> {
       });
 
       const userData = response.data;
-      console.log('getMe 호출 후 받아온 userData', typeof userData, userData);
-
       // 유저 정보 store에 저장
       dispatch(createUserInfo(userData));
 
@@ -56,7 +52,7 @@ function useGetMe(): UseQueryResult<IUserInfo | null> {
       }
 
       return userData;
-    } catch (error: any) {
+    } catch (error: AxiosError | any) {
       // refresh token 만료 시 로그아웃 처리
       if (error?.response?.status === 401) {
         localStorage.removeItem(ACCESS_TOKEN);

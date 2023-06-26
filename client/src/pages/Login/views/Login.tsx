@@ -1,5 +1,5 @@
 import { MembershipPageStyle, StackoverflowLogo } from '../../../common/style';
-import GoogleLoginBtn from '../../../common/components/GoogleLoginBtn';
+// import GoogleLoginBtn from '../../../common/components/GoogleLoginBtn';
 import LoginForm from './LoginForm';
 import TextLeadingToSignUpPage from '../components/TextLeadingToSignUpPage';
 import TextLeadingToSignUpOnTalentPage from '../components/TextLeadingToSignUpOnTalentPage';
@@ -10,7 +10,7 @@ function Login() {
     <LoginPageContainer>
       <MembershipPageStyle />
       <StackoverflowLogo />
-      <GoogleLoginBtn />
+      {/* <GoogleLoginBtn /> */}
       <LoginForm />
       <TextLeadingToSignUpPage />
       <TextLeadingToSignUpOnTalentPage />
