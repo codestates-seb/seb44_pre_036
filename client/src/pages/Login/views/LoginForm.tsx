@@ -31,7 +31,7 @@ import { MembershipUrl } from '../../../common/utils/enum';
 
 const postData = async (data: IUserInfoLogin) => {
   const response = await axios.post(MembershipUrl.Login, data);
-  console.log('2 준기님께 계정 정보 전달 후 받아온 데이터', response.headers);
+
   return response.headers;
 };
 
@@ -55,10 +55,6 @@ function LoginForm() {
         return;
       }
       const accessToken: string = header.authorization.split(' ')[1];
-      console.log(
-        '3 준기님께 계정 정보 전달 후 받아온 accessToken',
-        accessToken,
-      );
 
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.setItem(ACCESS_TOKEN, encryptToken(accessToken));
@@ -90,7 +86,6 @@ function LoginForm() {
   });
 
   const onSubmit = async (userData: IUserInfoLogin) => {
-    console.log('1 유저데이터', userData);
     setIsClicked(true);
 
     await mutation.mutateAsync(userData);
