@@ -65,5 +65,6 @@ https://seb-44-pre-036.web.app
 - [API명세서](https://documenter.getpostman.com/view/26572663/2s93z6f529)
 
 # 8. ERD
-<img width="981" alt="스크린샷 2023-06-26 오전 11 55 31" src="https://github.com/codestates-seb/seb44_pre_036/assets/108858620/f9f11141-b925-4b1d-896c-2e5e1ad666c5">
+<img width="833" alt="스크린샷 2023-06-26 오후 2 48 50" src="https://github.com/codestates-seb/seb44_pre_036/assets/108858620/f750451c-91ee-4df4-a29a-a31ac8a7e249">
+">
 
