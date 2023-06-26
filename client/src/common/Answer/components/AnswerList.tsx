@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { GetMutation } from '../queries';
+import { GetMutation, DeleteMutation, PatchMutation } from '../queries';
 import { useState } from 'react';
 import {
   Header,
@@ -14,7 +14,7 @@ import {
   AnswerContent,
   AnswerContentIn,
 } from '../styles';
-import { Listdata } from '../model/type';
+import { AnswerData } from '../model/type';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAnswer } from '../store/AnswerStore';
@@ -26,11 +26,12 @@ function AnswerList() {
 
   const { data: answerList } = GetMutation(id);
   const dispatch = useDispatch();
-  const Answerlength = useSelector((state: RootState) => state.item);
+  const Question = useSelector((state: RootState) => state.item);
+  console.log(Question);
 
   useEffect(() => {
     dispatch(getAnswer(answerList));
-  }, [answerList]);
+  }, [answerList, Question]);
 
   const UpCount = () => {
     setCount(count + 1);
@@ -38,44 +39,61 @@ function AnswerList() {
   const DownCount = () => {
     setCount(count - 1);
   };
+  const DeleteAnswer = (id: string) => {
+    DeleteMutation(id);
+  };
   return (
     <div>
-      <Header>
-        <Item>
-          {answerList === null ? (
+      {Question.answers.length === 0 ? (
+        <Header>
+          <Item>
             <h2>Answer</h2>
-          ) : (
-            <h2>{Answerlength.answers.length} Answer</h2>
-          )}
-        </Item>
-        {Answerlength.answers.length ? null : (
-          <Item2>
-            <label>Sorted by:</label>
-            <Select>
-              <option>Highest scroe (default)</option>
-              <option>Trending (recent votes count more)</option>
-              <option>Date modified (newest first)</option>
-              <option>Date created (oldest first)</option>
-            </Select>
-          </Item2>
-        )}
-      </Header>
-      <AnswerContainer>
-        <AnswerVote>
-          <AnswerVoteIn>
-            <Circle onClick={UpCount}>
-              <img src="/answer_svg/up.svg/" alt="up" />
-            </Circle>
-            <Count>{count}</Count>
-            <Circle onClick={DownCount}>
-              <img src="/answer_svg/down.svg/" alt="up" />
-            </Circle>
-          </AnswerVoteIn>
-        </AnswerVote>
-        <AnswerContent>
-          <AnswerContentIn>{answerList.content}</AnswerContentIn>
-        </AnswerContent>
-      </AnswerContainer>
+          </Item>
+        </Header>
+      ) : (
+        <>
+          <Header>
+            <Item>
+              <h2>{Question.answers.length} Answer</h2>
+            </Item>
+            <Item2>
+              <label>Sorted by:</label>
+              <Select>
+                <option>Highest scroe (default)</option>
+                <option>Trending (recent votes count more)</option>
+                <option>Date modified (newest first)</option>
+                <option>Date created (oldest first)</option>
+              </Select>
+            </Item2>
+          </Header>
+          {Question.answers.map((answer: AnswerData, key: number) => (
+            <AnswerContainer key={key}>
+              <AnswerVote>
+                <AnswerVoteIn>
+                  <Circle onClick={UpCount}>
+                    <img src="/answer_svg/up.svg/" alt="up" />
+                  </Circle>
+                  <Count>{count}</Count>
+                  <Circle onClick={DownCount}>
+                    <img src="/answer_svg/down.svg/" alt="up" />
+                  </Circle>
+                </AnswerVoteIn>
+              </AnswerVote>
+              <AnswerContent>
+                <AnswerContentIn
+                  dangerouslySetInnerHTML={{ __html: answer?.content }}
+                />
+                <AnswerContentIn>
+                  <button>Edit</button>
+                  <button onClick={() => DeleteAnswer(answer.answerId)}>
+                    DELETE
+                  </button>
+                </AnswerContentIn>
+              </AnswerContent>
+            </AnswerContainer>
+          ))}
+        </>
+      )}
     </div>
   );
 }
