@@ -20,6 +20,7 @@ import {
   WARNING_MESSAGE_PASSWORD_EMPTY,
   WARNING_MESSAGE_EMAIL_EMPTY,
   WARNING_MESSAGE_PASSWORD_WEAK,
+  PASSWORD_MAX_LENGTH,
 } from '../../../common/utils/constants';
 import ConfirmButton from '../components/ConfirmButton';
 import { MembershipUrl } from '../../../common/utils/enum';
@@ -136,9 +137,9 @@ function SignUpForm() {
               } more characters.`,
             },
             maxLength: {
-              value: 16,
+              value: PASSWORD_MAX_LENGTH,
               message: `Must contain ${
-                watch(password)?.length - 16
+                watch(password)?.length - PASSWORD_MAX_LENGTH
               } less characters.`,
             },
             pattern: {
