@@ -1,6 +1,11 @@
-import { useEffect } from 'react';
-import { GetMutation, DeleteMutation, PatchMutation } from '../queries';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  GetMutation,
+  DeleteMutation,
+  SelectMutation,
+  VoteMutation,
+  SortMutation,
+} from '../queries';
 import {
   Header,
   Item,
@@ -22,8 +27,7 @@ import { RootState } from '../../store/RootStore';
 
 function AnswerList() {
   const { id = '' } = useParams();
-  const [count, setCount] = useState(0);
-
+  const [selectedSort, setSelectedSort] = useState('1');
   const { data: answerList } = GetMutation(id);
   const dispatch = useDispatch();
   const Question = useSelector((state: RootState) => state.item);
@@ -33,14 +37,25 @@ function AnswerList() {
     dispatch(getAnswer(answerList));
   }, [answerList, Question]);
 
-  const UpCount = () => {
-    setCount(count + 1);
+  const UpCount = (id: string, recommand: boolean) => {
+    VoteMutation(id, recommand);
   };
-  const DownCount = () => {
-    setCount(count - 1);
+  const DownCount = (id: string, recommand: boolean) => {
+    VoteMutation(id, recommand);
   };
   const DeleteAnswer = (id: string) => {
     DeleteMutation(id);
+  };
+  const SelectAnswer = (id: string) => {
+    SelectMutation(id);
+  };
+  const SortAnswer = (id: string, sortedBy: string) => {
+    SortMutation(id, sortedBy);
+  };
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const sortedBy = event.target.value;
+    setSelectedSort(sortedBy);
+    SortAnswer(`${Question.questionId}`, sortedBy);
   };
   return (
     <div>
@@ -58,11 +73,11 @@ function AnswerList() {
             </Item>
             <Item2>
               <label>Sorted by:</label>
-              <Select>
-                <option>Highest scroe (default)</option>
-                <option>Trending (recent votes count more)</option>
-                <option>Date modified (newest first)</option>
-                <option>Date created (oldest first)</option>
+              <Select onChange={handleSortChange}>
+                <option value="1">Highest scroe (default)</option>
+                <option value="2">Trending (recent votes count more)</option>
+                <option value="3">Date modified (newest first)</option>
+                <option value="4">Date created (oldest first)</option>
               </Select>
             </Item2>
           </Header>
@@ -70,11 +85,11 @@ function AnswerList() {
             <AnswerContainer key={key}>
               <AnswerVote>
                 <AnswerVoteIn>
-                  <Circle onClick={UpCount}>
+                  <Circle onClick={() => UpCount(answer.answerId, true)}>
                     <img src="/answer_svg/up.svg/" alt="up" />
                   </Circle>
-                  <Count>{count}</Count>
-                  <Circle onClick={DownCount}>
+                  <Count>{answer.vote}</Count>
+                  <Circle onClick={() => DownCount(answer.answerId, false)}>
                     <img src="/answer_svg/down.svg/" alt="up" />
                   </Circle>
                 </AnswerVoteIn>
@@ -86,7 +101,10 @@ function AnswerList() {
                 <AnswerContentIn>
                   <button>Edit</button>
                   <button onClick={() => DeleteAnswer(answer.answerId)}>
-                    DELETE
+                    Delete
+                  </button>
+                  <button onClick={() => SelectAnswer(answer.answerId)}>
+                    Select
                   </button>
                 </AnswerContentIn>
               </AnswerContent>

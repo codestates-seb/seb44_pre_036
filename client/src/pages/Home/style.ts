@@ -111,7 +111,6 @@ export const ListContainer = styled.main`
   justify-content: center;
   align-items: center;
   width: 100%;
-
   & > div {
     display: flex;
     justify-content: space-between;

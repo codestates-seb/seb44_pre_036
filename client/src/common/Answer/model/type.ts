@@ -14,6 +14,7 @@ export interface AnswerData {
   isAccepted: string;
   createdAt: Date;
   updatedAt: Date;
+  vote: number;
   questionId: number;
   memberId: number;
 }
