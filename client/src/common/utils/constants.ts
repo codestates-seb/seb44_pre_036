@@ -6,8 +6,6 @@ export const email: UserInfoField = 'email';
 
 export const password: UserInfoField = 'password';
 
-export const GET_ME_URL_EXAMPLE = 'https://localhost:5000/api/v1/users/me';
-
 export const ACCESS_TOKEN: Token = 'accessToken';
 
 export const PASSWORD_MIN_LENGTH: number = 8;
@@ -31,4 +29,4 @@ export const WARNING_MESSAGE_PASSWORD_WEAK: string =
 
 export const PASSWORD_RULE_MESSAGE: string = `Passwords must contain at least eight characters, including at least 1 letter and 1 number.`;
 
-export const LISTCRUD_URL = 'https://0c66-58-237-124-214.ngrok-free.app';
+export const LISTCRUD_URL = 'https://preprojectseb44036.kro.kr:8080';

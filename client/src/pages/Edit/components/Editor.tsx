@@ -4,9 +4,15 @@ import { useDispatch } from 'react-redux';
 import { setPreview } from '../store/PreviewStore';
 import { setContent } from '../store/EditStore';
 import { getItem } from '../../../common/type';
+import { useEffect } from 'react';
 
 function Editor({ item }: { item: getItem }) {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setPreview(item.content));
+    dispatch(setContent({ content: item.content }));
+  }, []);
 
   const handleTextChange = (value: string) => {
     dispatch(setPreview(value));

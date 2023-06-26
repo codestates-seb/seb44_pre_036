@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { AnswerForm, Button } from '../styles';
 import Editor from '../../components/Editor';
 import { PostMutation } from '../queries';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/RootStore';
 function AnswerEditor() {
   const {
     //register,
@@ -15,14 +17,18 @@ function AnswerEditor() {
   //   setText(e.target.value);
   // };
 
+  const Question = useSelector((state: RootState) => state.item);
   //POST 요청
   const handleClick = async () => {
     const data = {
-      memberId: '2',
-      questionId: '1',
+      questionId: Question.questionId,
       content: text,
     };
+    console.log(data);
     postMutation(data);
+  };
+  const handleText = (value: string) => {
+    setText(value);
   };
   return (
     <AnswerForm onSubmit={handleSubmit(handleClick)}>
@@ -32,7 +38,7 @@ function AnswerEditor() {
         value={text}
         onChange={onChange}
       /> */}
-      <Editor value={text} onChange={setText} />
+      <Editor value={text} onChange={handleText} />
       <Button type="submit">Post Your Answer</Button>
     </AnswerForm>
   );

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useDecryptToken from '../../../common/utils/customHook/useDecryptToken';
 
 export const getList = async (
   url: string,
@@ -7,22 +8,26 @@ export const getList = async (
   tab: string,
 ) => {
   try {
-    const accessToken = localStorage.getItem('accessToken');
+    const decrypt = useDecryptToken();
+    const encryptedToken = localStorage.getItem('accessToken');
 
-    const headers = {
-      'ngrok-skip-browser-warning': 'true',
-      Authorization: `Bearer ${accessToken}`,
-    };
+    if (encryptedToken) {
+      const accessToken = decrypt(encryptedToken);
 
-    const res = await axios.get(url, {
-      headers,
-      params: {
-        page: page,
-        size: size,
-        tab: tab,
-      },
-    });
-    return res.data;
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+      const res = await axios.get(url, {
+        headers,
+        params: {
+          page: page,
+          size: size,
+          tab: tab,
+        },
+      });
+      return res.data;
+    }
   } catch (err) {
     throw new Error('데이터를 불러오는데 실패했습니다');
   }

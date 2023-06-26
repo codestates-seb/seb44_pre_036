@@ -2,7 +2,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 interface Props {
   value: string;
-  onChange: (content: string) => void;
+  onChange: (value: string) => void;
 }
 function Editor({ value, onChange }: Props) {
   const modules = {
@@ -40,10 +40,6 @@ function Editor({ value, onChange }: Props) {
     'background',
   ];
 
-  const handleText = () => {
-    onChange;
-  };
-
   return (
     <ReactQuill
       style={{ width: '100%', height: '300px' }}
@@ -52,7 +48,7 @@ function Editor({ value, onChange }: Props) {
       formats={formats}
       value={value || ''}
       // onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
-      onChange={handleText}
+      onChange={onChange}
     />
   );
 }

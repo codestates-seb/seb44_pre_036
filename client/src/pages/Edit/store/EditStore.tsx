@@ -5,6 +5,7 @@ export const editSlice = createSlice({
   initialState: {
     title: '',
     content: '',
+    questionId: 0,
   },
   reducers: {
     setTitle: (state, action) => {

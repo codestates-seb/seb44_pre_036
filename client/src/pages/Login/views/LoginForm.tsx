@@ -2,9 +2,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../common/store/RootStore';
-import { deleteUserInfo } from '../../../common/store/UserInfoStore';
 import axios from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import useEncryptToken from '../../../common/utils/customHook/useEncryptToken';
@@ -40,7 +37,7 @@ const postData = async (data: IUserInfoLogin) => {
 
 function LoginForm() {
   const [isClicked, setIsClicked] = useState(false);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const encryptToken = useEncryptToken();
   const {
     register,
@@ -87,58 +84,39 @@ function LoginForm() {
     await mutation.mutateAsync(userData);
   };
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem(ACCESS_TOKEN);
-    dispatch(deleteUserInfo());
-    navigate('/');
-  };
-
-  const myInfo = useSelector((state: RootState) => state.userInfo);
-  const memberId = useSelector((state: RootState) => state.userInfo.memberId);
-  console.log(myInfo, '!!!!!!!');
-  const handleWithdrawal = async () => {
-    localStorage.removeItem(ACCESS_TOKEN);
-    await axios.delete(MembershipUrl.Withdrawal + `/${memberId}`);
-    dispatch(deleteUserInfo());
-    navigate('/');
-  };
-
   return (
-    <>
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <UserInfoWrapper>
-          <UserInfoLabel label={'Email'} />
-          <StyledInput
-            {...register(email, {
-              required: WARNING_MESSAGE_EMAIL_EMPTY,
-              pattern: {
-                value: EMAIL_REGEX,
-                message: `${watch(email)} is not a valid email address`,
-              },
-            })}
-          />
-          {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
-          (isClicked && typeof errors?.email?.message === 'string') ? (
-            <ErrorMsg>{errors.email.message}</ErrorMsg>
-          ) : null}
-        </UserInfoWrapper>
-        <UserInfoWrapper>
-          <UserInfoLabel label={'Password'} />
-          <StyledInput
-            type="password"
-            {...register(password, {
-              required: WARNING_MESSAGE_PASSWORD_EMPTY,
-              minLength: {
-                value: PASSWORD_MIN_LENGTH,
-                message: `Must contain at least ${
-                  PASSWORD_MIN_LENGTH - (watch(password)?.length || 0)
-                } more characters.`,
-              },
-              pattern: {
-                value: PASSWORD_REGEX,
-                message: `${WARNING_MESSAGE_PASSWORD_WEAK}: 
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <UserInfoWrapper>
+        <UserInfoLabel label={'Email'} />
+        <StyledInput
+          {...register(email, {
+            required: WARNING_MESSAGE_EMAIL_EMPTY,
+            pattern: {
+              value: EMAIL_REGEX,
+              message: `${watch(email)} is not a valid email address`,
+            },
+          })}
+        />
+        {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
+        (isClicked && typeof errors?.email?.message === 'string') ? (
+          <ErrorMsg>{errors.email.message}</ErrorMsg>
+        ) : null}
+      </UserInfoWrapper>
+      <UserInfoWrapper>
+        <UserInfoLabel label={'Password'} />
+        <StyledInput
+          type="password"
+          {...register(password, {
+            required: WARNING_MESSAGE_PASSWORD_EMPTY,
+            minLength: {
+              value: PASSWORD_MIN_LENGTH,
+              message: `Must contain at least ${
+                PASSWORD_MIN_LENGTH - (watch(password)?.length || 0)
+              } more characters.`,
+            },
+            pattern: {
+              value: PASSWORD_REGEX,
+              message: `${WARNING_MESSAGE_PASSWORD_WEAK}: 
                   ${
                     watch(password) &&
                     PASSWORD_REGEX_NO_LETTERS.test(watch(password))
@@ -151,23 +129,16 @@ function LoginForm() {
                       ? 'numbers'
                       : ''
                   }`,
-              },
-            })}
-          />
-          {errors?.password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
-          (isClicked && typeof errors?.password?.message === 'string') ? (
-            <ErrorMsg>{errors.password.message}</ErrorMsg>
-          ) : null}
-        </UserInfoWrapper>
-        <ConfirmButton setIsClicked={setIsClicked} buttontext={'Log in'} />
-        <h1>로그아웃</h1>
-        <button onClick={handleLogout}>log out</button>
-      </StyledForm>
-      <section>
-        <h1>회원 탈퇴</h1>
-        <button onClick={handleWithdrawal}>withdraw</button>
-      </section>
-    </>
+            },
+          })}
+        />
+        {errors?.password?.message === WARNING_MESSAGE_PASSWORD_EMPTY ||
+        (isClicked && typeof errors?.password?.message === 'string') ? (
+          <ErrorMsg>{errors.password.message}</ErrorMsg>
+        ) : null}
+      </UserInfoWrapper>
+      <ConfirmButton setIsClicked={setIsClicked} buttontext={'Log in'} />
+    </StyledForm>
   );
 }
 export default LoginForm;
