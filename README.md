@@ -27,7 +27,7 @@ https://seb-44-pre-036.web.app
 | 홍준기(BE 팀장) | 노성윤 | 최민환 |
 | :---: | :---: | :---: |
 | <div style="display: flex; align-items: flex-start;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb9zYIdoA5wcBFTNLCD1BqzZu4Wq4IcGy0O2HtkiRm1sfZf48D" width="180" height="160" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQmGXk6TyhpardoBaUXe_C_6hMXcal_A2UrOC-mNbLTNbUuG2Mu" width="180" height="160" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://github.com/codestates-seb/seb44_pre_036/assets/108858620/27cd2161-5bdb-4642-a5e5-f3791302f986" width="180" height="160" /></div> |
-| <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/RedJunKi">@RedJunKi</a></span><br/><span>로그인, 회원가입 구현</span></div> | <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/NOHSUNGYOON">@NOHSUNGYOON</a></span><br/><span>구현</span></div> | <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/minit88">@minit88</a></span><br/><span>답변(Answer) 구현</span></div> |
+| <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/RedJunKi">@RedJunKi</a></span><br/><span>로그인, 회원가입 구현</span></div> | <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/NOHSUNGYOON">@NOHSUNGYOON</a></span><br/><span>질문리스트(Question) 구현</span></div> | <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/minit88">@minit88</a></span><br/><span>답변(Answer) 구현</span></div> |
 
 # 4. 사용 기술 스택
 ### Front-End
@@ -62,9 +62,8 @@ https://seb-44-pre-036.web.app
 # 6. git commit rule
 
 # 7. API 명세서
-- [Answer](https://www.notion.so/Answer-API-4254ca6c8a0c426b8eec861fcdc08313)
-- [Member](https://www.notion.so/Membership-API-0f50de5b5e884b12b4d2d43c86b116e2)
-- [Question](https://www.notion.so/Question-API-94f882bf6d824c1ba720200d65556d95)
+- [API명세서](https://documenter.getpostman.com/view/26572663/2s93z6f529)
+
 # 8. ERD
 <img width="981" alt="스크린샷 2023-06-26 오전 11 55 31" src="https://github.com/codestates-seb/seb44_pre_036/assets/108858620/f9f11141-b925-4b1d-896c-2e5e1ad666c5">
 
