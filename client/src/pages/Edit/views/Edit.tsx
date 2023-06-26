@@ -5,17 +5,14 @@ import Preview from '../components/Preview';
 import TitleInput from '../components/TitleInput';
 import { Page, Wrapper } from '../style';
 import { updateData } from '../model/updateData';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
 import { editItem } from '../../../common/type';
-import { createUserInfo } from '../../../common/store/UserInfoStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Edit = () => {
   const user = useSelector((state: RootState) => state.userInfo);
-
-  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -35,12 +32,6 @@ const Edit = () => {
 
   const handleUpdate = () => {
     updateMutation.mutate(updatedItem);
-    dispatch(
-      createUserInfo({
-        ...user,
-        modifiedTime: new Date().toLocaleDateString(),
-      }),
-    );
     navigate(-1);
   };
 

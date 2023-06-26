@@ -94,18 +94,17 @@ export const ActivityContainer = styled.section`
       margin-bottom: 0.5rem;
     }
 
-    > p {
+    > div {
       border: 1px solid #e4e5e7;
       padding: 1rem;
       border-radius: 5px;
 
-      > p {
-        border: 1px solid #e4e5e7;
-        padding: 1rem;
-        border-radius: 5px;
-
-        h3 {
-          margin-bottom: 0.5rem;
+      > a {
+        color: black;
+        > div {
+          border: 1px solid #e4e5e7;
+          padding: 1rem;
+          border-radius: 5px;
         }
       }
     }
