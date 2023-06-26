@@ -19,8 +19,6 @@ export const Side = styled.div`
   width: 158px;
   height: 100vh;
   border-right: 1px solid #d4d4d4;
-  position: sticky;
-  top: 56px;
   height: calc(100vh - 56px);
 `;
 

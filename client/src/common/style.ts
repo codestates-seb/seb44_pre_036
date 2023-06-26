@@ -118,10 +118,13 @@ export const StackoverflowLogo = styled.div`
   background-position: center;
   width: 45px;
   height: 45px;
+  margin-bottom: 10px;
 `;
 
 export const Layout = styled.div`
   display: flex;
   /* max-width: 1280px; */
   justify-content: center;
+  width: 100%;
+  height: 100vh;
 `;

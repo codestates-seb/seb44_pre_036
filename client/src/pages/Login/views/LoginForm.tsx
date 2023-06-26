@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import useEncryptToken from '../../../common/utils/customHook/useEncryptToken';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
@@ -31,11 +31,12 @@ import { MembershipUrl } from '../../../common/utils/enum';
 
 const postData = async (data: IUserInfoLogin) => {
   const response = await axios.post(MembershipUrl.Login, data);
-  console.log('2 준기님께 계정 정보 전달 후 받아온 데이터', response.headers);
+
   return response.headers;
 };
 
 function LoginForm() {
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
   const encryptToken = useEncryptToken();
@@ -54,10 +55,6 @@ function LoginForm() {
         return;
       }
       const accessToken: string = header.authorization.split(' ')[1];
-      console.log(
-        '3 준기님께 계정 정보 전달 후 받아온 accessToken',
-        accessToken,
-      );
 
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.setItem(ACCESS_TOKEN, encryptToken(accessToken));
@@ -66,19 +63,29 @@ function LoginForm() {
 
       navigate('/');
     },
-    onError: (error: any) => {
-      console.log(error.response.status);
-      // TODO: 에러 처리
-      // 이메일 형식이 잘못됨 (400) -> The email is not a valid email address.
-      // 비밀번호가 잘못됨 (404) -> The email or password is incorrect.
-      // 이메일이 존재하지 않음 (404) 해결!
-      //
-      // 서버 에러 (500)
+    onError: (error: AxiosError) => {
+      if (error.response) {
+        const statusCode: number = error.response.status;
+        // TODO: 에러 처리
+        // 비밀번호가 잘못됨 (404) -> The email or password is incorrect.
+        switch (statusCode) {
+          case 404:
+            setErrorMessage('The email or password is incorrect.');
+            break;
+          // 서버 에러 시 (500) -> Server Error
+          case 500:
+            setErrorMessage('Server Error');
+            break;
+          // 기타 에러 시 (400) -> Error
+          default:
+            setErrorMessage('Error');
+            break;
+        }
+      }
     },
   });
 
   const onSubmit = async (userData: IUserInfoLogin) => {
-    console.log('1 유저데이터', userData);
     setIsClicked(true);
 
     await mutation.mutateAsync(userData);
@@ -100,6 +107,8 @@ function LoginForm() {
         {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
         (isClicked && typeof errors?.email?.message === 'string') ? (
           <ErrorMsg>{errors.email.message}</ErrorMsg>
+        ) : errorMessage ? (
+          <ErrorMsg>{errorMessage}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import { StyledInput, UserInfoWrapper } from '../../../common/style';
@@ -20,6 +20,7 @@ import {
   WARNING_MESSAGE_PASSWORD_EMPTY,
   WARNING_MESSAGE_EMAIL_EMPTY,
   WARNING_MESSAGE_PASSWORD_WEAK,
+  PASSWORD_MAX_LENGTH,
 } from '../../../common/utils/constants';
 import ConfirmButton from '../components/ConfirmButton';
 import { MembershipUrl } from '../../../common/utils/enum';
@@ -31,16 +32,13 @@ import ImNotARobotBox from '../components/ImNotARobotBox';
 import PasswordRuleMessage from '../components/PasswordRuleMessage';
 
 const postData = async (data: IUserInfoSignUp) => {
-  console.log('1. 준기님께 보내는 유저 정보', data);
   const response = await axios.post(MembershipUrl.SignUp, data);
-  console.log('2. 준기님께 계정 정보 전달 후 받아온 데이터', response);
-
-  console.log('3. 준기님께 계정 정보 전달 후 받아온 헤더', response.headers);
 
   return response.headers;
 };
 
 function SignUpForm() {
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [isClicked, setIsClicked] = useState(false);
   const encrypt = useEncryptToken();
   const {
@@ -54,33 +52,38 @@ function SignUpForm() {
 
   const mutation = useMutation(postData, {
     onSuccess: async (headers) => {
-      console.log('3. 준기님께 계정 정보 전달 후 받아온 데이터', headers);
-
       if (!headers) {
         return;
       }
       const accessToken = headers.authorization;
-
-      console.log(
-        '4. 준기님께 계정 정보 전달 후 받아온 accessToken',
-        accessToken,
-      );
 
       localStorage.setItem(ACCESS_TOKEN, encrypt(accessToken));
 
       const { data: userData } = await refetchGetMe();
       console.log(userData);
     },
-    onError: (error) => {
-      console.error(error);
+    onError: (error: AxiosError) => {
       // TODO: 에러 처리
-      // 유효성 검사 에러 (400)
-      // 서버 에러 (500)
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            setErrorMessage('Invalid email or password.');
+            break;
+          case 409:
+            setErrorMessage('The user already exists.');
+            break;
+          case 500:
+            setErrorMessage('Server Error');
+            break;
+          default:
+            setErrorMessage('Error');
+            break;
+        }
+      }
     },
   });
 
   const onSubmit = async (userData: IUserInfoSignUp) => {
-    console.log('1. 준기님께 보내는 유저 정보', userData);
     setIsClicked(true);
     await mutation.mutateAsync(userData);
   };
@@ -89,8 +92,20 @@ function SignUpForm() {
     <SignUpBox onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
         <UserInfoLabel label={'Display name'} />
-        <StyledInput {...register(name, { required: false })} />
+        <StyledInput
+          {...register(name, {
+            required: 'Display name required',
+            maxLength: {
+              value: 10,
+              message:
+                'Display name must be equal to or less than 10 characters.',
+            },
+          })}
+        />
       </UserInfoWrapper>
+      {errors?.name?.message ? (
+        <ErrorMsg>{errors.name.message}</ErrorMsg>
+      ) : null}
       <UserInfoWrapper>
         <UserInfoLabel label={'Email'} />
         <StyledInput
@@ -105,6 +120,8 @@ function SignUpForm() {
         {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
         (isClicked && typeof errors?.email?.message === 'string') ? (
           <ErrorMsg>{errors.email.message}</ErrorMsg>
+        ) : errorMessage ? (
+          <ErrorMsg>{errorMessage}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
@@ -118,6 +135,12 @@ function SignUpForm() {
               message: `Must contain at least ${
                 PASSWORD_MIN_LENGTH - (watch(password)?.length || 0)
               } more characters.`,
+            },
+            maxLength: {
+              value: PASSWORD_MAX_LENGTH,
+              message: `Must contain ${
+                watch(password)?.length - PASSWORD_MAX_LENGTH
+              } less characters.`,
             },
             pattern: {
               value: PASSWORD_REGEX,
