@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import useGetMe from '../../../common/utils/customHook/useGetMe';
 import UserInfoLabel from '../../../common/components/UserInfoLabel';
 import { StyledInput, UserInfoWrapper } from '../../../common/style';
@@ -41,6 +41,7 @@ const postData = async (data: IUserInfoSignUp) => {
 };
 
 function SignUpForm() {
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [isClicked, setIsClicked] = useState(false);
   const encrypt = useEncryptToken();
   const {
@@ -71,11 +72,24 @@ function SignUpForm() {
       const { data: userData } = await refetchGetMe();
       console.log(userData);
     },
-    onError: (error) => {
-      console.error(error);
+    onError: (error: AxiosError) => {
       // TODO: 에러 처리
-      // 유효성 검사 에러 (400)
-      // 서버 에러 (500)
+      if (error.response) {
+        switch (error.response.status) {
+          case 400:
+            setErrorMessage('Invalid email or password.');
+            break;
+          case 409:
+            setErrorMessage('The user already exists.');
+            break;
+          case 500:
+            setErrorMessage('Server Error');
+            break;
+          default:
+            setErrorMessage('Error');
+            break;
+        }
+      }
     },
   });
 
@@ -89,8 +103,20 @@ function SignUpForm() {
     <SignUpBox onSubmit={handleSubmit(onSubmit)}>
       <UserInfoWrapper>
         <UserInfoLabel label={'Display name'} />
-        <StyledInput {...register(name, { required: false })} />
+        <StyledInput
+          {...register(name, {
+            required: 'Display name required',
+            maxLength: {
+              value: 10,
+              message:
+                'Display name must be equal to or less than 10 characters.',
+            },
+          })}
+        />
       </UserInfoWrapper>
+      {errors?.name?.message ? (
+        <ErrorMsg>{errors.name.message}</ErrorMsg>
+      ) : null}
       <UserInfoWrapper>
         <UserInfoLabel label={'Email'} />
         <StyledInput
@@ -105,6 +131,8 @@ function SignUpForm() {
         {errors?.email?.message === WARNING_MESSAGE_EMAIL_EMPTY ||
         (isClicked && typeof errors?.email?.message === 'string') ? (
           <ErrorMsg>{errors.email.message}</ErrorMsg>
+        ) : errorMessage ? (
+          <ErrorMsg>{errorMessage}</ErrorMsg>
         ) : null}
       </UserInfoWrapper>
       <UserInfoWrapper>
@@ -118,6 +146,12 @@ function SignUpForm() {
               message: `Must contain at least ${
                 PASSWORD_MIN_LENGTH - (watch(password)?.length || 0)
               } more characters.`,
+            },
+            maxLength: {
+              value: 16,
+              message: `Must contain ${
+                watch(password)?.length - 16
+              } less characters.`,
             },
             pattern: {
               value: PASSWORD_REGEX,
