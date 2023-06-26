@@ -9,11 +9,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
 import { useNavigate } from 'react-router-dom';
 
-const user = useSelector((state: RootState) => state.userInfo);
-
-const navigate = useNavigate();
-
 export const VoteUp = ({ item }: { item: getItem }) => {
+  const user = useSelector((state: RootState) => state.userInfo);
+
+  const navigate = useNavigate();
+
   const voteUpMutation = useMutation(async () => {
     const accessToken = localStorage.getItem('accessToken');
 
@@ -48,6 +48,10 @@ export const VoteUp = ({ item }: { item: getItem }) => {
 };
 
 export const VoteDown = ({ item }: { item: getItem }) => {
+  const user = useSelector((state: RootState) => state.userInfo);
+
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
 
   const voteDownMutation = useMutation(
