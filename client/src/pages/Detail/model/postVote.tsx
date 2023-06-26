@@ -5,13 +5,17 @@ import { ReactComponent as UpIcon } from '../../../common/assets/icons/VoteUp.sv
 import { ReactComponent as DownIcon } from '../../../common/assets/icons/VoteDown.svg';
 import { LISTCRUD_URL } from '../../../common/utils/constants';
 import { getItem } from '../../../common/type';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../common/store/RootStore';
+import { useNavigate } from 'react-router-dom';
+
+const user = useSelector((state: RootState) => state.userInfo);
+
+const navigate = useNavigate();
 
 export const VoteUp = ({ item }: { item: getItem }) => {
   const voteUpMutation = useMutation(async () => {
-    // const accessToken = localStorage.getItem('accessToken');
-
-    const accessToken =
-      'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sImVtYWlsIjoicG90YXRvQG5hdmVyLmNvbSIsIm1lbWJlcklkIjoyLCJzdWIiOiJwb3RhdG9AbmF2ZXIuY29tIiwiaWF0IjoxNjg3NjU1NjE3LCJleHAiOjE2ODc2NTgwMTd9.NUBf36NbM05Xejr-_b7oTwQDRem5ilgHKtVTGdNHKTU';
+    const accessToken = localStorage.getItem('accessToken');
 
     const headers = {
       'ngrok-skip-browser-warning': 'true',
@@ -29,7 +33,11 @@ export const VoteUp = ({ item }: { item: getItem }) => {
   });
 
   const handleVoteUp = () => {
-    voteUpMutation.mutate();
+    if (user.memberId) {
+      voteUpMutation.mutate();
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -44,10 +52,7 @@ export const VoteDown = ({ item }: { item: getItem }) => {
 
   const voteDownMutation = useMutation(
     async () => {
-      // const accessToken = localStorage.getItem('accessToken');
-
-      const accessToken =
-        'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sImVtYWlsIjoicG90YXRvQG5hdmVyLmNvbSIsIm1lbWJlcklkIjoyLCJzdWIiOiJwb3RhdG9AbmF2ZXIuY29tIiwiaWF0IjoxNjg3NjU1NjE3LCJleHAiOjE2ODc2NTgwMTd9.NUBf36NbM05Xejr-_b7oTwQDRem5ilgHKtVTGdNHKTU';
+      const accessToken = localStorage.getItem('accessToken');
 
       const headers = {
         'ngrok-skip-browser-warning': 'true',
@@ -78,7 +83,11 @@ export const VoteDown = ({ item }: { item: getItem }) => {
   );
 
   const handleVoteDown = () => {
-    voteDownMutation.mutate();
+    if (user.memberId) {
+      voteDownMutation.mutate();
+    } else {
+      navigate('/login');
+    }
   };
 
   return (

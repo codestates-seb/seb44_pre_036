@@ -12,7 +12,6 @@ const Author = ({ item, user }: { item: getItem; user: IUserInfo }) => {
         <span>{item?.createdAt.slice(0, 10)}</span>
       </p>
       <p>
-        {/* <img src={item?.userAvatar} alt={item?.name} /> */}
         <Profile />
         <Link to={`/mypage/${user.memberId}/${user.name}/profile`}>
           <span>{item?.name}</span>

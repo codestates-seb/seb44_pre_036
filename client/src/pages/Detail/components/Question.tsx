@@ -11,8 +11,12 @@ const Question = ({ item, user }: { item: getItem; user: IUserInfo }) => {
   const deleteMutation = useMutation(deleteItem);
 
   const handleDeleteItem = () => {
-    if (window.confirm('Are you sure you want to delete this question?')) {
-      deleteMutation.mutate(item.questionId);
+    if (item.memberId === user.memberId) {
+      if (window.confirm('Are you sure you want to delete this question?')) {
+        deleteMutation.mutate(item.questionId);
+      }
+    } else {
+      window.alert('You can not delete this question.');
     }
   };
 
@@ -25,7 +29,9 @@ const Question = ({ item, user }: { item: getItem; user: IUserInfo }) => {
         </p>
         <QuestionInfo>
           <div>
-            <Link to={`/edit/${item?.questionId}`}>Edit</Link>
+            <Link to={user.memberId ? `/edit/${item?.questionId}` : '/login'}>
+              Edit
+            </Link>
             <a onClick={handleDeleteItem}>Delete</a>
           </div>
           <Author item={item} user={user} />

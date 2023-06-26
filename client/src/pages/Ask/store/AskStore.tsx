@@ -7,7 +7,7 @@ export const askSlice = createSlice({
     content: '',
     viewCount: 0,
     createdAt: new Date().toLocaleDateString(),
-    updatedAt: new Date().toLocaleDateString(),
+    updatedAt: '',
     memberId: 0,
     name: 'Mooobi',
     userAvatar:
