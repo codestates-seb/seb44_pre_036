@@ -42,7 +42,8 @@ https://seb-44-pre-036.web.app
 
 
 # 5. 구현 기능
-- [구현 기능.pdf](https://github.com/codestates-seb/seb44_pre_036/files/11862791/default.pdf)
+- [구현 기능](https://github.com/codestates-seb/seb44_pre_036/files/11862794/default.pdf)
+
 
 
 # 6. git commit rule
