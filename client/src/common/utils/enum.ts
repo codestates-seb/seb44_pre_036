@@ -1,5 +1,4 @@
-const BASE_URL =
-  'http://ec2-43-201-107-128.ap-northeast-2.compute.amazonaws.com';
+const BASE_URL = 'https://preprojectseb44036.kro.kr:8080';
 
 export enum MembershipUrl {
   GoogleGsiClient = 'https://accounts.google.com/gsi/client',
