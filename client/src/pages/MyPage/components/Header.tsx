@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { HeaderContainer } from '../style';
 import { RootState } from '../../../common/store/RootStore';
 import { ReactComponent as Profile } from '../../../common/assets/icons/Profile.svg';
+import MembershipButtons from './MembershipButtons';
 
 const Header = () => {
   const user = useSelector((state: RootState) => state.userInfo);
@@ -23,6 +24,7 @@ const Header = () => {
             user.modifiedTime.slice(0, 10) || `doesn't exist`
           }`}</p>
         </div>
+        <MembershipButtons />
       </section>
     </HeaderContainer>
   );
