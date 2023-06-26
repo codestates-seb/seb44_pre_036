@@ -50,5 +50,5 @@ https://seb-44-pre-036.web.app
 - [Member](https://www.notion.so/Membership-API-0f50de5b5e884b12b4d2d43c86b116e2)
 - [Question](https://www.notion.so/Question-API-94f882bf6d824c1ba720200d65556d95)
 # 8. ERD
-<img width="986" alt="스크린샷 2023-06-26 오전 11 49 33" src="https://github.com/codestates-seb/seb44_pre_036/assets/108858620/c41fe963-2c85-486c-bfce-4f49f7475ec3">
+<img width="981" alt="스크린샷 2023-06-26 오전 11 55 31" src="https://github.com/codestates-seb/seb44_pre_036/assets/108858620/f9f11141-b925-4b1d-896c-2e5e1ad666c5">
 
