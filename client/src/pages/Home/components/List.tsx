@@ -2,7 +2,7 @@ import { IUserInfo } from '../../../common/model/UserInfo';
 import { getItem } from '../../../common/type';
 import { ListContainer } from '../style';
 import ListItem from './ListItem';
-import SideBar from './Sidebar';
+import SideBar from './SideBar';
 
 const List = ({ data, user }: { data: getItem[]; user: IUserInfo }) => {
   return (

@@ -7,7 +7,6 @@ export const postData = async (data: postItem) => {
     const accessToken = localStorage.getItem('accessToken');
 
     const headers = {
-      'ngrok-skip-browser-warning': 'true',
       Authorization: `Bearer ${accessToken}`,
     };
 

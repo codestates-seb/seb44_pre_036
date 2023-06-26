@@ -17,7 +17,9 @@ const Header = ({
     <HeaderContainer>
       <section>
         <h2>Top Questions</h2>
-        <Link to={`/ask/${user.memberId}/${user.name}`}>
+        <Link
+          to={user.memberId ? `/ask/${user.memberId}/${user.name}` : '/login'}
+        >
           <BlueButton>Ask Question</BlueButton>
         </Link>
       </section>

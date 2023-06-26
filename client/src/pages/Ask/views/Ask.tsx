@@ -4,17 +4,12 @@ import TitleInput from '../components/TitleInput';
 import QuestionInput from '../components/QuestionInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
-import {
-  setCreatedAt,
-  setMemberId,
-  setName,
-  setUserAvatar,
-} from '../store/AskStore';
-import { useEffect } from 'react';
 import { postData } from '../model/postData';
 import { useMutation } from 'react-query';
 import { createUserInfo } from '../../../common/store/UserInfoStore';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { setMemberId } from '../store/AskStore';
 
 const Ask = () => {
   const user = useSelector((state: RootState) => state.userInfo);
@@ -29,13 +24,6 @@ const Ask = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(setCreatedAt({ createdAt: new Date().toLocaleDateString() }));
-    dispatch(setMemberId({ memberId: user.memberId }));
-    dispatch(setName({ name: user.name }));
-    dispatch(setUserAvatar({ userAvatar: user.profileImageUrl }));
-  }, []);
-
   const handleSubmit = () => {
     if (user.memberId) {
       askMutation.mutate(ask);
@@ -49,6 +37,10 @@ const Ask = () => {
       navigate('/login');
     }
   };
+
+  useEffect(() => {
+    dispatch(setMemberId(user.memberId));
+  }, []);
 
   return (
     <Page>
