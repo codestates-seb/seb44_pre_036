@@ -1,16 +1,19 @@
 import axios from 'axios';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { VoteButton } from '../style';
 import { ReactComponent as UpIcon } from '../../../common/assets/icons/VoteUp.svg';
 import { ReactComponent as DownIcon } from '../../../common/assets/icons/VoteDown.svg';
 import { LISTCRUD_URL } from '../../../common/utils/constants';
 import { getItem } from '../../../common/type';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
 import { useNavigate } from 'react-router-dom';
 import useDecryptToken from '../../../common/utils/customHook/useDecryptToken';
+import { setVoteCount } from '../store/voteCountStore';
 
 export const VoteUp = ({ item }: { item: getItem }) => {
+  const dispatch = useDispatch();
+
   const user = useSelector((state: RootState) => state.userInfo);
 
   const navigate = useNavigate();
@@ -41,6 +44,7 @@ export const VoteUp = ({ item }: { item: getItem }) => {
   const handleVoteUp = () => {
     if (user.memberId) {
       voteUpMutation.mutate();
+      dispatch(setVoteCount(item.voteCount + 1));
     } else {
       navigate('/login');
     }
@@ -54,52 +58,39 @@ export const VoteUp = ({ item }: { item: getItem }) => {
 };
 
 export const VoteDown = ({ item }: { item: getItem }) => {
+  const dispatch = useDispatch();
+
   const user = useSelector((state: RootState) => state.userInfo);
 
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
+  const voteDownMutation = useMutation(async () => {
+    const decrypt = useDecryptToken();
 
-  const voteDownMutation = useMutation(
-    async () => {
-      const decrypt = useDecryptToken();
+    const encryptedToken = localStorage.getItem('accessToken');
 
-      const encryptedToken = localStorage.getItem('accessToken');
+    if (encryptedToken) {
+      const accessToken = decrypt(encryptedToken);
 
-      if (encryptedToken) {
-        const accessToken = decrypt(encryptedToken);
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
 
-        const headers = {
-          Authorization: `Bearer ${accessToken}`,
-        };
-
-        await axios.patch(
-          `${LISTCRUD_URL}/questions/vote`,
-          {
-            questionId: item.questionId,
-            vote: false,
-          },
-          { headers },
-        );
-      }
-    },
-    {
-      onSuccess: () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (queryClient.setQueryData as any)(
-          ['item', item.questionId],
-          (prevData: { voteCount: number }) => ({
-            ...prevData,
-            voteCount: prevData.voteCount + 1,
-          }),
-        );
-      },
-    },
-  );
+      await axios.patch(
+        `${LISTCRUD_URL}/questions/vote`,
+        {
+          questionId: item.questionId,
+          vote: false,
+        },
+        { headers },
+      );
+    }
+  });
 
   const handleVoteDown = () => {
     if (user.memberId) {
       voteDownMutation.mutate();
+      dispatch(setVoteCount(item.voteCount - 1));
     } else {
       navigate('/login');
     }

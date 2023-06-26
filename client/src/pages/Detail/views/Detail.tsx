@@ -9,6 +9,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { getListItem } from '../model/getListItem.tsx';
 import Answer from '../../../common/Answer/views/Answer.tsx';
+import { setVoteCount } from '../store/voteCountStore.tsx';
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ const Detail = () => {
   const item = useQuery('question', () => getListItem(id), {
     refetchOnWindowFocus: true,
   });
+
+  useEffect(() => {
+    dispatch(setVoteCount(item.data.voteCount));
+  }, []);
 
   const user = useSelector((state: RootState) => state.userInfo);
 
