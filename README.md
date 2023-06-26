@@ -46,5 +46,8 @@ https://seb-44-pre-036.web.app
 # 6. git commit rule
 
 # 7. API 명세서
-
+[답변 API](https://www.notion.so/Answer-API-4254ca6c8a0c426b8eec861fcdc08313)
+[회원 API](https://www.notion.so/Membership-API-0f50de5b5e884b12b4d2d43c86b116e2)
+[질문 API](https://www.notion.so/Question-API-94f882bf6d824c1ba720200d65556d95)
 # 8. ERD
+<img width="986" alt="스크린샷 2023-06-26 오전 11 49 33" src="https://github.com/codestates-seb/seb44_pre_036/assets/108858620/6793cf1c-29a8-4dc6-bdcc-d4a9eae7ed62">
