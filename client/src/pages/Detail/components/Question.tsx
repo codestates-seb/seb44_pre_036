@@ -26,9 +26,9 @@ const Question = ({ item, user }: { item: getItem; user: IUserInfo }) => {
     <QuestionContainer>
       <Vote item={item} />
       <QuestionContent>
-        <p>
+        <div>
           <div dangerouslySetInnerHTML={{ __html: item?.content }} />
-        </p>
+        </div>
         <QuestionInfo>
           <div>
             <Link to={user.memberId ? `/edit/${item?.questionId}` : '/login'}>
