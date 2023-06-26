@@ -7,7 +7,7 @@ import { Page, Wrapper } from '../style';
 import { updateData } from '../model/updateData';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
-import { getItem } from '../../../common/type';
+import { editItem } from '../../../common/type';
 import { createUserInfo } from '../../../common/store/UserInfoStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +19,11 @@ const Edit = () => {
 
   const navigate = useNavigate();
 
-  let item = useSelector((state: RootState) => state.item);
+  const item = useSelector((state: RootState) => state.item);
 
   const updatedItem = useSelector((state: RootState) => state.edit);
 
-  const updateMutation = useMutation((data: getItem) =>
+  const updateMutation = useMutation((data: editItem) =>
     updateData(item.questionId, data),
   );
 
@@ -31,22 +31,17 @@ const Edit = () => {
     if (!user.memberId) {
       navigate('/login');
     }
-  });
+  }, []);
 
   const handleUpdate = () => {
-    item = {
-      ...item,
-      title: updatedItem.title,
-      content: updatedItem.content,
-      updatedAt: new Date().toLocaleDateString(),
-    };
-    updateMutation.mutate(item);
+    updateMutation.mutate(updatedItem);
     dispatch(
       createUserInfo({
         ...user,
         modifiedTime: new Date().toLocaleDateString(),
       }),
     );
+    navigate(-1);
   };
 
   return (

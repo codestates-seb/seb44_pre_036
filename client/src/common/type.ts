@@ -57,3 +57,9 @@ export type list = {
   data: getItem[];
   pageInfo: pageInfo;
 };
+
+export type editItem = {
+  questionId: number;
+  title: string;
+  content: string;
+};

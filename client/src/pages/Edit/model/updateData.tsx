@@ -1,20 +1,26 @@
 import axios from 'axios';
 import { LISTCRUD_URL } from '../../../common/utils/constants';
-import { getItem } from '../../../common/type';
+import { editItem } from '../../../common/type';
+import useDecryptToken from '../../../common/utils/customHook/useDecryptToken';
 
-export const updateData = async (questionId: number, data: getItem) => {
+export const updateData = async (questionId: number, data: editItem) => {
   try {
-    const accessToken = localStorage.getItem('accessToken');
+    const decrypt = useDecryptToken();
 
-    const headers = {
-      'ngrok-skip-browser-warning': 'true',
-      Authorization: `Bearer ${accessToken}`,
-    };
+    const encryptedToken = localStorage.getItem('accessToken');
 
-    await axios.patch(`${LISTCRUD_URL}/questions/edit/${questionId}`, data, {
-      headers,
-    });
-    console.log('데이터가 성공적으로 전송되었습니다.');
+    if (encryptedToken) {
+      const accessToken = decrypt(encryptedToken);
+
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+      console.log(accessToken);
+      await axios.patch(`${LISTCRUD_URL}/questions/edit/${questionId}`, data, {
+        headers,
+      });
+      console.log('데이터가 성공적으로 전송되었습니다.');
+    }
   } catch (error) {
     console.log('데이터 전송 중 오류가 발생하였습니다:', error);
   }
