@@ -15,6 +15,19 @@ https://seb-44-pre-036.web.app
 ### 🥔 육감 (6명의 감자)
 
 # 3. 팀원 소개
+### Front-End
+
+| 이민선(FE 팀장) | 임경섭 | 박무생 |
+| :---: | :---: | :---: |
+| <div style="display: flex; align-items: flex-start;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-wTg3-H0qZ1B181BryQTgT3DGYI5cMYQkgA4xfsdfZk1bT9pPTy41gwouEI3Xdoe-3Y&usqp=CAU" width="180" height="160" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTefSLki2J70ZFDaHCZqDcqywZ_guCfO1w-Py9cWp_rpuxd7I78" width="180" height="160" /></div> | <div style="display: flex; align-items: flex-start;"><img src="" width="180" height="160" /></div> |
+| <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/minsun0714">@minsun0714</a></span><br/><span>로그인, 회원가입 구현</span></div> | <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/seobi-97">@seobi-97</a></span><br/><span>구현</span></div> | <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/Mooobi">@Mooobi</a></span><br/><span>구현</span></div> |
+
+### Back-End
+
+| 홍준기(BE 팀장) | 노성윤 | 최민환 |
+| :---: | :---: | :---: |
+| <div style="display: flex; align-items: flex-start;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb9zYIdoA5wcBFTNLCD1BqzZu4Wq4IcGy0O2HtkiRm1sfZf48D" width="180" height="160" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQmGXk6TyhpardoBaUXe_C_6hMXcal_A2UrOC-mNbLTNbUuG2Mu" width="180" height="160" /></div> | <div style="display: flex; align-items: flex-start;"><img src="" width="180" height="160" /></div> |
+| <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/RedJunKi">@RedJunKi</a></span><br/><span>구현</span></div> | <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/NOHSUNGYOON">@NOHSUNGYOON</a></span><br/><span>구현</span></div> | <div style="display: flex; align-items: flex-start;"><span><a href="https://github.com/minit88">@minit88</a></span><br/><span>구현</span></div> |
 
 # 4. 사용 기술 스택
 ### Front-End
