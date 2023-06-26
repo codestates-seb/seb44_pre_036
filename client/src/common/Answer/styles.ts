@@ -58,13 +58,13 @@ export const Select = styled.select`
 `;
 
 export const AnswerContainer = styled.div`
-  display: grid;
+  display: flex;
   max-width: 752px;
   padding-top: 16px;
 `;
 
 export const AnswerVote = styled.div`
-  width: auto;
+  width: 70px;
   padding-right: 16px;
   grid-column: 1;
 `;
@@ -104,8 +104,22 @@ export const AnswerContent = styled.div`
   grid-column: 2;
   width: auto;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const AnswerContentIn = styled.div`
   width: 100%;
+  button {
+    margin: 3px;
+    padding: 3px 6px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: #c2c2c2;
+  }
+  button:hover {
+    color: #909090;
+  }
 `;
