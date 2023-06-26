@@ -1,5 +1,5 @@
 const BASE_URL =
-  'https://ec2-43-201-107-128.ap-northeast-2.compute.amazonaws.com';
+  'http://ec2-43-201-107-128.ap-northeast-2.compute.amazonaws.com';
 
 export enum MembershipUrl {
   GoogleGsiClient = 'https://accounts.google.com/gsi/client',

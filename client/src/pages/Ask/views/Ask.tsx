@@ -33,6 +33,7 @@ const Ask = () => {
           createdTime: new Date().toLocaleDateString(),
         }),
       );
+      navigate(-1);
     } else {
       navigate('/login');
     }

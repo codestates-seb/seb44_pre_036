@@ -8,6 +8,7 @@ import { getItem } from '../../../common/type';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../common/store/RootStore';
 import { useNavigate } from 'react-router-dom';
+import useDecryptToken from '../../../common/utils/customHook/useDecryptToken';
 
 export const VoteUp = ({ item }: { item: getItem }) => {
   const user = useSelector((state: RootState) => state.userInfo);
@@ -15,21 +16,26 @@ export const VoteUp = ({ item }: { item: getItem }) => {
   const navigate = useNavigate();
 
   const voteUpMutation = useMutation(async () => {
-    const accessToken = localStorage.getItem('accessToken');
+    const decrypt = useDecryptToken();
 
-    const headers = {
-      'ngrok-skip-browser-warning': 'true',
-      Authorization: `Bearer ${accessToken}`,
-    };
+    const encryptedToken = localStorage.getItem('accessToken');
 
-    await axios.patch(
-      `${LISTCRUD_URL}/questions/vote`,
-      {
-        questionId: item.questionId,
-        vote: true,
-      },
-      { headers },
-    );
+    if (encryptedToken) {
+      const accessToken = decrypt(encryptedToken);
+
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+      await axios.patch(
+        `${LISTCRUD_URL}/questions/vote`,
+        {
+          questionId: item.questionId,
+          vote: true,
+        },
+        { headers },
+      );
+    }
   });
 
   const handleVoteUp = () => {
@@ -56,21 +62,26 @@ export const VoteDown = ({ item }: { item: getItem }) => {
 
   const voteDownMutation = useMutation(
     async () => {
-      const accessToken = localStorage.getItem('accessToken');
+      const decrypt = useDecryptToken();
 
-      const headers = {
-        'ngrok-skip-browser-warning': 'true',
-        Authorization: `Bearer ${accessToken}`,
-      };
+      const encryptedToken = localStorage.getItem('accessToken');
 
-      await axios.patch(
-        `${LISTCRUD_URL}/questions/vote`,
-        {
-          questionId: item.questionId,
-          vote: false,
-        },
-        { headers },
-      );
+      if (encryptedToken) {
+        const accessToken = decrypt(encryptedToken);
+
+        const headers = {
+          Authorization: `Bearer ${accessToken}`,
+        };
+
+        await axios.patch(
+          `${LISTCRUD_URL}/questions/vote`,
+          {
+            questionId: item.questionId,
+            vote: false,
+          },
+          { headers },
+        );
+      }
     },
     {
       onSuccess: () => {
