@@ -66,5 +66,5 @@ https://seb-44-pre-036.web.app
 
 # 8. ERD
 <img width="833" alt="스크린샷 2023-06-26 오후 2 48 50" src="https://github.com/codestates-seb/seb44_pre_036/assets/108858620/f750451c-91ee-4df4-a29a-a31ac8a7e249">
-">
+
 
