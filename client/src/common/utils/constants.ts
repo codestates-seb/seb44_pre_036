@@ -6,8 +6,6 @@ export const email: UserInfoField = 'email';
 
 export const password: UserInfoField = 'password';
 
-export const GET_ME_URL_EXAMPLE = 'https://localhost:5000/api/v1/users/me';
-
 export const ACCESS_TOKEN: Token = 'accessToken';
 
 export const PASSWORD_MIN_LENGTH: number = 8;
