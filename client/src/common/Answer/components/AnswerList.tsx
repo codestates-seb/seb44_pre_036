@@ -20,7 +20,7 @@ import {
   AnswerContentIn,
 } from '../styles';
 import { AnswerData } from '../model/type';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAnswer } from '../store/AnswerStore';
 import { RootState } from '../../store/RootStore';
@@ -32,6 +32,7 @@ function AnswerList() {
   const dispatch = useDispatch();
   const Question = useSelector((state: RootState) => state.item);
   console.log(Question);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAnswer(answerList));
@@ -99,7 +100,11 @@ function AnswerList() {
                   dangerouslySetInnerHTML={{ __html: answer?.content }}
                 />
                 <AnswerContentIn>
-                  <button>Edit</button>
+                  <button
+                    onClick={() => navigate(`/edit/answer/${answer?.answerId}`)}
+                  >
+                    Edit
+                  </button>
                   <button onClick={() => DeleteAnswer(answer.answerId)}>
                     Delete
                   </button>
