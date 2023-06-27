@@ -45,6 +45,7 @@ export const VoteUp = ({ item }: { item: getItem }) => {
     if (user.memberId) {
       voteUpMutation.mutate();
       dispatch(setVoteCount((prevState: number) => prevState + 1));
+      window.location.reload();
     } else {
       navigate('/login');
     }
@@ -91,6 +92,7 @@ export const VoteDown = ({ item }: { item: getItem }) => {
     if (user.memberId) {
       voteDownMutation.mutate();
       dispatch(setVoteCount((prevState: number) => prevState - 1));
+      window.location.reload();
     } else {
       navigate('/login');
     }
