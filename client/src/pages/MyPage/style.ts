@@ -12,7 +12,6 @@ export const HeaderContainer = styled.header`
   margin-bottom: 1rem;
   & :first-child {
     border-radius: 5px;
-    height: 8rem;
     margin-right: 1rem;
   }
 
@@ -117,9 +116,11 @@ export const LogoutBtnWrapper = styled.div`
 `;
 
 export const LogoutBtn = styled.button`
+  border-radius: 5px;
   justify-content: center;
   align-items: center;
   width: 50%;
   border: none;
   height: 30px;
+  cursor: pointer;
 `;

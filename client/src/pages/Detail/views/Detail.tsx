@@ -34,8 +34,10 @@ const Detail = () => {
   });
 
   useEffect(() => {
-    dispatch(setVoteCount(item.data.voteCount));
-  }, []);
+    if (item.data) {
+      dispatch(setVoteCount(item.data.voteCount));
+    }
+  }, [item.data]);
 
   const user = useSelector((state: RootState) => state.userInfo);
 
