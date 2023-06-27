@@ -28,16 +28,15 @@ const ListItem = ({ data, user }: { data: getItem[]; user: IUserInfo }) => {
                     <div>{item.title}</div>
                   </Link>
                   <div>
-                    {item.content.replace(/<[^>]+>/g, '').length > 199
+                    {item.content.replace(/<[^>]+>/g, '').length > 80
                       ? `${item.content
                           .replace(/<[^>]+>/g, '')
-                          .slice(0, 199)}...`
+                          .slice(0, 80)}...`
                       : item.content.replace(/<[^>]+>/g, '')}
                   </div>
                 </ContentSection>
                 <AuthorSection>
                   <Link to={`/mypage/${user.memberId}/${user.name}/profile`}>
-                    {/* <img src={item.userAvatar} alt={item.name} /> */}
                     <Profile />
                     <div>{item.name}</div>
                   </Link>

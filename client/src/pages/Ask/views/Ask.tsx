@@ -33,7 +33,9 @@ const Ask = () => {
           createdTime: new Date().toLocaleDateString(),
         }),
       );
-      navigate(-1);
+      setTimeout(() => {
+        navigate(-1);
+      }, 500);
     } else {
       navigate('/login');
     }
