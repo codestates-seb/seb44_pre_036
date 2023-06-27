@@ -4,6 +4,19 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 8px; /* 스크롤 바 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888; /* 스크롤 바 색상 */
+    border-radius: 4px; /* 스크롤 바 테두리 반지름 */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* 스크롤 바 호버 시 색상 */
+  }
 `;
 
 export const Page = styled.main`

@@ -14,7 +14,7 @@ const PostAnswer = async (data: Answerdata) => {
   return response.data;
 };
 const GetAnswer = async (id: string) => {
-  const response = await axios.get(`${url}/${id}`);
+  const response = await axios.get(`${url}${id}`);
   return response.data;
 };
 const PatchAnswer = async (data: Patchdata) => {
@@ -22,7 +22,7 @@ const PatchAnswer = async (data: Patchdata) => {
   return response.data;
 };
 const DeleteAnswer = async (id: string) => {
-  const response = await axios.delete(`${url}/${id}`);
+  const response = await axios.delete(`${url}${id}`);
   return response.data;
 };
 const SelectAnswer = async (id: string) => {
@@ -72,10 +72,10 @@ export const GetMutation = (id: string) => {
   });
 };
 
-export const PatchMutation = () => {
-  return useMutation(PatchAnswer, {
-    onSuccess: async (response) => {
-      console.log(response);
+export const PatchMutation = (data: Patchdata) => {
+  return useQuery(['answer', data], () => PatchAnswer(data), {
+    onSuccess: async (data) => {
+      console.log(data);
     },
     onError: (error: AxiosError) => {
       const { response } = error;
