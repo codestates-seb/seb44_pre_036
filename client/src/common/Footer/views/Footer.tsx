@@ -113,7 +113,7 @@ function Footer() {
               <a>LinkedIn</a>
             </li>
             <li>
-              <a>Instargram</a>
+              <a>Instagram</a>
             </li>
           </ul>
           <p>

@@ -59,22 +59,109 @@ function Dropdown({ Id }: DropdownProps): JSX.Element | null {
   } else if (Id === 2) {
     containerContent = (
       <Container2>
-        <InBox>Content for Id 2</InBox>
-        <Content>More details for Id 2</Content>
+        <InBox>
+          <button>
+            <h3>TROPHY BOX (ALL)</h3>
+          </button>
+          <InBoxIn>
+            <Mark>
+              <button>Mark all as read</button>
+            </Mark>
+          </InBoxIn>
+        </InBox>
+        <Content>
+          <ul>
+            <li>
+              <MessageButton>
+                <img src="/header_svg/message2.svg" />
+              </MessageButton>
+              <ContentItem>
+                <img src="/header_svg/slogo.svg" />
+              </ContentItem>
+              <ContentItem2>
+                <p>Welcome</p>
+                <ContentItem3>
+                  <p>
+                    Welcome to Stack Overflow! Take the 2-minute site tour to
+                    earn your first badge
+                  </p>
+                </ContentItem3>
+              </ContentItem2>
+            </li>
+          </ul>
+        </Content>
       </Container2>
     );
   } else if (Id === 3) {
     containerContent = (
       <Container3>
-        <InBox>Content for Id 3</InBox>
-        <Content>More details for Id 3</Content>
+        <InBox>
+          <button>
+            <h3>HELP BOX (ALL)</h3>
+          </button>
+          <InBoxIn>
+            <Mark>
+              <button>Mark all as read</button>
+            </Mark>
+          </InBoxIn>
+        </InBox>
+        <Content>
+          <ul>
+            <li>
+              <MessageButton>
+                <img src="/header_svg/message2.svg" />
+              </MessageButton>
+              <ContentItem>
+                <img src="/header_svg/slogo.svg" />
+              </ContentItem>
+              <ContentItem2>
+                <p>Welcome</p>
+                <ContentItem3>
+                  <p>
+                    Welcome to Stack Overflow! Take the 2-minute site tour to
+                    earn your first badge
+                  </p>
+                </ContentItem3>
+              </ContentItem2>
+            </li>
+          </ul>
+        </Content>
       </Container3>
     );
   } else if (Id === 4) {
     containerContent = (
       <Container4>
-        <InBox>Content for Id 4</InBox>
-        <Content>More details for Id 4</Content>
+        <InBox>
+          <button>
+            <h3>LISTBOX (ALL)</h3>
+          </button>
+          <InBoxIn>
+            <Mark>
+              <button>Mark all as read</button>
+            </Mark>
+          </InBoxIn>
+        </InBox>
+        <Content>
+          <ul>
+            <li>
+              <MessageButton>
+                <img src="/header_svg/message2.svg" />
+              </MessageButton>
+              <ContentItem>
+                <img src="/header_svg/slogo.svg" />
+              </ContentItem>
+              <ContentItem2>
+                <p>Welcome</p>
+                <ContentItem3>
+                  <p>
+                    Welcome to Stack Overflow! Take the 2-minute site tour to
+                    earn your first badge
+                  </p>
+                </ContentItem3>
+              </ContentItem2>
+            </li>
+          </ul>
+        </Content>
       </Container4>
     );
   }
