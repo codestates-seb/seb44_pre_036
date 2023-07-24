@@ -1,4 +1,4 @@
-# <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-wTg3-H0qZ1B181BryQTgT3DGYI5cMYQkgA4xfsdfZk1bT9pPTy41gwouEI3Xdoe-3Y&usqp=CAU" width="180" height="160" /></div>1. 프로젝트 소개
+# 1. 프로젝트 소개
 
 ### Stackoverflow clone (23.06.09 ~ 23.06.27)
 
