@@ -4,10 +4,6 @@
 
 모범 웹 사이트인 스택오버플로우를 클론하는 codestates pre-project입니다.
 
-#### 배포 링크
-
-https://seb-44-pre-036.web.app
-
 # 2. 팀명
 
 ### 🥔 육감 (6명의 감자)
